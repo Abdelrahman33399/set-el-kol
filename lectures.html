@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تلخيصات المواد - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .material-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            margin-bottom: 1.5rem;
+        }
+        .material-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+        }
+        .material-card h3 {
+            color: var(--text-light);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .material-card h3 i {
+            color: var(--accent-orange);
+        }
+        .material-card p {
+            color: #ccc;
+            margin: 1rem 0;
+        }
+        .summary-content {
+            background: rgba(30, 30, 50, 0.6);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-line;
+            text-align: right;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        .password-input-group {
+            margin-top: 1rem;
+        }
+        .password-error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .toggle-icon {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* أزرار اليوتيوب */
+        .youtube-links {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed rgba(255, 107, 53, 0.3);
+        }
+        .youtube-links h4 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .youtube-btn {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .youtube-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+        }
+        .youtube-btn i {
+            margin-left: 6px;
+        }
+
+        /* زر العودة للرئيسية */
+        .back-to-home-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+        .back-to-home-btn:hover {
+            background: #e05a2a;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="neon-title text-center mb-5"> تلخيصات المواد</h1>
+
+        <div id="materialsContainer">
+            <!-- سيتم ملؤه ديناميكيًا -->
+        </div>
+    </div>
+
+    <a href="index.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة للرئيسية
+    </a>
+
+    <script>
+        // قاعدة بيانات المواد + روابط يوتيوب
+        const materials = [
+            {
+                id: 1,
+                name: "لسه لما نبدأ",
+                description: "",
+                password: "math123",
+                summary: `📌 التفاضل: دراسة معدلات التغير، المشتقات، التطبيقات الهندسية والفيزيائية.
+📌 التكامل: حساب المساحات والحجوم، التكامل بالتجزئة.
+📌 الجبر الخطي: المصفوفات، المحددات، فضاءات المتجهات.
+✅ نصائح: ركز على فهم المفاهيم قبل الحفظ، وحل أمثلة متنوعة.`,
+                youtubeLinks: [
+                    { title: "شرح التفاضل من الصفر", url: "https://www.youtube.com/watch?v=d3f4y6k4W3E" },
+                    { title: "أساسيات التكامل", url: "https://www.youtube.com/watch?v=5QnToLHJqec" },
+                    { title: "مقدمة في الجبر الخطي", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }
+                ]
+            },
+            {
+                id: 2,
+                name: "لسه لما نبدأ",
+                description: "",
+                password: "physics456",
+                summary: `⚡ الميكانيكا: قوانين نيوتن، الحركة الدائرية، الزخم.
+🔥 الديناميكا الحرارية: قوانين الديناميكا، الآلات الحرارية، الإنتروبي.
+🧲 الكهرباء والمغناطيسية: قانون كولوم، المجال المغناطيسي، قانون فاراداي.
+✅ نصائح: استخدم الرسوم البيانية، وتدرب على المسائل التطبيقية.`,
+                youtubeLinks: [
+                    { title: "قوانين نيوتن الثلاثة", url: "https://www.youtube.com/watch?v=9gUeX6O3c8o" },
+                    { title: "شرح الديناميكا الحرارية", url: "https://www.youtube.com/watch?v=4GZ56vBZT9o" },
+                    { title: "أساسيات الكهرباء والمغناطيسية", url: "https://www.youtube.com/watch?v=ip8wdmvF64c" }
+                ]
+            },
+            {
+                id: 3,
+                name: "لسه لما نبدأ",
+                description: "",
+                password: "chem789",
+                summary: `🧪 التفاعلات الكيميائية: أنواعها، معادلاتها، طاقة التفاعل.
+🧪 الأحماض والقواعد: تعريف أرهينيوس وبرونستد، الرقم الهيدروجيني pH.
+🧪 الكيمياء العضوية: الهيدروكربونات، المجموعات الوظيفية، التسمية IUPAC.
+✅ نصائح: احفظ الجدول الدوري، وتدرب على كتابة المعادلات المتزنة.`,
+                youtubeLinks: [
+                    { title: "أنواع التفاعلات الكيميائية", url: "https://www.youtube.com/watch?v=ZzeS_bBj0aY" },
+                    { title: "حساب pH للأحماض والقواعد", url: "https://www.youtube.com/watch?v=U4UH4bXcH5w" },
+                    { title: "مقدمة في الكيمياء العضوية", url: "https://www.youtube.com/watch?v=NS4dY33fE4s" }
+                ]
+            },
+            {
+                id: 4,
+                name: "لسه لما نبدأ",
+                description: "",
+                password: "code101",
+                summary: `💻 البرمجة الكائنية: الفئات، الكائنات، التوريث، التغليف.
+📊 الخوارزميات: البحث، الترتيب، التعقيد الزمني.
+🧱 هياكل البيانات: المصفوفات، القوائم، الأشجار، الجداول التجزئة.
+✅ نصائح: اكتب كود يوميًا، وحل تحديات على منصات مثل LeetCode.`,
+                youtubeLinks: [
+                    { title: "البرمجة الكائنية للمبتدئين", url: "https://www.youtube.com/watch?v=PFmuCDHHpwk" },
+                    { title: "شرح خوارزميات البحث والترتيب", url: "https://www.youtube.com/watch?v=kPRA0W1kECg" },
+                    { title: "هياكل البيانات بالتفصيل", url: "https://www.youtube.com/watch?v=RBSGKlAvoiM" }
+                ]
+            }
+        ];
+
+        // عرض المواد عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('materialsContainer');
+            materials.forEach(material => {
+                const card = `
+                    <div class="material-card" data-id="${material.id}">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h3><i class="fas fa-graduation-cap"></i> ${material.name}</h3>
+                            <i class="fas fa-chevron-down toggle-icon" id="toggle-${material.id}"></i>
+                        </div>
+                        <p>${material.description}</p>
+                        <div class="password-input-group" id="passwordGroup-${material.id}" style="display:none;">
+                            <input type="password" class="form-control bg-secondary text-light" placeholder="أدخل كلمة المرور لفتح التلخيص" data-material-id="${material.id}">
+                            <button class="btn mt-2" style="background: var(--accent-orange); color: white;" onclick="verifyPassword(${material.id})">
+                                <i class="fas fa-key me-1"></i> فتح التلخيص
+                            </button>
+                            <div class="password-error" id="error-${material.id}">
+                                <i class="fas fa-exclamation-triangle me-1"></i> كلمة المرور غير صحيحة!
+                            </div>
+                        </div>
+                        <div class="summary-content" id="summary-${material.id}" style="display:none;"></div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', card);
+            });
+
+            // إضافة حدث النقر على العنوان لفتح/إغلاق حقل كلمة المرور
+            document.querySelectorAll('.material-card').forEach(card => {
+                const header = card.querySelector('h3');
+                header.addEventListener('click', function() {
+                    const id = card.getAttribute('data-id');
+                    const passwordGroup = document.getElementById(`passwordGroup-${id}`);
+                    const summary = document.getElementById(`summary-${id}`);
+                    const toggleIcon = document.getElementById(`toggle-${id}`);
+
+                    if (summary.style.display === 'block') {
+                        summary.style.display = 'none';
+                        passwordGroup.style.display = 'none';
+                        toggleIcon.classList.remove('rotated');
+                        return;
+                    }
+
+                    if (passwordGroup.style.display === 'none') {
+                        passwordGroup.style.display = 'block';
+                        toggleIcon.classList.add('rotated');
+                    } else {
+                        passwordGroup.style.display = 'none';
+                        toggleIcon.classList.remove('rotated');
+                    }
+                });
+            });
+        });
+
+        // التحقق من كلمة المرور + عرض التلخيص + روابط اليوتيوب
+        function verifyPassword(materialId) {
+            const material = materials.find(m => m.id === materialId);
+            const input = document.querySelector(`input[data-material-id="${materialId}"]`);
+            const errorDiv = document.getElementById(`error-${materialId}`);
+            const summaryDiv = document.getElementById(`summary-${materialId}`);
+
+            if (input.value === material.password) {
+                // عرض التلخيص
+                summaryDiv.innerHTML = `
+                    <div>${material.summary}</div>
+                    <div class="youtube-links">
+                        <h4><i class="fab fa-youtube"></i> فيديوهات شرح مقترحة:</h4>
+                        ${material.youtubeLinks.map(link => `
+                            <a href="${link.url}" target="_blank" class="youtube-btn">
+                                ${link.title} <i class="fab fa-youtube"></i>
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+                summaryDiv.style.display = 'block';
+
+                // إخفاء حقل كلمة المرور
+                document.getElementById(`passwordGroup-${materialId}`).style.display = 'none';
+                document.getElementById(`toggle-${materialId}`).classList.add('rotated');
+                errorDiv.style.display = 'none';
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        // إشعار مؤقت
+        function showNotification(msg) {
+            const div = document.createElement('div');
+            div.className = 'alert alert-info position-fixed bottom-0 end-0 m-3';
+            div.style.zIndex = 9999;
+            div.innerHTML = `<i class="fas fa-bell me-2"></i>${msg}`;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 4000);
+        }
+    </script>
+</body>
+</html>

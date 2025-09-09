@@ -1,0 +1,108 @@
+:root {
+    /* الألوان الأساسية */
+    --bg-color: #121212; /* رمادي غامق للخلفية */
+    --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-light: #e0e0e0; /* لون فاتح للنصوص */
+    --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
+    --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
+    --accent-orange-hover: #e05a2a;
+    --shadow-purple: rgba(164, 83, 255, 0.5);
+    --shadow-orange: rgba(255, 107, 53, 0.5);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* خلفية Particles.js */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.neon-title {
+    background: var(--primary-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-shadow: 0 0 10px var(--shadow-purple);
+}
+
+.logo {
+    max-width: 200px;
+    border-radius: 70px;
+    box-shadow: 0 0 20px var(--shadow-orange);
+}
+
+.card-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.card-section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px var(--shadow-orange);
+    background: rgba(255, 107, 53, 0.1);
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-section i {
+    color: var(--accent-orange);
+}
+
+.card-section h3 {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.designer-btn {
+    display: inline-block;
+    background: var(--accent-orange);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.designer-btn:hover {
+    background: var(--accent-orange-hover);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px var(--shadow-orange);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .neon-title {
+        font-size: 2rem;
+    }
+    .card-section {
+        padding: 1.5rem;
+    }
+}

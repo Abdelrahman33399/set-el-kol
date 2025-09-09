@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            margin: 1rem;
+            animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-tabs .nav-link {
+            color: #ddd;
+            border: none;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 0 5px;
+        }
+        .nav-tabs .nav-link:hover {
+            background: rgba(255, 107, 53, 0.1);
+            color: #ff6b35;
+        }
+        .nav-tabs .nav-link.active {
+            background: var(--accent-orange);
+            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #ddd;
+            transition: all 0.3s;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            background: rgba(30, 30, 50, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            background: rgba(40, 40, 60, 0.8) !important;
+            border-color: var(--accent-orange) !important;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25) !important;
+            transform: translateY(-2px);
+        }
+        .btn-auth {
+            background: var(--accent-orange);
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+        }
+        .btn-auth:hover {
+            background: #e05a2a;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+        }
+        .password-toggle {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        .password-toggle:hover {
+            color: var(--accent-orange);
+        }
+        .back-link {
+            display: inline-block;
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .back-link:hover {
+            color: var(--accent-orange);
+            background: rgba(255, 107, 53, 0.1);
+            transform: translateX(5px);
+        }
+        .auth-notification {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom right;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        @media (max-width: 480px) {
+            .auth-card {
+                width: 95%;
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            .nav-tabs .nav-link {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            .btn-auth {
+                padding: 10px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100" style="position: relative;">
+    <div id="particles-js"></div>
+
+    <div class="auth-card">
+        <h2 class="text-center neon-title mb-4">مرحبًا بك 👋</h2>
+
+        <ul class="nav nav-tabs justify-content-center mb-4" id="authTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active flex-fill" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button">
+                    <i class="fas fa-sign-in-alt me-1"></i> تسجيل الدخول
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link flex-fill" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button">
+                    <i class="fas fa-user-plus me-1"></i> إنشاء حساب
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="authTabContent">
+            <div class="tab-pane fade show active" id="login" role="tabpanel">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" id="loginEmail" required autocomplete="email">
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <label for="loginPassword" class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-control" id="loginPassword" required autocomplete="current-password">
+                        <span class="password-toggle" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-auth w-100">
+                        <span id="loginBtnText">دخول</span>
+                        <span id="loginSpinner" class="spinner-border spinner-border-sm ms-2" style="display:none;" role="status"></span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="register" role="tabpanel">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="registerName" class="form-label">الاسم الكامل</label>
+                        <input type="text" class="form-control" id="registerName" required autocomplete="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" id="registerEmail" required autocomplete="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPhone" class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-control" id="registerPhone" placeholder="010XXXXXXXX" required>
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <label for="registerPassword" class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-control" id="registerPassword" required minlength="6" autocomplete="new-password">
+                        <span class="password-toggle" onclick="togglePassword('registerPassword')">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-auth w-100">
+                        <span id="registerBtnText">إنشاء الحساب</span>
+                        <span id="registerSpinner" class="spinner-border spinner-border-sm ms-2" style="display:none;" role="status"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-right-to-bracket me-1"></i> العودة للصفحة الرئيسية
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="js/particles-config.js"></script>
+
+<!-- Firebase Modular SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
+        authDomain: "sit-el-kol.firebaseapp.com",
+        projectId: "sit-el-kol",
+        storageBucket: "sit-el-kol.firebasestorage.app",
+        messagingSenderId: "573924344198",
+        appId: "1:573924344198:web:fec2e9a54c1c152cd16c07",
+        measurementId: "G-CWVJDKPS0M"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // إظهار/إخفاء كلمة المرور
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = event.currentTarget.querySelector('i');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    // تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const loginBtnText = document.getElementById('loginBtnText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        loginBtnText.style.display = 'none';
+        loginSpinner.style.display = 'inline-block';
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                showNotification('تم تسجيل الدخول بنجاح! 👏', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                showNotification('خطأ: ' + error.message, 'danger');
+                loginBtnText.style.display = 'inline';
+                loginSpinner.style.display = 'none';
+            });
+    });
+
+    // إنشاء حساب
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const phone = document.getElementById('registerPhone').value;
+        const password = document.getElementById('registerPassword').value;
+
+        const registerBtnText = document.getElementById('registerBtnText');
+        const registerSpinner = document.getElementById('registerSpinner');
+        registerBtnText.style.display = 'none';
+        registerSpinner.style.display = 'inline-block';
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                const user = userCredential.user;
+
+                // 🔢 جلب الكاونتر وزيادته (يبدأ من 50)
+                const counterRef = doc(db, "counters", "users");
+                const counterDoc = await getDoc(counterRef);
+
+                let nextId;
+                if (!counterDoc.exists()) {
+                    // أول مستخدم — نبدأ من 50
+                    nextId = 50;
+                    await setDoc(counterRef, { nextId: 51 });
+                } else {
+                    nextId = counterDoc.data().nextId;
+                    await updateDoc(counterRef, { nextId: nextId + 1 });
+                }
+
+                // ✂️ تنظيف اسم المستخدم: إزالة المسافات، تحويل لحروف صغيرة
+                const cleanName = name.trim().toLowerCase().replace(/\s+/g, '_');
+
+                // 🆔 توليد ID مخصص: اسم_رقم
+                const customId = `${cleanName}_${nextId}`;
+
+                // 💾 حفظ بيانات المستخدم مع الـ ID المخصص
+                await setDoc(doc(db, "users", user.uid), {
+                    id: customId, // ← ID مخصص: ahmed_50
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    createdAt: new Date()
+                });
+
+                showNotification('تم إنشاء الحساب بنجاح! 🎉', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                showNotification('خطأ: ' + error.message, 'danger');
+                registerBtnText.style.display = 'inline';
+                registerSpinner.style.display = 'none';
+            });
+    });
+
+    // إشعار مؤقت
+    function showNotification(msg, type) {
+        const existing = document.querySelector('.auth-notification');
+        if (existing) existing.remove();
+
+        const div = document.createElement('div');
+        div.className = `auth-notification alert alert-${type} position-fixed bottom-0 end-0 m-3`;
+        div.style.zIndex = 9999;
+        div.style.fontSize = '0.95rem';
+        div.innerHTML = msg;
+        document.body.appendChild(div);
+
+        setTimeout(() => {
+            div.classList.add('fade-out');
+            setTimeout(() => div.remove(), 500);
+        }, 3000);
+    }
+</script>
+</body>
+</html>
