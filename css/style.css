@@ -1,3 +1,4 @@
+/* الوضع الليلي (الافتراضي) */
 :root {
     /* الألوان الأساسية */
     --bg-color: #121212; /* رمادي غامق للخلفية */
@@ -11,6 +12,19 @@
     --shadow-orange: rgba(255, 107, 53, 0.5);
 }
 
+/* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
+:root.day-mode {
+    --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
+    --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
+    --border-color: rgba(130, 130, 255, 0.2);
+    --text-light: #ec6211; /* ← النصوص العادية بالأسود — باينة وواضحة */
+    --primary-neon: linear-gradient(45deg, #ffffff, #ffffff); /* بنفسجي → أزرق — تدرج نهاري أنيق */
+    --accent-orange: #e65c00; /* برتقالي ترابي — مش حارق */
+    --accent-orange-hover: #cc5200;
+    --shadow-purple: rgb(255, 255, 255);
+    --shadow-orange: rgba(230, 92, 0, 0.592);
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-light);
@@ -21,12 +35,13 @@ body {
 
 /* خلفية Particles.js */
 #particles-js {
-    position: absolute;
+    position: fixed; /* ← غيرتها لـ fixed عشان تفضل ظاهرة */
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: -1;
+    pointer-events: none; /* ← مهم: يسمح بالتفاعل مع العناصر فوقها */
 }
 
 .neon-title {
@@ -51,7 +66,7 @@ body {
     padding: 2rem;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* ← يحافظ على الخلفية شبه شفافة */
 }
 
 .card-section:hover {
@@ -105,4 +120,42 @@ footer {
     .card-section {
         padding: 1.5rem;
     }
+}
+
+/* زر تبديل الوضع */
+.theme-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--accent-orange);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px var(--shadow-orange);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--accent-orange-hover);
+    transform: translateY(-3px) rotate(15deg);
+}
+
+.theme-toggle-btn i {
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn.day i {
+    transform: rotate(0deg);
+}
+
+.theme-toggle-btn.night i {
+    transform: rotate(360deg);
 }
