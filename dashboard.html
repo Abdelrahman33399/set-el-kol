@@ -425,19 +425,27 @@
     }
 
     // استقبال الإشعارات أثناء وجود المستخدم في الموقع (Foreground)
-    onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
+   // استقبال الإشعارات أثناء وجود المستخدم في الموقع
+onMessage(messaging, (payload) => {
+    console.log("Message received. ", payload);
+
+    // جلب العنوان والنص من الـ payload
     const title = payload.notification?.title || "ست الكل";
     const body = payload.notification?.body || "لديك إشعار جديد!";
 
-    // ✅ إضافة الإشعار للقائمة الداخلية
-    addNotification(title, body);
+    // ✅ إضافة للصندوق الداخلي
+    if (typeof addNotification === 'function') {
+        addNotification(title, body);
+    } else {
+        console.warn("addNotification function not found!");
+    }
 
-    // عرض إشعار المتصفح
+    // ✅ عرض إشعار المتصفح
     if ("Notification" in window && Notification.permission === "granted") {
         new Notification(title, {
             body: body,
-            icon: "images/logo.png"
+            icon: "images/logo.png",
+            badge: "images/logo.png"
         });
     }
 });
@@ -552,5 +560,6 @@
 </script>
 </body>
 </html>
+
 
 
