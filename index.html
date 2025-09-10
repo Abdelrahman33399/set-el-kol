@@ -167,8 +167,108 @@
         });
     });
 </script>
+    <!-- Firebase -->
+<script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+
+    // Your Firebase config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
+        authDomain: "sit-el-kol.firebaseapp.com",
+        projectId: "sit-el-kol",
+        storageBucket: "sit-el-kol.firebasestorage.app",
+        messagingSenderId: "573924344198",
+        appId: "1:573924344198:web:fec2e9a54c1c152cd16c07",
+        measurementId: "G-CWVJDKPS0M"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const messaging = getMessaging(app);
+
+    // طلب إذن الإشعارات من المستخدم
+    function requestNotificationPermission() {
+        if (!("Notification" in window)) {
+            console.log("This browser does not support notifications.");
+            return;
+        }
+
+        Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+                console.log("Notification permission granted.");
+
+                // الحصول على FCM Token
+                getToken(messaging, {
+                    vapidKey: "BNJG3dR3q5Cp6xQj7X8Yz9A0B1C2D3E4F5G6H7I8J9K0L1M2N3O4P5Q6R7S8T9U0V1W2X3Y4Z5" // ← استبدلها بـ VAPID Key اللي جبته من Firebase
+                }).then((currentToken) => {
+                    if (currentToken) {
+                        console.log("FCM Token:", currentToken);
+
+                        // حفظ التوكن في Firestore مع بيانات المستخدم
+                        saveTokenToFirestore(currentToken);
+                    } else {
+                        console.log("No registration token available. Request permission to generate one.");
+                    }
+                }).catch((err) => {
+                    console.log("An error occurred while retrieving token. ", err);
+                });
+            } else {
+                console.log("Unable to get permission to notify.");
+            }
+        });
+    }
+
+    // حفظ التوكن في Firestore
+    async function saveTokenToFirestore(token) {
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                await setDoc(doc(db, "users", user.uid), {
+                    fcmToken: token,
+                    updatedAt: new Date()
+                }, { merge: true });
+                console.log("Token saved to Firestore.");
+            } catch (error) {
+                console.error("Error saving token: ", error);
+            }
+        }
+    }
+
+    // استقبال الإشعارات أثناء وجود المستخدم في الموقع (Foreground)
+    onMessage(messaging, (payload) => {
+        console.log("Message received. ", payload);
+
+        const notificationTitle = payload.notification?.title || "ست الكل";
+        const notificationBody = payload.notification?.body || "لديك إشعار جديد!";
+        const notificationIcon = "images/logo.png";
+
+        // عرض إشعار في المتصفح
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification(notificationTitle, {
+                body: notificationBody,
+                icon: notificationIcon,
+                badge: notificationIcon
+            });
+        }
+    });
+
+    // تشغيل طلب الإذن عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function() {
+        const user = auth.currentUser;
+        if (user) {
+            requestNotificationPermission();
+        }
+    });
+</script>
 </body>
 
 </html>
+
 
 
