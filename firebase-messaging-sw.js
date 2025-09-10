@@ -23,8 +23,8 @@ messaging.onBackgroundMessage((payload) => {
     const notificationTitle = payload.notification?.title || "ست الكل";
     const notificationOptions = {
         body: payload.notification?.body || "لديك إشعار جديد!",
-        icon: "images/logo.png",
-        badge: "images/logo.png"
+        icon: "Image_fx6.jpg",
+        badge: "Image_fx6.jpg"
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);
