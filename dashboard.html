@@ -7,12 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-   <style>
+    <style>
         body {
             background-color: var(--bg-color);
             overflow-x: hidden;
             position: relative;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         #particles-js {
             position: fixed;
@@ -29,7 +31,8 @@
             border-radius: 24px;
             padding: 3rem 2rem;
             margin: 2rem auto;
-            max-width: 500px;
+            max-width: 90%;
+            width: 500px;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border-color);
@@ -44,7 +47,7 @@
             font-weight: 800;
             background: var(--primary-neon);
             -webkit-background-clip: text;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             text-shadow: 0 0 15px rgba(199, 125, 255, 0.5);
         }
         .avatar {
@@ -113,6 +116,60 @@
             background: #c82333;
             transform: translateY(-3px);
         }
+
+        /* زر الجرس */
+        .notification-bell {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        .notification-bell button {
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s;
+        }
+        .notification-bell button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+        }
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            animation: slideDownLeft 0.3s ease;
+        }
+        @keyframes slideDownLeft {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .notification-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .notification-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .notification-item.read {
+            opacity: 0.7;
+        }
+        .notification-item .time {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* زر تبديل الوضع */
         .theme-toggle-btn {
             position: fixed;
             top: 20px;
@@ -145,17 +202,25 @@
         .theme-toggle-btn.night i {
             transform: rotate(360deg);
         }
-        @media (max-width: 576px) {
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .user-banner {
-                margin: 1rem;
-                padding: 2rem 1.5rem;
+                margin: 1.5rem auto;
+                padding: 2.5rem 1.8rem;
+                max-width: 95%;
             }
             .platform-name {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .avatar {
                 width: 80px;
                 height: 80px;
+            }
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
             }
             .action-btns {
                 flex-direction: column;
@@ -164,58 +229,34 @@
             .btn-action {
                 width: 100%;
             }
+            .notification-dropdown {
+                width: 280px;
+                left: -20px;
+            }
         }
-        /* زر الجرس - في اليسار */
-        .notification-bell {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            padding: 0;
-        }
-        .notification-bell button {
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-            transition: all 0.3s;
-        }
-        .notification-bell button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
-        }
-        .notification-dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 350px;
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            animation: slideDownLeft 0.3s ease;
-        }
-        @keyframes slideDownLeft {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .notification-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .notification-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        .notification-item.read {
-            opacity: 0.7;
-        }
-        .notification-item .time {
-            font-size: 0.8rem;
-            color: #aaa;
+
+        @media (max-width: 576px) {
+            .user-banner {
+                margin: 1rem auto;
+                padding: 2rem 1.5rem;
+            }
+            .platform-name {
+                font-size: 1.8rem;
+            }
+            .avatar {
+                width: 70px;
+                height: 70px;
+            }
+            .notification-dropdown {
+                width: 260px;
+                left: -10px;
+            }
+            .theme-toggle-btn,
+            .notification-bell button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -224,13 +265,12 @@
     <button id="themeToggle" class="theme-toggle-btn">
         <i class="fas fa-moon"></i>
     </button>
+
     <!-- زر الجرس -->
     <div class="notification-bell">
         <button class="btn btn-outline-light position-relative" id="notificationBell">
             <i class="fas fa-bell"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">
-                0
-            </span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">0</span>
         </button>
         <div class="notification-dropdown bg-dark text-light rounded shadow" id="notificationDropdown">
             <div class="p-3 border-bottom">
@@ -288,29 +328,25 @@
 
     <!-- إدارة الإشعارات اليدوية -->
     <script>
-        // قائمة الإشعارات (تدخلها يدويًا هنا)
         let notifications = [
             {
                 title: "💬 رد على سؤالك",
                 body: "لقد تم الرد على سؤالك في قسم الأسئلة.",
-                time: new Date(Date.now() - 60000 * 30), // قبل 4 ساعات
+                time: new Date(Date.now() - 60000 * 30),
                 read: false
             }
         ];
 
-        // حفظ في localStorage عند التغيير
         function saveToStorage() {
             localStorage.setItem('notifications', JSON.stringify(notifications));
         }
 
-        // عرض عدد الإشعارات غير المقروءة
         function updateNotificationCount() {
             const count = document.getElementById('notificationCount');
             const unread = notifications.filter(n => !n.read).length;
             count.textContent = unread > 0 ? unread : '';
         }
 
-        // عرض قائمة الإشعارات
         function renderNotifications() {
             const list = document.getElementById('notificationsList');
             if (notifications.length === 0) {
@@ -328,7 +364,6 @@
                 </div>
             `).join('');
 
-            // نقر على إشعار لتحويله لمقروء
             document.querySelectorAll('.notification-item').forEach(item => {
                 item.addEventListener('click', function() {
                     const index = this.getAttribute('data-index');
@@ -342,7 +377,6 @@
             });
         }
 
-        // تنسيق الوقت كـ "قبل ٣٠ دقيقة"
         function formatTimeAgo(date) {
             const now = new Date();
             const diff = Math.floor((now - date) / 60000);
@@ -352,7 +386,6 @@
             return `قبل ${Math.floor(diff / 1440)} يوم`;
         }
 
-        // مسح جميع الإشعارات
         document.getElementById('clearNotifications').addEventListener('click', function() {
             if (confirm('هل أنت متأكد أنك تريد مسح كل الإشعارات؟')) {
                 notifications = [];
@@ -362,14 +395,12 @@
             }
         });
 
-        // فتح/إغلاق قائمة الإشعارات
         document.getElementById('notificationBell').addEventListener('click', function(e) {
             e.stopPropagation();
             const dropdown = document.getElementById('notificationDropdown');
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         });
 
-        // إغلاق القائمة عند النقر خارجها
         document.addEventListener('click', function(e) {
             const dropdown = document.getElementById('notificationDropdown');
             const bell = document.getElementById('notificationBell');
@@ -378,17 +409,11 @@
             }
         });
 
-        // تحميل البيانات عند بدء الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            // ✅ يمكنك تعديل هذه القائمة بأي إشعارات جديدة
             updateNotificationCount();
             renderNotifications();
-
-            // مثال: إضافة إشعار جديد
-            // addNotification("عنوان", "نص الإشعار");
         });
 
-        // دالة لإضافة إشعار جديد يدويًا (استخدمها في أي مكان)
         function addNotification(title, body) {
             notifications.unshift({
                 title: title,
@@ -463,13 +488,13 @@
             setTimeout(() => div.remove(), 3000);
         }
     </script>
-     <!-- تبديل الوضع الليلي/النهاري -->
+
+    <!-- تبديل الوضع الليلي/النهاري -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeToggle = document.getElementById('themeToggle');
             const root = document.documentElement;
 
-            // تحقق من الوضع المحفوظ
             if (localStorage.getItem('theme') === 'day') {
                 root.classList.add('day-mode');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -478,7 +503,6 @@
                 themeToggle.classList.add('night');
             }
 
-            // تبديل الوضع
             themeToggle.addEventListener('click', function() {
                 if (root.classList.contains('day-mode')) {
                     root.classList.remove('day-mode');
@@ -498,7 +522,3 @@
     </script>
 </body>
 </html>
-
-
-
-
