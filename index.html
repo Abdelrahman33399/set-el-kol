@@ -147,24 +147,27 @@
             </div>
         </div>
     </section>
-
-    <!-- قسم الفيديو المحمي -->
-    <section class="container my-5 text-center" id="videoSection">
-        <h2 class="text-light mb-4">🎥 فيديو طريقة المذاكرة</h2>
-        <button id="watchVideoBtn" class="btn btn-primary btn-lg mb-4">
-            <i class="fas fa-play me-2"></i> شاهد الفيديو
-        </button>
-        <div id="videoContainer" style="display: none;">
-            <video controls width="100%" class="rounded shadow">
-                <source src="vid edu.mp4" type="video/mp4">
-                متصفحك لا يدعم تشغيل الفيديو.
-            </video>
+<section class="container my-5 text-center" id="videoSection">
+    <h2 class="text-light mb-4">🎥 فيديو طريقة المذاكرة</h2>
+    <button id="watchVideoBtn" class="btn btn-primary btn-lg mb-4">
+        <i class="fas fa-play me-2"></i> شاهد الفيديو
+    </button>
+    <div id="videoContainer" style="display: none; margin-top: 1.5rem;">
+        <div class="ratio ratio-16x9">
+            <iframe 
+                src="https://drive.google.com/file/d/1uQoULuGQw8nhMxs4rkV8Jl_L0cln02b-/preview" 
+                allow="autoplay"
+                allowfullscreen
+                title="فيديو طريقة المذاكرة"
+                style="border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+            </iframe>
         </div>
-        <div id="loginPrompt" class="alert alert-warning d-none mt-3" role="alert">
-            <i class="fas fa-lock me-2"></i>
-            هذا الفيديو حصري! يرجى <a href="login.html" class="alert-link">تسجيل الدخول</a> أو <a href="login.html" class="alert-link">إنشاء حساب</a> لمشاهدته.
-        </div>
-    </section>
+    </div>
+    <div id="loginPrompt" class="alert alert-warning d-none mt-3" role="alert">
+        <i class="fas fa-lock me-2"></i>
+        هذا الفيديو حصري! يرجى <a href="login.html" class="alert-link">تسجيل الدخول</a> أو <a href="login.html" class="alert-link">إنشاء حساب</a> لمشاهدته.
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="text-center py-4 mt-auto">
@@ -209,3 +212,4 @@
     </script>
 </body>
 </html>
+
