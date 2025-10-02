@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكات الحاسب - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .lesson-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+        }
+        .lesson-card h4 {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .lesson-list li {
+            padding: 0.7rem 1rem;
+            margin: 0.5rem 0;
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 12px;
+            border-right: 3px solid var(--accent-orange);
+        }
+        .back-to-home-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+        .back-to-home-btn:hover {
+            background: #e05a2a;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px var(--shadow-orange);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle-btn:hover {
+            background: var(--accent-orange-hover);
+            transform: translateY(-3px) rotate(15deg);
+        }
+        .text-content {
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+        .section-title {
+            margin-top: 1.5rem;
+            color: var(--accent-orange);
+            font-weight: bold;
+        }
+        .sub-list {
+            padding-right: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4 py-md-5">
+        <h1 class="neon-title text-center mb-4 mb-md-5">شبكات الحاسب</h1>
+
+        <div class="lesson-card">
+            <h4>الوحدة 1: الشبكات الواسعة (WAN)</h4>
+            <div class="text-content">
+                <p><strong>مقدمة:</strong> يركز المقرر على تقنيات الشبكات الحديثة مع تعمق في الجوانب الأمنية والبنية التحتية للشبكات.</p>
+
+                <div class="section-title">1. الشبكات الواسعة (WAN):</div>
+                <p><strong>تعريف:</strong> هي شبكة اتصالات تغطي مناطق جغرافية واسعة، مثل دول أو قارات.</p>
+                <p>تُستخدم لربط شبكات محلية متباعدة، وتمكّن من توصيل العلم ككل.</p>
+                
+                <p><strong>مواصفاتها:</strong></p>
+                <ul class="sub-list">
+                    <li>تُستخدم في المؤسسات الحكومية والشركات.</li>
+                    <li>تُستخدم لـ التبادل البيانات.</li>
+                    <li>تعمل على ثلاث طبقات من نموذج OSI:
+                        <ul>
+                            <li>الطبقة الفيزيائية</li>
+                            <li>طبقة ربط البيانات</li>
+                            <li>طبقة الشبكة</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>بروتوكولات الإنترنت المستخدمة:</strong></p>
+                <ul class="sub-list">
+                    <li>[IP] الإنترنت</li>
+                    <li>[FTP] بروتوكول نقل الحزم</li>
+                    <li>Packet Switching</li>
+                </ul>
+
+                <p><strong>طرف التوصيل في الشبكات الواسعة:</strong></p>
+                <ul class="sub-list">
+                    <li>الخطوط الهاتفية المؤجرة</li>
+                </ul>
+
+                <p><strong>المميزات:</strong></p>
+                <ul class="sub-list">
+                    <li>اتصال دائم بسعة مخصصة</li>
+                    <li>اتصال مباشر من نقطة إلى نقطة</li>
+                </ul>
+
+                <p><strong>العيوب:</strong></p>
+                <ul class="sub-list">
+                    <li>تكلفة عالية مقارنة بخدمات مشتركة مثل Frame Relay</li>
+                </ul>
+
+                <div class="section-title">2. تبديل الدوائر:</div>
+                <ul class="sub-list">
+                    <li><strong>تبديل الدوائر:</strong> ينشئ اتصالًا مؤقتًا عند الحاجة (مثل مكالمات الهاتف).</li>
+                    <li><strong>تبديل الحزم:</strong> يُشارك عدة مستخدمين نفس النطاق، مما يقلل التكلفة.</li>
+                    <li>ISDN / ATM</li>
+                </ul>
+
+                <p><strong>الدوائر الافتراضية:</strong></p>
+                <ul class="sub-list">
+                    <li>دوائر منطقية تنشأ داخل الشبكة لتمكين الاتصال بين طرفين.</li>
+                </ul>
+
+                <p><strong>معدل نقل:</strong></p>
+                <ul class="sub-list">
+                    <li><strong>ثابت:</strong> معدل نقل ثابت، تكلفة أعلى.</li>
+                    <li><strong>متغير:</strong> معدل نقل يتغير ديناميكيًا حسب الحاجة، تكلفة أقل.</li>
+                    <li>تُنشأ وتُلغى بشكل متكرر، مما قد يؤثر على الأداء.</li>
+                </ul>
+
+                <div class="section-title">3. أنواع الاتصال:</div>
+                <ul class="sub-list">
+                    <li><strong>الاتصال حسب الحاجة:</strong> يستخدم دائرة افتراضية مؤقتة أثناء الإرسال فقط.</li>
+                    <li><strong>الاحتياطي:</strong> دائرة بديلة تُفعّل تلقائيًا عند تعطل الدائرة الأساسية.</li>
+                </ul>
+
+                <div class="section-title">4. أجهزة الشبكة الواسعة:</div>
+                <ul class="sub-list">
+                    <li><strong>مبدلات الشبكة الواسعة:</strong> أجهزة ربط تُستخدم من قبل مزودي الخدمة لربط الشبكات عبر البنية التحتية الحاملة للإشارات.</li>
+                    <li><strong>خوادم الوصول إلى الشبكات الواسعة:</strong> نقاط تجميع للوصلات المختلفة لتوصيلها بالشبكة الواسعة.</li>
+                    <li><strong>وحدة خدمة القنوات (CSU/DSU):</strong> واجهة مُصعدة تُستخدم لتوصيل الموجه بالدائرة الرقمية.</li>
+                    <li><strong>المودم:</strong> جهاز يحول الإشارات الرقمية إلى إشارات تماثلية لنقلها عبر خطوط الهاتف، والعكس.</li>
+                </ul>
+
+                <div class="section-title">5. الشبكة الشبكية (Spine):</div>
+                <ul class="sub-list">
+                    <li><strong>التشبيك الشبكي:</strong> هو ربط مجموعة من الشبكات الفردية عبر أجهزة وسيطة.</li>
+                </ul>
+
+                <p><strong>المشكلات التي تواجه الشبكة:</strong></p>
+                <ul class="sub-list">
+                    <li>كيفية إتمام التوصيل بين الشبكات</li>
+                    <li>ضمان الاعتمادية</li>
+                    <li>رفع جودة إدارة الشبكة</li>
+                    <li>إمكانية التوسع</li>
+                </ul>
+
+                <p><strong>حلول التغلب على المشكلات:</strong></p>
+                <ul class="sub-list">
+                    <li>استخدام مفهوم تكرار المكونات لضمان الاعتمادية</li>
+                    <li>توفير دعم مركزي لإدارة الشبكة</li>
+                </ul>
+
+                <p><strong>العوامل المؤثرة في كفاءة الشبكة:</strong></p>
+                <ul class="sub-list">
+                    <li>توصيف الشبكة</li>
+                    <li>مواصفات الأداء</li>
+                    <li>تأمين الشبكات ضد الهجمات الداخلية والخارجية</li>
+                </ul>
+
+                <div class="section-title">6. عنوان الشبكة:</div>
+                <p><strong>أ. أنواع العناوين:</strong></p>
+                <ul class="sub-list">
+                    <li><strong>عناوين الطبقة الفيزيائية:</strong>
+                        <ul>
+                            <li>MAC Address</li>
+                            <li>مكون من 48 بت (6 أرقام سداسية)</li>
+                            <li>أول 3 أرقام: مُعرف المصنع</li>
+                            <li>آخر 3 أرقام: الرقم التسلسلي</li>
+                            <li>مخزن في ذاكرة ROM ومحمل في RAM عند التشغيل</li>
+                        </ul>
+                    </li>
+                    <li><strong>عناوين طبقة الشبكة:</strong>
+                        <ul>
+                            <li>عناوين منطقية (افتراضية)</li>
+                            <li>تُستخدم لتحديد الأجهزة على طبقة الشبكة</li>
+                            <li>كل جهاز طرفي يمتلك عنوان IP واحد</li>
+                            <li>كل واجهة شبكية في الجهاز تتطلب عنوان IP منفصل</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>ب. نظم التسمية والهيكلية:</strong></p>
+                <ul class="sub-list">
+                    <li><strong>العلوية (Flat):</strong> مثل الرقم القومي (جميع العناصر في مجموعة واحدة)</li>
+                    <li><strong>الهرمية:</strong> مثل العنوان البريدي (شارع – مدينة – محافظة – دولة)</li>
+                </ul>
+
+                <p><strong>ج. طرق تخصيص العناوين:</strong></p>
+                <ul class="sub-list">
+                    <li><strong>ثابتة:</strong> يحددها مدير النظام يدويًا، ولا تتغير تلقائيًا</li>
+                    <li><strong>متغيرة:</strong> يحصل الجهاز على العناوين تلقائيًا عند الاتصال، وقد تتغير عند كل اتصال</li>
+                </ul>
+
+                <div class="section-title">7. بروتوكولات وآليات دعم الشبكة:</div>
+                <ul class="sub-list">
+                    <li><strong>بروتوكول تحليل العناوين (ARP):</strong> يترجم العناوين المنطقية (IP) إلى عناوين فيزيائية (MAC)</li>
+                    <li><strong>بروتوكول التحية:</strong> يُستخدم على طبقة الشبكة للإعلان عن وجود الجهاز وحالته، يُرسل دورياً لضمان الاتصال</li>
+                </ul>
+
+                <div class="section-title">8. التحكم في التدفق:</div>
+                <p><strong>الطرق المستخدمة:</strong></p>
+                <ul class="sub-list">
+                    <li>استخدام المخازن</li>
+                    <li>رسائل تنبيه عند الاختناق</li>
+                    <li>إرسال إشارات إلى المرسل لتحديد سرعة الإرسال</li>
+                </ul>
+
+                <p><strong>الشباك المنزلق (Sliding Window):</strong></p>
+                <ul class="sub-list">
+                    <li>يُرسل المرسل مجموعة من الحزم ثم ينتظر تأكيد الاستلام قبل إرسال الدفعة التالية</li>
+                </ul>
+
+                <div class="section-title">9. مراجعة الأخطاء:</div>
+                <ul class="sub-list">
+                    <li>تهدف إلى اكتشاف ما إذا كانت البيانات قد تلفت أو تشوهت أثناء النقل</li>
+                    <li>يتم التعامل مع الأخطاء في الطبقات العليا من نموذج OSI</li>
+                </ul>
+
+                <div class="section-title">10. تجميع البيانات:</div>
+                <p><strong>الأساس:</strong></p>
+                <ul class="sub-list">
+                    <li>دمج عدة قنوات بيانات في قناة واحدة للإرسال، ثم فصلها عند الاستقبال</li>
+                </ul>
+
+                <p><strong>الأنواع:</strong></p>
+                <ul class="sub-list">
+                    <li><strong>تقسيم الزمن (TDM):</strong> منظم، غير متزامن</li>
+                    <li><strong>تقسيم التردد (FDM):</strong> يخصص جزء من النطاق الترددي لكل قناة</li>
+                    <li><strong>تجميع إحصائي:</strong> تخصيص السعة ديناميكيًا لأي قناة لديها بيانات للإرسال</li>
+                </ul>
+
+                <div class="section-title">11. مقارنة بين الشبكات الواسعة (WAN) والمحلية (LAN):</div>
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>العنصر</th>
+                            <th>الشبكات الواسعة (WAN)</th>
+                            <th>الشبكات المحلية (LAN)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>النطاق الجغرافي</td>
+                            <td>واسع (دول، قارات)</td>
+                            <td>محدود (مبنى، حرم جامعي)</td>
+                        </tr>
+                        <tr>
+                            <td>البنية التحتية</td>
+                            <td>تعتمد على مزودي خدمة</td>
+                            <td>مملوكة محليًا</td>
+                        </tr>
+                        <tr>
+                            <td>السرعة</td>
+                            <td>من 56 كيلو إلى 45 ميجا</td>
+                            <td>تصل إلى 10 جيجابت</td>
+                        </tr>
+                        <tr>
+                            <td>المسافة القصوى</td>
+                            <td>تصل إلى 42 ميل في الطبقة</td>
+                            <td>مسافات قصيرة جدًا</td>
+                        </tr>
+                        <tr>
+                            <td>التقنيات</td>
+                            <td>تستخدم تجميع الدوائر</td>
+                            <td>لا تستخدم تقنيات WAN</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h4>الوحدة 2: الأجهزة</h4>
+            <ul class="lesson-list">
+                <li>الراوتر</li>
+                <li>السوتش</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <a href="../lectures.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
+    </a>
+
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.classList.add('day');
+            } else {
+                themeToggle.classList.add('night');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.classList.remove('day');
+                    themeToggle.classList.add('night');
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.classList.remove('night');
+                    themeToggle.classList.add('day');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

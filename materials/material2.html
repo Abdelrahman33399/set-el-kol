@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>علم نفس النمو - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .lesson-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+        }
+        .lesson-card h4 {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .lesson-list li {
+            padding: 0.7rem 1rem;
+            margin: 0.5rem 0;
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 12px;
+            border-right: 3px solid var(--accent-orange);
+        }
+        .back-to-home-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+        .back-to-home-btn:hover {
+            background: #e05a2a;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px var(--shadow-orange);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle-btn:hover {
+            background: var(--accent-orange-hover);
+            transform: translateY(-3px) rotate(15deg);
+        }
+        .text-content {
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+        .section-title {
+            margin-top: 1.5rem;
+            color: var(--accent-orange);
+            font-weight: bold;
+        }
+        .sub-list {
+            padding-right: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4 py-md-5">
+        <h1 class="neon-title text-center mb-4 mb-md-5">علم نفس النمو</h1>
+
+        <div class="lesson-card">
+            <h4>الوحدة 1: تعريف علم نفس النمو وأهدافه ومبادئه</h4>
+            <div class="text-content">
+                <div class="section-title">1. تعريف علم نفس النمو:</div>
+                <p>هو فرع من فروع علم النفس يهتم بالدراسة العلمية لجميع التغيرات النمائية التي تطرأ على الفرد طوال حياته، تبدأ من لحظة الإخصاب وحتى الوفاة.</p>
+                <p>وتشمل التغيرات الجوانب التالية:</p>
+                <ul class="sub-list">
+                    <li>الجسدية (العضوية والفيزيولوجية)</li>
+                    <li>العقلية (المعرفية والفكرية)</li>
+                    <li>الانفعالية (العاطفية)</li>
+                    <li>اللغوية</li>
+                    <li>والاجتماعية والسلوكية</li>
+                </ul>
+                <p>ويهدف هذا العلم إلى كشف القوانين والمبادئ التي تفسر:</p>
+                <ul class="sub-list">
+                    <li>طبيعة هذه التغيرات</li>
+                    <li>أسباب حدوثها</li>
+                    <li>ارتباطها بعوامل النضج، والوراثة، والبيئة، والخبرة</li>
+                </ul>
+
+                <div class="section-title">2. أهداف علم نفس النمو:</div>
+                <ol class="sub-list">
+                    <li><strong>الوصف الدقيق للظواهر النمائية:</strong>
+                        <ul>
+                            <li>يركز على رصد وتوثيق التغيرات السلوكية والنفسية في مراحل العمر المختلفة</li>
+                            <li>يمر بمرحلتين:
+                                <ul>
+                                    <li>الوصف التفصيلي للحقائق النمائية</li>
+                                    <li>تنظيم هذه الحقائق في أنماط واتجاهات وطنية</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>تفسير التغيرات السلوكية:</strong>
+                        <ul>
+                            <li>لا يكتفي بفهم أسباب التغيرات النمائية من خلال الإجابة على سؤال: "لماذا يحدث؟"</li>
+                            <li>يعتمد على تحليل العوامل المؤثرة مثل:
+                                <ul>
+                                    <li>الوراثة</li>
+                                    <li>البيئة</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>التدخل في التغيرات السلوكية:</strong>
+                        <ul>
+                            <li>يهدف إلى توجيه النمو وضبطه وتحسينه من خلال التدخل التربوي أو العلاجي</li>
+                            <li><strong>ملاحظة:</strong> لا يمكن تحقيق هذا الهدف إلا بعد وصف دقيق وتفسير سليم للظواهر</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="section-title">3. مبادئ وقوانين النمو الإنساني:</div>
+                <p>تتم عمليات النمو وفق مجموعة من المبادئ التي تساعد في:</p>
+                <ul class="sub-list">
+                    <li>فهمه</li>
+                    <li>التنبؤ به</li>
+                    <li>توجيهه</li>
+                </ul>
+                <ol class="sub-list">
+                    <li><strong>النمو عملية مستمرة ومتكاملة:</strong> يسير في سلسلة من الحلقات، يعتمد كل مرحلة على سابقتها وتعود للاحقتها</li>
+                    <li><strong>النمو عملية متكاملة ومتصلة:</strong> تتفاعل جوانب النمو المختلفة (الجسدي، الانفعالي، المعرفي...)، فالتقدم في جانب غالبًا ما يصاحبه تقدم في جوانب أخرى، والعكس صحيح.</li>
+                    <li><strong>تتفاوت سرعة النمو في المراحل العمرية:</strong> لا تكون متساوية:
+                        <ul>
+                            <li>تكون أسرع في المرحلة الجنينية، المستوى الأولي، ومرحلة المراهقة</li>
+                            <li>وتبطئ في مرحلة الطفولة المبكرة، والرشد، والشيخوخة</li>
+                        </ul>
+                    </li>
+                    <li><strong>وجود فترات حرجة (حساسة) في النمو:</strong> هي فترات يكون فيها الفرد أكثر استجابة للمؤثرات، والتدخل التربوي في غير وقته قد يكون غير فعال أو متأخرًا</li>
+                    <li><strong>النمو يتأثر بعوامل داخلية وخارجية:</strong>
+                        <ul>
+                            <li><strong>داخلية:</strong> الوراثة، البيئة الجسدية، العوامل الفسيولوجية، النضج</li>
+                            <li><strong>خارجية:</strong> البيئة الاجتماعية، التربوية، الثقافية</li>
+                        </ul>
+                    </li>
+                    <li><strong>النمو يسير في مراحل عمرية مميزة:</strong> لكل مرحلة خصائصها الفردية، ساعد هذا التقسيم في فهم احتياجات الفرد في كل مرحلة</li>
+                </ol>
+
+                <div class="section-title">4. أهمية دراسة علم نفس النمو:</div>
+                <p><strong>من الناحية النظرية:</strong></p>
+                <ul class="sub-list">
+                    <li>يُعمق فهمنا للطبيعة الإنسانية وعلاقاتها بالبيئة</li>
+                    <li>يحدد معايير النمو في الجوانب المختلفة لكل مرحلة عمرية</li>
+                </ul>
+
+                <p><strong>من الناحية التطبيقية:</strong></p>
+                <ol class="sub-list">
+                    <li><strong>للمربين النفسيين والتربويين:</strong>
+                        <ul>
+                            <li>تمكينهم من اكتشاف الانحرافات أو الاضطرابات السلوكية</li>
+                            <li>تحديد أسبابها</li>
+                            <li>إعداد خطط علاجية أو تربوية مناسبة</li>
+                        </ul>
+                    </li>
+                    <li><strong>للمعلمين والآباء:</strong>
+                        <ul>
+                            <li>فهم خصائص كل مرحلة عمرية</li>
+                            <li>احترام الفروق الفردية في معدلات النمو</li>
+                            <li>تجنب تحميل الطفل ما لا يطيق</li>
+                            <li>دعم النمو العقلي، الاجتماعي، الانفعالي بطرق مناسبة</li>
+                        </ul>
+                    </li>
+                    <li><strong>للمجتمع:</strong>
+                        <ul>
+                            <li>تصميم بيئات تربوية واجتماعية ملائمة للنمو السليم</li>
+                            <li>معالجة المشكلات الاجتماعية من جذورها التكوينية الشخصية</li>
+                            <li>تحقيق أعلى درجات التوافق النفسي، التربوي، والمهني للأفراد</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="section-title">5. مراحل وتطور علم نفس النمو:</div>
+                <ul class="sub-list">
+                    <li><strong>الجذور القديمة:</strong>
+                        <ul>
+                            <li>ظهرت أولى البوادر في التعاليم الدينية والتأملات الفلسفية</li>
+                            <li>في الحضارة المصرية: إخناتون صور تطور الجنين</li>
+                            <li>عند الإغريق: أفلاطون يتحدث عن مراحل نمو الطفل</li>
+                            <li>وأرسطو أكّد دور الأسرة في النمو</li>
+                        </ul>
+                    </li>
+                    <li><strong>العصور الحديثة:</strong>
+                        <ul>
+                            <li>لوك: رأى أن العقل عند الولادة كصفحة بيضاء، عاد إلى احترام ميول الطفل</li>
+                            <li>جان جاك روسو: دعا إلى منح الطفل الحرية في التعبير وتنمية قدراته الفطرية</li>
+                            <li>بيستالوزي، فرويد، دوور، بياجيه، إيركسون... ساهموا في تطوير النظريات النهائية الحديثة</li>
+                        </ul>
+                    </li>
+                    <li><strong>عند العرب والمسلمين:</strong>
+                        <ul>
+                            <li>الرازي، ابن سينا، الغزالي تناولوا مراحل النمو بدقة (الجنين، الوليد، الطفل، الصغير، المراهق...)</li>
+                        </ul>
+                    </li>
+                    <li><strong>في العصر الحديث:</strong>
+                        <ul>
+                            <li>تطورت المناهج البحثية (الobservation، التجربة، الدراسات الطولية)</li>
+                            <li>أصبح علم النفس النمو مجالًا غنيًا بالبحوث العلمية في لكليات التربوية</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="lesson-card">
+            <h4>الوحدة 2: نظرية فرويد</h4>
+            <ul class="lesson-list">
+                <li>ال人格</li>
+                <li>ال超人格</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <a href="../lectures.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
+    </a>
+
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.classList.add('day');
+            } else {
+                themeToggle.classList.add('night');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.classList.remove('day');
+                    themeToggle.classList.add('night');
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.classList.remove('night');
+                    themeToggle.classList.add('day');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
