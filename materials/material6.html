@@ -311,6 +311,290 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="section-title">2. تكنولوجيا بروتوكول X.25</div>
+                <div class="section-title">أ. تعريف بروتوكول X.25</div>
+                <p>بروتوكول معياري خاص باتصالات الشبكات الواسعة (WAN).</p>
+                <p>يصف كيفية ربط وصيانة الوصلة بين أجهزة المستخدمين وأجهزة الشبكة.</p>
+                <p>مصمم للعمل بكفاءة بغض النظر عن نوع النظام المتصل.</p>
+                <p>يُستخدم عادةً في شبكات نقل الحزم (Packet-Switched Networks).</p>
+
+                <div class="section-title">ب. مكونات بنية X.25</div>
+                <p>تنقسم أجهزة شبكة X.25 إلى ثلاث فئات:</p>
+                <ul class="sub-list">
+                    <li><strong>معدات البيانات الطرفية (DTE – Data Terminal Equipment)</strong>
+                        <ul>
+                            <li>أنظمة طرفية تتواصل عبر الشبكة (مثل: الحواسيب، الشاشات).</li>
+                        </ul>
+                    </li>
+                    <li><strong>معدات نهاية دائرة البيانات (DCE – Data Circuit-terminating Equipment)</strong>
+                        <ul>
+                            <li>أجهزة اتصال (مثل: المودمات، مبدلات الحزم).</li>
+                        </ul>
+                    </li>
+                    <li><strong>مفتاح تبديل الحزم (Packet Switch)</strong>
+                        <ul>
+                            <li>ينقل البيانات من معدة طرفية إلى أخرى عبر الشبكة.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">ج. إنشاء الجلسات في X.25</div>
+                <p>تتصل إحدى معدات البيانات الطرفية (DTE) بأخرى وتطلب إنشاء جلسة اتصال.</p>
+                <p>تُقبل الجلسة، وتُنشأ دائرة تخيلية (Virtual Circuit) كوصلة منطقية.</p>
+                <p>يُوفّر هذا الاتصال اتصالًا اعتماديًا ثنائي الاتجاه بين الجهازين عبر الشبكة.</p>
+
+                <div class="section-title">د. بروتوكولات X.25 الفرعية</div>
+                <ul class="sub-list">
+                    <li><strong>بروتوكولات طبقة الحزم (Network Layer)</strong>
+                        <ul>
+                            <li>تدير تبديل الحزم بين الطرفين في الشبكة.</li>
+                        </ul>
+                    </li>
+                    <li><strong>بروتوكول توازن إجراءات التعامل مع الوصلة (LAPB – Link Access Procedure, Balanced)</strong>
+                        <ul>
+                            <li>يعمل على طبقة رابطة البيانات، ويدير الاتصال بين الجهاز الطرفي وجهاز الشبكة.</li>
+                            <li>يُعدّ نسخة محسّنة من تقنية HDLC، مناسبة أكثر للشبكات الواسعة بسبب كفاءتها في الأداء وجودة النقل.</li>
+                        </ul>
+                    </li>
+                    <li><strong>بروتوكولات الواجهات المتسلسلة (Physical Layer)</strong>
+                        <ul>
+                            <li>مثل: V.24، X.21.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">3. تقنية تبديل الإطارات (Frame Relay)</div>
+                <div class="section-title">أ. تعريف Frame Relay</div>
+                <p>بروتوكول عالي الأداء من بروتوكولات الشبكات الواسعة.</p>
+                <p>يعمل على الطبقة الفيزيائية وطبقة رابطة البيانات في نموذج OSI.</p>
+                <p>صُمي للاستخدام مع واجهات بروتوكولات مثل X.25.</p>
+                <p>مثال على تقنية تبديل الحزم التشاركي، حيث تُستخدم مصادر الشبكة ديناميكيًا.</p>
+
+                <div class="section-title">ب. خصائص Frame Relay</div>
+                <ul class="sub-list">
+                    <li>حزم ذات أطوال مختلفة، مما يسمح بنقل البيانات عبر شبكات متنوعة.</li>
+                    <li>التجميع الإحصائي للحزم، لرفع كفاءة استغلال سعة الشبكة.</li>
+                </ul>
+
+                <div class="section-title">4. شبكة الإنترنت (Internet)</div>
+                <div class="section-title">أ. تعريف الإنترنت</div>
+                <p>شبكة اتصالات عالمية تسمح بتبادل المعلومات بين شبكات أصغر، تتصل عبرها الحواسيب حول العالم وفق أنظمة بروتوكولات موحدة.</p>
+
+                <div class="section-title">ب. بروتوكولات الإنترنت (TCP/IP Suite)</div>
+                <p>حزمة بروتوكولات تحدد كيفية الاتصال وصيانة الاتصال في شبكات الإنترنت.</p>
+                <p><strong>المجالات التي تهتم بها بروتوكولات الإنترنت:</strong></p>
+                <ul class="sub-list">
+                    <li>شكل البيانات المنقولة وعنوانها.</li>
+                    <li>طريقة نقلها ومسارات النقل.</li>
+                    <li>حالة توصيلها إلى الهدف.</li>
+                </ul>
+
+                <div class="section-title">5. المبادئ الأساسية للمعمار المنطقي للإنترنت</div>
+                <ul class="sub-list">
+                    <li><strong>مبدأ الإرسال نهاية-نهاية (End-to-End Principle)</strong>
+                        <ul>
+                            <li>يركّز على صيانة التشغيل عند أطراف الشبكة (أجهزة المستخدمين).</li>
+                            <li>كانت الشبكة تركز سابقًا على سرعة النقل فقط، دون الاهتمام بحالة البيانات.</li>
+                        </ul>
+                    </li>
+                    <li><strong>مبدأ الصلابة (Robustness Principle)</strong>
+                        <ul>
+                            <li>التزام المرسل: بصحة شكل الإرسال.</li>
+                            <li>حرية المستقبل: في قبول البيانات أو رفضها.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>ملاحظة:</strong> تغيّر مبدأ الإرسال نهاية-نهاية بسبب الحاجة إلى:</p>
+                <ul class="sub-list">
+                    <li>جدران نارية (Firewalls)</li>
+                    <li>ترجمة عناوين الشبكة (NAT)</li>
+                    <li>مخازن مؤقتة (Caches)</li>
+                </ul>
+
+                <div class="section-title">6. وظائف البروتوكولات حسب الطبقات</div>
+                <div class="section-title">أ. طبقة رابطة البيانات (Data Link Layer)</div>
+                <ul class="sub-list">
+                    <li><strong>ARP (Address Resolution Protocol)</strong>
+                        <ul>
+                            <li>يترجم عناوين طبقة الشبكة (IP) إلى عناوين طبقة رابطة البيانات (MAC).</li>
+                        </ul>
+                    </li>
+                    <li><strong>RARP (Reverse Address Resolution Protocol)</strong>
+                        <ul>
+                            <li>يحصل على عنوان IP من عنوان MAC.</li>
+                        </ul>
+                    </li>
+                    <li><strong>OSPF (Open Shortest Path First)</strong>
+                        <ul>
+                            <li>بروتوكول توجيه يشبه العنكبوت أو النجمة، يُستخدم في شبكات العمود الفقري الكبيرة.</li>
+                            <li>يعمل على طبقة الشبكة، ويُستخدم داخل النظام المتكامل.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">ب. طبقة الإنترنت (Internet Layer)</div>
+                <ul class="sub-list">
+                    <li><strong>IPv4</strong>
+                        <ul>
+                            <li>يرسل حزم شبكية طرف لطرف، بعناوين طولها 32 بت (≈4.3 مليار عنوان).</li>
+                        </ul>
+                    </li>
+                    <li><strong>IPv6</strong>
+                        <ul>
+                            <li>يسمح بعناوين طولها 128 بت (≈3.4×10³⁸ عنوان)، لدعم عدد أكبر من الأجهزة.</li>
+                            <li>غير متوافق مع IPv4، لذا يُستخدم بوابات ترجمة خاصة.</li>
+                            <li><strong>آليات الانتقال:</strong>
+                                <ul>
+                                    <li>Tunneling: وضع IPv6 داخل نفق IPv4 (بروتوكول 41).</li>
+                                    <li>العكس: وضع IPv4 داخل شبكة IPv6.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>ICMP (Internet Control Message Protocol)</strong>
+                        <ul>
+                            <li>يُرسل رسائل أخطاء (مثل: خدمة غير متاحة، جهاز غير قابل للوصول).</li>
+                        </ul>
+                    </li>
+                    <li><strong>IGMP (Internet Group Management Protocol)</strong>
+                        <ul>
+                            <li>يُنشئ عضوية في مجموعات إرسال إذاعي (Multicast)، ويُستخدم فقط في IPv4.</li>
+                        </ul>
+                    </li>
+                    <li><strong>IPsec (IP Security)</strong>
+                        <ul>
+                            <li>حزمة بروتوكولات لتأمين الاتصالات عبر:
+                                <ul>
+                                    <li>توثيق الهوية</li>
+                                    <li>التشفير ثنائي الاتجاه</li>
+                                    <li>تشفير كل حزمة في جلسة الاتصال.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">ج. طبقة النقل (Transport Layer)</div>
+                <ul class="sub-list">
+                    <li><strong>TCP (Transmission Control Protocol)</strong>
+                        <ul>
+                            <li>نقل بيانات اعتمادي عبر وصلات شبكية، مع فتح قنوات اتصال قبل الإرسال.</li>
+                        </ul>
+                    </li>
+                    <li><strong>UDP (User Datagram Protocol)</strong>
+                        <ul>
+                            <li>نقل مباشر دون فتح قنوات، غير اعتمادي، مناسب للوسائط المتعددة والألعاب.</li>
+                        </ul>
+                    </li>
+                    <li><strong>DCCP (Datagram Congestion Control Protocol)</strong>
+                        <ul>
+                            <li>يُرسل رسائل عبر وصلة اعتمادية مع تنبيه صريح بالاختناق، لكنه لا يدعم الترتيب.</li>
+                        </ul>
+                    </li>
+                    <li><strong>SCTP (Stream Control Transmission Protocol)</strong>
+                        <ul>
+                            <li>يجمع بين ميزات TCP وUDP: اعتمادي، مرتب، مع تحكم في الاختناق.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">د. طبقة التطبيقات (Application Layer)</div>
+                <ul class="sub-list">
+                    <li><strong>Telnet</strong>
+                        <ul>
+                            <li>للدخول على الآلة عن بُعد (كتابة فقط، ثنائي الاتجاه).</li>
+                        </ul>
+                    </li>
+                    <li><strong>FTP (File Transfer Protocol)</strong>
+                        <ul>
+                            <li>لنقل الملفات بين الآلات عبر الإنترنت.</li>
+                            <li>يعمل وفق نموذج العميل-الخادم، ويستخدم وصلتين منفصلتين (بيانات + تحكم).</li>
+                        </ul>
+                    </li>
+                    <li><strong>SMTP (Simple Mail Transfer Protocol)</strong>
+                        <ul>
+                            <li>لإرسال البريد الإلكتروني.</li>
+                        </ul>
+                    </li>
+                    <li><strong>SNMP (Simple Network Management Protocol)</strong>
+                        <ul>
+                            <li>لمراقبة الأجهزة (الموجهات، الخوادم، الطابعات...) والتحكم بها.</li>
+                        </ul>
+                    </li>
+                    <li><strong>POP3 (Post Office Protocol v3)</strong>
+                        <ul>
+                            <li>لاستلام البريد الإلكتروني من الخادم.</li>
+                            <li><strong>ملاحظة:</strong> يجب حفظ الاختصار "POP3" كما هو في الامتحانات.</li>
+                        </ul>
+                    </li>
+                    <li><strong>TFTP (Trivial File Transfer Protocol)</strong>
+                        <ul>
+                            <li>خدمة غير اعتمادية، أسرع من FTP، تُستخدم في الشبكات المحلية المستقرة.</li>
+                        </ul>
+                    </li>
+                    <li><strong>HTTP (Hypertext Transfer Protocol)</strong>
+                        <ul>
+                            <li>لطلب تحميل صفحات الويب (نصوص، صور، فيديو...).</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-title">7. نظام أسماء النطاقات (DNS – Domain Name System)</div>
+                <p>نظام هرمي يترجم أسماء النطاقات (مثل: www.example.com ) إلى عناوين IP.</p>
+                <p>يتناسب مع قدرة الإنسان على تذكّر الأسماء بدل الأرقام.</p>
+                <p><strong>آلية العمل:</strong></p>
+                <ul class="sub-list">
+                    <li>يطلب العميل عنوان موقع من الخادم المحلي.</li>
+                    <li>يستشير الخادم المحلي خوادم الجذور (Root Servers).</li>
+                    <li>ثم خوادم TLD (مثل: .com).</li>
+                    <li>ثم خادم الشركة، الذي يحتوي على العنوان المطلوب.</li>
+                </ul>
+
+                <div class="section-title">8. تحديد المسارات (التوجيه – Routing)</div>
+                <div class="section-title">أ. تعريف التوجيه</div>
+                <p>اختيار أنسب المسارات لنقل الحزمة من المصدر عبر سلسلة شبكات إلى الهدف.</p>
+
+                <div class="section-title">ب. منهجان رئيسيان للتوجيه</div>
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>المنهاج</th>
+                            <th>طريقة العمل</th>
+                            <th>تحديث المعلومات</th>
+                            <th>البروتوكولات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Distance Vector</td>
+                            <td>يحسب المسافة إلى الهدف، ولا يعرف المسار الكامل</td>
+                            <td>دوري، عند تغيير المعمار</td>
+                            <td>RIP، IGRP</td>
+                        </tr>
+                        <tr>
+                            <td>Link State</td>
+                            <td>يعرف حالة جميع الوصلات في الشبكة</td>
+                            <td>فوري، عند أي تغيير</td>
+                            <td>OSPF، IS-IS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="section-title">ج. أنواع المسالك (Routes)</div>
+                <ul class="sub-list">
+                    <li><strong>المسالك الساكنة (Static Routes)</strong>
+                        <ul>
+                            <li>يُدخلها مدير الشبكة يدويًا في جدول التوجيه.</li>
+                            <li>تُستخدم لأسباب أمنية (إخفاء وصلات داخلية).</li>
+                        </ul>
+                    </li>
+                    <li><strong>المسالك الديناميكية (Dynamic Routes)</strong>
+                        <ul>
+                            <li>تُحدّث تلقائيًا عبر تبادل المعلومات بين الموجهات.</li>
+                            <li>تتكيف مع تغيّر ظروف الشبكة.</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -365,3 +649,4 @@
 </body>
 
 </html>
+
