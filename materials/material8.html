@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التصوير الرقمي - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .lesson-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+        }
+        .lesson-card h4 {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .lesson-list li {
+            padding: 0.7rem 1rem;
+            margin: 0.5rem 0;
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 12px;
+            border-right: 3px solid var(--accent-orange);
+        }
+        .back-to-home-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+        .back-to-home-btn:hover {
+            background: #e05a2a;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px var(--shadow-orange);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle-btn:hover {
+            background: var(--accent-orange-hover);
+            transform: translateY(-3px) rotate(15deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4 py-md-5">
+        <h1 class="neon-title text-center mb-4 mb-md-5">التصوير الرقمي</h1>
+
+       <div class="lesson-card">
+    <h4>الوحدة 1: أساسيات التصوير</h4>
+
+    <div class="section-title">📸 ما هو التصوير الرقمي؟</div>
+    <p><strong>✅ التعريف:</strong><br>
+    هو عملية التقاط الصور باستخدام أجهزة رقمية (مثل الكاميرات الرقمية أو الهواتف)، حيث تُحوَّل الصورة من ضوء (إشارات تناظرية) إلى بيانات رقمية (بكسلات) عبر مستشعر (Sensor)، ثم تُخزَّن على وسائط رقمية (بطاقة SD، ذاكرة داخلية، إلخ).</p>
+    <p><strong>🔍 الفكرة الأساسية:</strong><br>
+    <em>الضوء → العدسة → فتحة العدسة → المستشعر (CCD/CMOS) → معالجة رقمية → صورة رقمية (JPEG, RAW, PNG...)</em></p>
+
+    <hr>
+
+    <div class="section-title">📷 أنواع الكاميرات الرقمية</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النوع</th>
+                <th>المميزات</th>
+                <th>العيوب</th>
+                <th>الاستخدام الأمثل</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>DSLR</strong></td>
+                <td>جودة عالية، تغيير عدسات، تحكم كامل، بطارية تدوم طويلًا</td>
+                <td>حجم ووزن كبير، صوت غالق عالي، فيديو محدود</td>
+                <td>المصورين المحترفين، الاستوديوهات</td>
+            </tr>
+            <tr>
+                <td><strong>Mirrorless</strong></td>
+                <td>أخف وزنًا، فيديو 4K/8K، معاينة مباشرة، تركيز تلقائي سريع</td>
+                <td>عمر بطارية أقصر، بعض العدسات باهظة</td>
+                <td>المحتوى الرقمي، الفيديوهات التعليمية، الـ YouTubers</td>
+            </tr>
+            <tr>
+                <td><strong>Point-and-Shoot</strong></td>
+                <td>بسيطة، رخيصة، مدمجة</td>
+                <td>مستشعر صغير → ضجيج عالي، لا تحكم يدوي</td>
+                <td>الاستخدام الشخصي، السفر</td>
+            </tr>
+            <tr>
+                <td><strong>Superzoom / Bridge</strong></td>
+                <td>زووم عالي (30x–60x)، تحكم متوسط</td>
+                <td>جودة محدودة في الإضاءة الضعيفة</td>
+                <td>السفر، الحياة البرية</td>
+            </tr>
+            <tr>
+                <td><strong>الهواتف الذكية</strong></td>
+                <td>دائمًا معك، مشاركة فورية، ذكاء اصطناعي</td>
+                <td>مستشعر صغير، محدودية في التحكم اليدوي</td>
+                <td>محتوى سوشيال ميديا، تصميم جرافيكي سريع</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>✅ ملاحظة لـ EdTech:</strong><br>
+    كاميرا <strong>Mirrorless</strong> (مثل Sony a6100 أو Canon EOS R50) مثالية لتصوير الفيديوهات التعليمية: جودة عالية + فيديو 4K + خفة + دعم تصوير Talking Head.</p>
+
+    <hr>
+
+    <div class="section-title">🔍 المفاهيم الأساسية وعلاقاتها</div>
+
+    <div class="section-title">1. البعد البؤري (Focal Length)</div>
+    <p><strong>✅ التعريف:</strong> المسافة (بالمم) بين مركز العدسة وبؤرة الضوء على المستشعر عند التركيز على لا نهائي.</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النطاق</th>
+                <th>النوع</th>
+                <th>زاوية الرؤية</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>< 24mm</td><td>واسعة جدًا</td><td>> 84°</td><td>معمار، مناظر طبيعية</td></tr>
+            <tr><td>24–35mm</td><td>واسعة</td><td>64°–84°</td><td>وثائقي، جماعي</td></tr>
+            <tr><td>35–50mm</td><td>عادية (مثل العين)</td><td>~46°</td><td><strong>Talking Head</strong>، يوميات</td></tr>
+            <tr><td>50–85mm</td><td>بورتريه</td><td>28°–15°</td><td>وجوه، فيديوهات تعليمية شخصية</td></tr>
+            <tr><td>> 85mm</td><td>تلسكوبية</td><td>< 15°</td><td>رياضة، حياة برية</td></tr>
+        </tbody>
+    </table>
+    <p><strong>✅ معلومة مهمة:</strong> في الكاميرات غير Full Frame، استخدم <strong>عامل القص</strong>:<br>
+    APS-C (كانون): ×1.6 — مثال: 50mm تصبح 80mm فعليًا.</p>
+
+    <div class="section-title">2. فتحة العدسة (Aperture)</div>
+    <p><strong>✅ التعريف:</strong> فتحة دائرية داخل العدسة تتحكم في كمية الضوء — تُقاس بـ <code>f/1.4, f/2.8, f/4...</code></p>
+    <p><strong>⚠️ تذكّر:</strong> كلما <strong>صغر</strong> الرقم (مثل <code>f/1.4</code>) → زادت الفتحة → زاد الضوء → قلّ عمق الميدان.</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>القيمة</th>
+                <th>عمق الميدان</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>f/1.4 – f/2.8</td><td>ضحل جدًا</td><td>بورتريه، منتجات</td></tr>
+            <tr><td>f/4 – f/5.6</td><td>متوسط</td><td><strong>فيديو تعليمي</strong> (وجه + شاشة خلفية طفيفة)</td></tr>
+            <tr><td>f/8 – f/11</td><td>عميق</td><td>شرح على لوحة، مجموعة طلاب</td></tr>
+            <tr><td>f/16 – f/22</td><td>عميق جدًا</td><td>معمار — لكن احذر الحيود (Diffraction)</td></tr>
+        </tbody>
+    </table>
+    <p><strong>✅ نصيحة للفيديوهات التعليمية:</strong><br>
+    استخدم <code>f/2.8 – f/4</code> لفصل الوجه، و<code>f/5.6 – f/8</code> إذا أردت إظهار البيئة التعليمية.</p>
+
+    <div class="section-title">3. سرعة الغالق (Shutter Speed)</div>
+    <p><strong>✅ التعريف:</strong> مدة بقاء الغالق مفتوحًا — تُقاس بالثانية أو الكسر (مثل <code>1/60</code>).</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>السرعة</th>
+                <th>التأثير</th>
+                <th>ملاحظة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1/1000+</td><td>تجميد حركة</td><td>رياضة</td></tr>
+            <tr><td>1/125 – 1/250</td><td>تصوير عادي</td><td>يوم مشمس</td></tr>
+            <tr><td>1/60 – 1/30</td><td>إضاءة داخلية</td><td>قد يحتاج تثبيت</td></tr>
+            <tr><td>< 1/30</td><td>إضاءة خافتة</td><td><strong>يحتاج حامل ثلاثي</strong></td></tr>
+        </tbody>
+    </table>
+    <p><strong>📌 قاعدة 1/البعد البؤري:</strong><br>
+    لتجنب الاهتزاز: سرعة الغالق ≥ <code>1 / (البعد البؤري × Crop Factor)</code><br>
+    <em>مثال: 50mm على APS-C (1.6x) → استخدم ≥ 1/80 ثانية.</em></p>
+
+    <div class="section-title">4. حساسية ISO</div>
+    <p><strong>✅ التعريف:</strong> مدى حساسية المستشعر للضوء (100, 400, 1600, 6400...).</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النطاق</th>
+                <th>جودة الصورة</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>100–400</td><td>عالية جدًا</td><td>إضاءة نهارية</td></tr>
+            <tr><td>800–1600</td><td>جيدة</td><td><strong>إضاءة داخلية</strong> — مثالية للفيديو التعليمي</td></tr>
+            <tr><td>3200–6400</td><td>مقبولة</td><td>إضاءة خافتة</td></tr>
+            <tr><td>12800+</td><td>منخفضة</td><td>حالات طوارئ فقط</td></tr>
+        </tbody>
+    </table>
+    <p><strong>⚠️ لا ترفع الـ ISO إلا بعد استنفاد:</strong><br>
+    • فتح الفتحة (مثل <code>f/1.8</code> بدل <code>f/4</code>)<br>
+    • خفض سرعة الغالق (مع تثبيت الكاميرا)</p>
+    <p><strong>✅ نصيحة للفيديو التعليمي:</strong><br>
+    لا تستخدم ISO > 1600 إلا إذا كانت الكاميرا حديثة (مثل Sony a7 IV).</p>
+
+    <hr>
+
+    <div class="section-title">🔁 مثلث التعريض (Exposure Triangle)</div>
+    <p>الصورة المُعرَّضة جيدًا تعتمد على توازن:<br>
+    <strong>الضوء = الفتحة × سرعة الغالق × ISO</strong></p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>التغيير</th>
+                <th>التأثير (+1 Stop)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>f/4 → f/2.8</td><td>ضوء أكثر، عمق ميدان أضحل</td></tr>
+            <tr><td>1/200 → 1/100</td><td>ضوء أكثر، خطر اهتزاز</td></tr>
+            <tr><td>ISO 400 → 800</td><td>ضوء أكثر، ضجيج أعلى</td></tr>
+        </tbody>
+    </table>
+    <p><strong>✅ مثال عملي (فيديو تعليمي):</strong><br>
+    • <code>f/2.8</code> (لـ Bokeh)<br>
+    • <code>1/60</code> (لفيديو 30fps)<br>
+    • ابدأ بـ <code>ISO 400</code> → ارفع لـ <code>800</code> → <code>1600</code><br>
+    • إن لم يكفِ: أضف إضاءة خارجية.</p>
+</div>
+<div class="lesson-card">
+    <h4>الوحدة 2: الإضاءة ونصائح التصوير التعليمي</h4>
+
+    <div class="section-title">💡 الإضاءة: الأنواع، الزوايا، ودرجات الحرارة</div>
+
+    <div class="section-title">أ. أنواع الإضاءة حسب المصدر</div>
+    <ul class="lesson-list">
+        <li><strong>طبيعي:</strong> ضوء الشمس — يختلف حسب الوقت (صباح/ظهيرة/غروب).</li>
+        <li><strong>صناعي:</strong> لمبات، فلاش، LED Panels — للاستوديو والتصوير الداخلي.</li>
+        <li><strong>مختلط:</strong> شمس + LED — قد يسبب تعارض درجات حرارة (يُصحح بالـ White Balance).</li>
+    </ul>
+
+    <div class="section-title">ب. زوايا الإضاءة (مهمة جدًا في الفيديوهات التعليمية!)</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الزاوية</th>
+                <th>التأثير</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>أمامية</strong></td><td>وجه مسطّح، بدون ظلال</td><td>مقبولة مع إضاءة خلفية تكميلية</td></tr>
+            <tr><td><strong>جانبية</strong></td><td>ظلال عميقة، إبراز ملامح</td><td>إظهار التعبيرات (مثل شرح مفاهيم معقدة)</td></tr>
+            <tr><td><strong>خلفية</strong></td><td>هالة حول الرأس</td><td>تُستخدم مع إضاءة أمامية لخلق عمق</td></tr>
+            <tr><td><strong>علوية</strong></td><td>ظلال تحت العينين</td><td>❌ تجنبها — تسبب مظهر "مُخيف"</td></tr>
+            <tr><td><strong>سفلية</strong></td><td>غير طبيعية</td><td>❌ لا تستخدمها في التعليم (أفلام رعب فقط)</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">ج. نظام ثلاثي الإضاءة (3-Point Lighting) — ✅ الأفضل للفيديو التعليمي</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الضوء</th>
+                <th>الدور</th>
+                <th>الزاوية</th>
+                <th>الشدة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Key Light</strong></td><td>الضوء الرئيسي</td><td>45° أمامية</td><td>100%</td></tr>
+            <tr><td><strong>Fill Light</strong></td><td>تخفيف الظلال</td><td>مقابل Key</td><td>50%</td></tr>
+            <tr><td><strong>Back Light</strong></td><td>فصل الجسد عن الخلفية</td><td>خلفية</td><td>30–50%</td></tr>
+        </tbody>
+    </table>
+    <p><strong>✅ هذا النظام يضمن:</strong> وضوح الوجه، عمق بصري، مظهر احترافي (مثل Coursera أو edX).</p>
+
+    <div class="section-title">د. درجات حرارة اللون (Color Temperature)</div>
+    <p>تقاس بوحدة <strong>كلفن (K)</strong> — كلما زاد الرقم، زادت الزرقة (بارد)، والعكس.</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النطاق (K)</th>
+                <th>المصدر</th>
+                <th>اللون</th>
+                <th>الملائمة للتعليم</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>2700–3000</td><td>لمبة منزلية</td><td>أصفر دافئ</td><td>تحتاج تعديل WB</td></tr>
+            <tr><td>3500–4100</td><td>لمبة مكتبية</td><td>أبيض متعادل</td><td>جيدة</td></tr>
+            <tr><td><strong>5000–5500</strong></td><td><strong>ضوء النهار</strong></td><td><strong>أبيض نقي</strong></td><td>✅ <strong>المثالية</strong></td></tr>
+            <tr><td>6500</td><td>LED Panels / غائم</td><td>أزرق بارد</td><td>يمكن ضبط WB على "Cloudy" لدفء</td></tr>
+        </tbody>
+    </table>
+    <p><strong>✅ نصيحة عملية:</strong><br>
+    استخدم <strong>LED Panel قابل للتعديل</strong> (3200K–5600K) مثل: Aputure Amaran AL-F7 أو Neewer 660 Bi-Color — وضبطه على <code>5000K</code>.</p>
+
+    <div class="section-title">هـ. مصطلحات الإضاءة</div>
+    <ul class="lesson-list">
+        <li><strong>Key Light:</strong> الضوء الرئيسي — أقوى ضوء، يُوجّه على الوجه من 30°–45°.</li>
+        <li><strong>Fill Light:</strong> يُخفف الظلال من الجهة المقابلة.</li>
+        <li><strong>Back Light:</strong> يفصل الموضوع عن الخلفية بهالة خفيفة.</li>
+        <li><strong>Rim Light:</strong> يضرب الحواف (شعر، كتف) — لإبراز العمق.</li>
+        <li><strong>Hair Light:</strong> يركز على الشعر — يجعله "يتلألأ" (مهم للفيديوهات الاحترافية للنساء).</li>
+        <li><strong>Background Light:</strong> يضيء الخلفية فقط — لمنع الظهور الأسود المسطح.</li>
+    </ul>
+
+    <hr>
+
+    <div class="section-title">🎨 خلاصة سريعة (لتصميم الورش التعليمية مع الطلاب)</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>العنصر</th>
+                <th>التوصية</th>
+                <th>السبب</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>الكاميرا</strong></td><td>Mirrorless (Sony ZV-E10 / Canon R50)</td><td>خفة + جودة + فيديو 4K</td></tr>
+            <tr><td><strong>العدسة</strong></td><td>35mm أو 50mm (f/1.8)</td><td>طبيعية، Bokeh لطيف، رخيصة</td></tr>
+            <tr><td><strong>الإضاءة</strong></td><td>3-Point Lighting، 5000K</td><td>وضوح + عمق + احترافية</td></tr>
+            <tr><td><strong>الخلفية</strong></td><td>غير مشتتة (ستارة ملساء / رف كتب بسيط)</td><td>تركيز على المُعلِّم</td></tr>
+            <tr><td><strong>ISO</strong></td><td>≤ 1600</td><td>تجنب الضجيج في الفيديو</td></tr>
+            <tr><td><strong>فتحة العدسة</strong></td><td>f/2.8 – f/4</td><td>توازن بين Bokeh ووضوح الوجه بالكامل</td></tr>
+            <tr><td><strong>سرعة الغالق</strong></td><td>1/60 ثانية (لفيديو 30fps)</td><td>تجنب الاهتزاز، طبيعة الحركة</td></tr>
+        </tbody>
+    </table>
+    <p><strong>🎯 تطبيق عملي لـ EdTech:</strong><br>
+    في ورشة تصميم محتوى رقمي مع الطلاب: اجعلهم يطبّقوا نظام 3-Point Lighting، ويصوّروا فيديو قصير (2 دقيقة) باستخدام الهاتف أو كاميرا مدمجة، مع التركيز على: الوضوح، الخلفية البسيطة، ودرجة حرارة 5000K.</p>
+</div>
+
+
+    </div>
+
+    <a href="../lectures.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
+    </a>
+
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.classList.add('day');
+            } else {
+                themeToggle.classList.add('night');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.classList.remove('day');
+                    themeToggle.classList.add('night');
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.classList.remove('night');
+                    themeToggle.classList.add('day');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
