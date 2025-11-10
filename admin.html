@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content">
     <title>لوحة التحكم - إدارة المستخدمين والمواعيد | ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css " rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --admin-primary: #1a237e;
@@ -225,7 +225,7 @@
         .modal-content {
             border-radius: 20px;
             border: none;
-            background: rgba(30, 35, 60, 0.9);
+            background: rgba(30, 35, 60, 0.95);
             color: white;
         }
         .form-control {
@@ -245,7 +245,7 @@
             color: var(--admin-accent);
         }
         .explanation-detail {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(40, 45, 75, 0.7);
             padding: 1rem;
             border-radius: 10px;
             margin: 0.8rem 0;
@@ -255,6 +255,20 @@
             color: var(--admin-accent);
             margin-bottom: 0.4rem;
         }
+        #resultDetailBody h5, #resultDetailBody h6 {
+            color: #ffd700;
+        }
+        #resultDetailBody .text-success {
+            color: #66ff66 !important;
+            font-weight: 600;
+        }
+        #resultDetailBody .text-danger {
+            color: #ff6666 !important;
+            font-weight: 600;
+        }
+        #resultDetailBody .text-info {
+            color: #66ccff !important;
+        }
     </style>
 </head>
 <body>
@@ -263,33 +277,26 @@
             <h1><i class="fas fa-shield-alt"></i> لوحة تحكم الأدمن</h1>
             <p>إدارة المستخدمين، المواعيد، التاسكات، ونتائج الاختبارات</p>
         </div>
-
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
             <button class="btn btn-admin" data-bs-toggle="modal" data-bs-target="#appointmentModal">
                 <i class="fas fa-calendar-plus"></i> إضافة موعد عام
             </button>
             <button class="btn btn-danger btn-sm" id="adminLogout">تسجيل خروج</button>
         </div>
-
         <div class="action-btns mb-4">
             <a href="dashboard.html" class="btn-action home-btn">
                 <i class="fas fa-home"></i> العودة للرئيسية
             </a>
         </div>
-
         <div class="admin-card">
             <h3><i class="fas fa-users-cog"></i> إدارة المستخدمين</h3>
-            <div id="usersList">
-                </div>
+            <div id="usersList"></div>
         </div>
-        
         <div class="admin-card">
             <h3><i class="fas fa-calendar-alt"></i> إدارة المواعيد العامة</h3>
             <p class="text-muted mb-3">المواعيد هنا تظهر في جدول محاضرات كل المستخدمين</p>
-            <div id="globalAppointmentsList">
-                </div>
+            <div id="globalAppointmentsList"></div>
         </div>
-        
         <div class="admin-card">
             <h3><i class="fas fa-tasks"></i> إدارة التاسكات العامة</h3>
             <p class="text-muted mb-3">التاسكات هنا تظهر تلقائيًا لكل المستخدمين في صفحة "تاسكاتي"</p>
@@ -298,14 +305,13 @@
             </button>
             <div id="globalTasksList"></div>
         </div>
-
         <div class="admin-card">
             <h3><i class="fas fa-graduation-cap"></i> نتائج اختبارات الطلاب</h3>
-            <div id="quizResultsList">
-                </div>
+            <div id="quizResultsList"></div>
         </div>
     </div>
 
+    <!-- Modal المواعيد -->
     <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-light">
@@ -353,6 +359,7 @@
         </div>
     </div>
 
+    <!-- Modal التاسكات -->
     <div class="modal fade" id="taskModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-light">
@@ -375,25 +382,699 @@
         </div>
     </div>
 
+    <!-- Modal تفاصيل النتيجة -->
     <div class="modal fade" id="resultDetailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content bg-dark text-light">
-                <div class="modal-header">
-                    <h5 class="modal-title">تفاصيل نتيجة الطالب</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            <div class="modal-content">
+                <div class="modal-header" style="background: var(--admin-primary); border-bottom: 2px solid var(--admin-accent);">
+                    <h5 class="modal-title fw-bold text-white">
+                        <i class="fas fa-file-medical me-2"></i> تفاصيل نتيجة الطالب
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                 </div>
-                <div class="modal-body" id="resultDetailBody">
-                    </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                <div class="modal-body p-4" id="resultDetailBody">
+                    <!-- سيتم ملؤه ديناميكيًا -->
+                </div>
+                <div class="modal-footer d-flex justify-content-between" style="background: rgba(30, 35, 60, 0.9);">
+                    <button type="button" class="btn btn-outline-danger px-4" id="deleteResultBtn">
+                        <i class="fas fa-trash-alt me-1"></i> حذف النتيجة
+                    </button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i> إغلاق
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js "></script>
+    <!-- تحميل Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
-       function _0x114e(_0x367c75,_0x441729){const _0x4c9edc=_0x3b87();return _0x114e=function(_0x2ee12f,_0x228f5d){_0x2ee12f=_0x2ee12f-0xa1;let _0x19a1f2=_0x4c9edc[_0x2ee12f];return _0x19a1f2;},_0x114e(_0x367c75,_0x441729);}const _0x5cb18d=_0x114e;(function(_0x2cc1bd,_0x28e35d){const _0x2762cd=_0x114e,_0x45bbe8=_0x2cc1bd();while(!![]){try{const _0x2627c7=-parseInt(_0x2762cd(0xe3))/0x1*(-parseInt(_0x2762cd(0x1c8))/0x2)+-parseInt(_0x2762cd(0xae))/0x3*(-parseInt(_0x2762cd(0x16a))/0x4)+-parseInt(_0x2762cd(0x157))/0x5*(parseInt(_0x2762cd(0x133))/0x6)+-parseInt(_0x2762cd(0x119))/0x7+-parseInt(_0x2762cd(0x237))/0x8+parseInt(_0x2762cd(0x142))/0x9+-parseInt(_0x2762cd(0x14a))/0xa*(-parseInt(_0x2762cd(0x114))/0xb);if(_0x2627c7===_0x28e35d)break;else _0x45bbe8['push'](_0x45bbe8['shift']());}catch(_0x57fdde){_0x45bbe8['push'](_0x45bbe8['shift']());}}}(_0x3b87,0x4a0b5));const _0x23ecf9=(function(){let _0x27a79b=!![];return function(_0x54d2cd,_0x45d750){const _0x50cba3=_0x27a79b?function(){if(_0x45d750){const _0x3de675=_0x45d750['apply'](_0x54d2cd,arguments);return _0x45d750=null,_0x3de675;}}:function(){};return _0x27a79b=![],_0x50cba3;};}()),_0x426359=_0x23ecf9(this,function(){const _0x3cbf06=_0x114e,_0x489900={'raMTw':_0x3cbf06(0xc5)};return _0x426359['toString']()[_0x3cbf06(0xb7)](_0x489900[_0x3cbf06(0x1fd)])['toString']()[_0x3cbf06(0x101)](_0x426359)[_0x3cbf06(0xb7)](_0x489900[_0x3cbf06(0x1fd)]);});_0x426359();const _0x228f5d=(function(){let _0xface80=!![];return function(_0xf5eaeb,_0x3005f8){const _0x5269d9=_0xface80?function(){if(_0x3005f8){const _0x22bc48=_0x3005f8['apply'](_0xf5eaeb,arguments);return _0x3005f8=null,_0x22bc48;}}:function(){};return _0xface80=![],_0x5269d9;};}());(function(){const _0x11c1df=_0x114e,_0x526fdb={'anNBc':'function\x20*\x5c(\x20*\x5c)','YKNqv':_0x11c1df(0xda),'UAjEu':function(_0x5a39d3,_0x2dddc0){return _0x5a39d3+_0x2dddc0;},'uqaVv':_0x11c1df(0xf9),'nETjP':_0x11c1df(0xa4),'ueRUv':function(_0x1f352f){return _0x1f352f();},'bKDKp':function(_0x422007,_0x1e032f,_0x3446f2){return _0x422007(_0x1e032f,_0x3446f2);}};_0x526fdb[_0x11c1df(0x1d3)](_0x228f5d,this,function(){const _0x167e5b=_0x11c1df,_0x5d73b8=new RegExp(_0x526fdb['anNBc']),_0x14cc9a=new RegExp(_0x526fdb[_0x167e5b(0xb8)],'i'),_0x24fa97=_0x2ee12f(_0x167e5b(0x124));!_0x5d73b8[_0x167e5b(0xdc)](_0x526fdb[_0x167e5b(0x13b)](_0x24fa97,_0x526fdb['uqaVv']))||!_0x14cc9a['test'](_0x526fdb[_0x167e5b(0x13b)](_0x24fa97,_0x526fdb['nETjP']))?_0x24fa97('0'):_0x526fdb[_0x167e5b(0x22b)](_0x2ee12f);})();}());function _0x3b87(){const _0x45f7ff=['TjFlZ','cpCYr','location','hWdrr','ixHWk','leGJL','search','YKNqv','مواعيدي','[data-bs-target=\x22#appointmentModal\x22]','iNWEQ','LNqUQ','تنزيل\x20لمستخدم\x20عادي','OjOnh','PfaCn','saveUserPermissions','تاسكاتي','XsSYK','خطأ\x20في\x20تعديل\x20حالة\x20الحظر:\x20','SvUYr','(((.+)+)+)+$','</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20type=\x22button\x22\x20class=\x22btn-close\x20btn-close-white\x22\x20onclick=\x22closeModal()\x22></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>اختر\x20الصفحات\x20اللي\x20عايز\x20تمنع\x20المستخدم\x20من\x20دخولها:</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22userPermissionsList\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-footer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20type=\x22button\x22\x20class=\x22btn\x20btn-secondary\x22\x20onclick=\x22closeModal()\x22>إلغاء</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20type=\x22button\x22\x20class=\x22btn\x20btn-admin\x22\x20onclick=\x22saveUserPermissions(\x27','StdMA','<i\x20class=\x22fas\x20fa-user-slash\x22></i>\x20حظر','حفظ\x20التاسك','خطأ\x20في\x20حفظ\x20الصلاحيات:\x20','5|6|1|0|8|3|2|4|7','users','appointmentDay','remove','href','EUGsR','\x20-\x20','OwGWD','qtPug','1:573924344198:web:fec2e9a54c1c152cd16c07','onclick','CqQiS','KUiFz','desc','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','ShVBx','test','restrictedPages','toggleUserBan','<i\x20class=\x22fas\x20fa-bell\x20me-2\x22></i>','mcq','appointmentModal','opacity','37laCjbc','oTsMh','div','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22small\x22>ID:\x20',')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-edit\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-danger-sm\x20btn-sm\x22\x20onclick=\x22deleteGlobalTask(\x27','agoyF','GdtWw','\x20(ID:\x20','UKYCp','</div>','includes','value','SUQGu','zCNRY','zouqT','WKVKU','debu','saveAppointmentBtn','</p>','questions','totalMCQ','يرجى\x20إدخال\x20وصف\x20التاسك!','chain','\x27)\x22>حفظ\x20التغييرات</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-backdrop\x20fade\x20show\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','<div\x20class=\x22alert\x20alert-danger\x22>خطأ\x20في\x20تحميل\x20النتائج:\x20','NqgJl','gtokA','HzpPT','XhqKq','qdLWJ','constructor','G-CWVJDKPS0M','UUvdk','tsYrC','YbosQ','nEKoM','RwrQX','message','osWGK','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-dialog\x20modal-dialog-centered\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-content\x20bg-dark\x20text-light\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h5\x20class=\x22modal-title\x22>🔐\x20إدارة\x20صلاحيات:\x20','apply','KzvHV','IsHBb','vkOdx','\x20هذا\x20المستخدم؟','map','stateObject','lCNCw','replace','11hQNogp','GpOdV','BAFAC','هل\x20أنت\x20متأكد\x20من\x20حذف\x20هذا\x20الموعد\x20العام؟\x20سيختفي\x20من\x20جميع\x20المستخدمين!','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-admin\x20btn-sm\x22\x20onclick=\x22toggleUserRole(\x27','3982363ErSztH','name','exists','JHxhj','tasks','QxBfJ','jJwnt','<div\x20class=\x22text-center\x22><div\x20class=\x22spinner-border\x20text-warning\x22></div></div>','EpsKG','result-item','✏️\x20تعديل\x20موعد\x20عام','init','zpieo',')</span></h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>المادة:</strong>\x20','غير\x20محدد','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','PfonW','getElementById','sedew','question','QPNUm','qAkYz','تم\x20حذف\x20المستخدم\x20بنجاح!','pcNTf','خطأ\x20في\x20تعديل\x20الصلاحية:\x20','TIJZP','186888boWuHA','createElement','bCsBg','border','\x20|\x20منذ:\x20','يرجى\x20ملء\x20جميع\x20الحقول!','querySelector','<p><strong>الإجابة\x20الصحيحة:</strong>\x20','UAjEu','toEez','KVQzb','appointmentSubject','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h5>الطالب:\x20','DQnFp','counter','4875282RodXTj','JVDqe','HTsEP','qFbiY','tMYZG','success','FenlJ','CMEVv','7578050owvMmZ','appointmentLocation','quiz_submissions','uid','answers','btn-warning-sm','MDXGd','FhCOY','toLocaleString','AGqHF','خطأ\x20في\x20التحديث:\x20','<div\x20class=\x22alert\x20alert-info\x22>لا\x20توجد\x20نتائج\x20اختبارات\x20حتى\x20الآن.</div>','>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22form-check-label\x22\x20for=\x22userPage_','90UHhsgO','usersList','appointmentDoctor','qHRCx','zIndex','action','lectures','cWolW','usNSV','show','timestamp','\x27,\x20','تم\x20تحديث\x20التاسك\x20بنجاح!','573924344198','data','bFCGN','innerHTML','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22d-flex\x20gap-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-admin\x20btn-sm\x22\x20onclick=\x22openEditAppointmentModal(\x27','ZmxTD','116tFIHaF','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','IOkGP','تحديث\x20الموعد','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-danger-sm\x20btn-sm\x22\x20onclick=\x22deleteUser(\x27','vWfcP','uNoJa','LAtEw','تم\x20حذف\x20الموعد\x20العام!','stringify','hAnqn','jKtEi','uaZht','nGbPO','ar-EG','btn-danger-sm','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','[data-bs-target=\x22#taskModal\x22]','gger','cbZTV','getInstance','subjectName','addEventListener','mZVaP','qeuAU','then','<div\x20class=\x22alert\x20alert-info\x22>لا\x20توجد\x20تاسكات\x20عامة\x20حتى\x20الآن.</div>','Modal','0.7','أدمن','time','BDfjp','appointmentTime','<p><strong>إجابتك:</strong>\x20','oxOJY','tsHxZ','<h6>السؤال\x20','أسئلتي','<i\x20class=\x22fas\x20fa-user-check\x22></i>\x20إلغاء\x20الحظر','style','user','role','LBClX','هل\x20أنت\x20متأكد\x20من\x20حذف\x20هذا\x20التاسك\x20العام؟\x20سيختفي\x20من\x20جميع\x20المستخدمين!','Oambk','appointments','BLXKM','QURgh','<div\x20class=\x22alert\x20alert-danger\x22>خطأ:\x20','\x20position-fixed\x20bottom-0\x20end-0\x20m-3','RAHhS','body','Keqsw','skQnz','\x27,\x20\x27','isGlobal','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<hr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h5>الإجابات\x20الكاملة:</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','hide','eKBqG','تنزيل','fDpkV','mOVnp','jGgBR','#userPermissionsList\x20input[type=\x22checkbox\x22]','string','AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE','QWwGG','explanation','resultDetailBody','taskModal','currentUser','ekeTT','AyoIz','Rtcmc','percentage','hhBdH','globalAppointmentsList','EMKJH','vwpDy','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22form-check\x20mb-2\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22form-check-input\x22\x20type=\x22checkbox\x22\x20id=\x22userPage_','saveTaskBtn','EIibu','ترقية','jDeQc','danger','appointmentId','KCaYW','textContent','empty','PaOoG','block','studentName','fpthW','correctAnswer','20792xnsHzG','</h6>','lKmJa','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x20حذف\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>','%)</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22d-flex\x20flex-column\x20gap-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn-view\x20btn-sm\x22\x20onclick=\x22viewResultDetails(','VhCJo','</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','NHZyw','hnKJI','تم\x20إضافة\x20التاسك\x20العام\x20بنجاح!','email','bKDKp','تم\x20إضافة\x20الموعد\x20العام\x20بنجاح!','\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22badge\x20','viewResultDetails','checked','rnefB','mSAUv','NVOJo','adminLogout','YBeXe',')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-eye\x22></i>\x20عرض\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','تم\x20تحديث\x20الموعد\x20بنجاح!','orWfm','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22score-badge\x22>النتيجة:\x20','smkXv','TJLuc','محاضراتي','KmBHQ','badge-user','SJlmj','GLobe','uuGLK','ilWZy','score','QCYRl','className','.modal','lZktT','type','BxkoQ','length','aEvRy','YZJIs','lQlfU','deleteUser','JPYHI','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22d-flex\x20justify-content-between\x20align-items-start\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h5>','<p><strong>الإجابة\x20النموذجية:</strong>\x20','elifs','GuZUm','EzEtx','mRKrf','raMTw','</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22text-warning\x22><i\x20class=\x22far\x20fa-clock\x22></i>\x20','toDate','PLwRs','➕\x20إضافة\x20تاسك\x20عام','JqhIT','لم\x20تجب','HGjQN','cDOHp','aCERz','YuEDx','forEach','0|2|1|3|4','JWJYn','gasnY','GtERB','click','user-item','مستخدم','iDFqI','trim','vQKwH','✏️\x20تعديل\x20تاسك\x20عام','</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22d-flex\x20gap-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-admin\x20btn-sm\x22\x20onclick=\x22openEditTaskModal(\x27','kxQGh','xrugL','HBWLu','OANDA','JWPQM','jtwGx','studentId','eGZrG','modal\x20fade\x20show','تم\x20حذف\x20التاسك\x20العام!','title','ليس\x20لديك\x20صلاحية\x20الوصول\x20لهذه\x20الصفحة!','PgoPI','.modal-backdrop','CMDUK','تلخيصاتي','taskId','snXoT','czWZV','appointmentModalLabel','admin','sit-el-kol.firebasestorage.app','ueRUv','VRuZo','VlEyd','NWtdR','userAnswer','visitsCount','EKoOp','HSkUK','call','split','hYbYq','<div\x20class=\x22alert\x20alert-info\x22>لا\x20توجد\x20مواعيد\x20عامة\x20حتى\x20الآن.</div>','2616592QOhSzY','YnXjh','userPage_','evcLO','taskModalLabel','ZnglF','oGgGr','appendChild','deleteGlobalAppointment','HnJrI','tPWos','FmKJA','index.html','createdAt','fLNih','EXHCp','KcMJB','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>الوقت:</strong>\x20','zXdEW','quizResultsList','closeModal','muYea','AYHac','taskTitle','fQRrD','input','تم\x20تعديل\x20صلاحية\x20المستخدم\x20بنجاح!','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22mb-1\x22>','dDsHH','lzPVu','badge-admin','iZtUO','kRVwy','<div\x20class=\x22alert\x20alert-danger\x22>خطأ\x20في\x20تحميل\x20المستخدمين:\x20','حفظ\x20الموعد','7839JNsACK','ZkGRY','gWaKI'];_0x3b87=function(){return _0x45f7ff;};return _0x3b87();}import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js\x20';import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js\x20';import{getFirestore,doc,getDoc,updateDoc,collection,getDocs,deleteDoc,addDoc,query,where,orderBy}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js\x20';const firebaseConfig={'apiKey':_0x5cb18d(0x1ab),'authDomain':'sit-el-kol.firebaseapp.com','projectId':'sit-el-kol','storageBucket':_0x5cb18d(0x22a),'messagingSenderId':_0x5cb18d(0x164),'appId':_0x5cb18d(0xd4),'measurementId':_0x5cb18d(0x102)},app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);window['toggleUserRole']=async function(_0x27f74d,_0x68f620){const _0x15ce6b=_0x5cb18d,_0x277db9={'jlTZe':function(_0x257479,_0x4e1ca3){return _0x257479(_0x4e1ca3);},'aCERz':_0x15ce6b(0x1bc),'TrTwE':_0x15ce6b(0x1a5),'Oambk':function(_0x5d244c,_0x2b6d85,_0x34e6b1){return _0x5d244c(_0x2b6d85,_0x34e6b1);},'RAHhS':function(_0x4cf2d4,_0x4d8b4b,_0xb8c68b,_0x421cec){return _0x4cf2d4(_0x4d8b4b,_0xb8c68b,_0x421cec);},'hnKJI':_0x15ce6b(0xcc),'ZxDfZ':function(_0x5ed3b3,_0x3845be){return _0x5ed3b3===_0x3845be;},'VhCJo':'user','gtokA':'admin','EUwoN':_0x15ce6b(0xa5),'ZxYsA':_0x15ce6b(0x147),'jGgBR':function(_0x5c975a){return _0x5c975a();},'fQRrD':function(_0x430efe,_0x3f09e2,_0x1a3702){return _0x430efe(_0x3f09e2,_0x1a3702);},'IOkGP':function(_0x50c2c0,_0x5dbfdd){return _0x50c2c0+_0x5dbfdd;},'HSkUK':_0x15ce6b(0x131),'cpCYr':_0x15ce6b(0x1be)};if(!_0x277db9['jlTZe'](confirm,'هل\x20أنت\x20متأكد\x20أنك\x20تريد\x20'+(_0x68f620===_0x15ce6b(0x192)?_0x277db9[_0x15ce6b(0x206)]:_0x277db9['TrTwE'])+_0x15ce6b(0x10f)))return;try{await _0x277db9[_0x15ce6b(0x196)](updateDoc,_0x277db9[_0x15ce6b(0x19c)](doc,db,_0x277db9[_0x15ce6b(0x1d0)],_0x27f74d),{'role':_0x277db9['ZxDfZ'](_0x68f620,_0x277db9[_0x15ce6b(0x1cd)])?_0x277db9[_0x15ce6b(0xfd)]:'user'}),_0x277db9[_0x15ce6b(0x196)](showNotification,_0x277db9['EUwoN'],_0x277db9['ZxYsA']),_0x277db9[_0x15ce6b(0x1a8)](loadUsers);}catch(_0x50524b){_0x277db9[_0x15ce6b(0xa3)](showNotification,_0x277db9[_0x15ce6b(0x16c)](_0x277db9[_0x15ce6b(0x232)],_0x50524b['message']),_0x277db9[_0x15ce6b(0xb2)]);}},window[_0x5cb18d(0xde)]=async function(_0x19934b,_0x35da85){const _0x599044=_0x5cb18d,_0x39617e={'hYbYq':function(_0x406e7e,_0x567db6,_0x4f5da2){return _0x406e7e(_0x567db6,_0x4f5da2);},'QCYRl':function(_0x489d88,_0x43fba9,_0x3bcac7,_0x5c222a){return _0x489d88(_0x43fba9,_0x3bcac7,_0x5c222a);},'uuGLK':_0x599044(0xcc),'gasnY':'تم\x20حظر\x20المستخدم!','GdtWw':'warning','vQKwH':function(_0x33cd17,_0x11a413,_0x233c04){return _0x33cd17(_0x11a413,_0x233c04);},'zCNRY':function(_0x1b3be2,_0x5d867c){return _0x1b3be2+_0x5d867c;},'rNETo':_0x599044(0xc3),'EIibu':_0x599044(0x1be)};try{await _0x39617e[_0x599044(0x235)](updateDoc,_0x39617e[_0x599044(0x1eb)](doc,db,_0x39617e[_0x599044(0x1e8)],_0x19934b),{'banned':!_0x35da85}),showNotification(_0x35da85?'تم\x20إلغاء\x20حظر\x20المستخدم!':_0x39617e[_0x599044(0x20b)],_0x39617e[_0x599044(0xe9)]),loadUsers();}catch(_0x3a0379){_0x39617e[_0x599044(0x212)](showNotification,_0x39617e[_0x599044(0xf0)](_0x39617e['rNETo'],_0x3a0379[_0x599044(0x108)]),_0x39617e[_0x599044(0x1bb)]);}},window[_0x5cb18d(0x1f5)]=async function(_0x2e4be8){const _0x32400b=_0x5cb18d,_0x5165ef={'TjFlZ':function(_0x3c1c64,_0x3adf6e){return _0x3c1c64(_0x3adf6e);},'uaZht':'هل\x20أنت\x20متأكد\x20أنك\x20تريد\x20حذف\x20هذا\x20المستخدم\x20نهائيًا؟','YBeXe':function(_0x524991,_0x595ea2){return _0x524991(_0x595ea2);},'HGjQN':function(_0x4f8f9f,_0x285242,_0x5ada53,_0x362ebe){return _0x4f8f9f(_0x285242,_0x5ada53,_0x362ebe);},'hhBAC':_0x32400b(0xcc),'qAkYz':function(_0x254d30,_0x2bb9d1,_0x596349){return _0x254d30(_0x2bb9d1,_0x596349);},'EpsKG':_0x32400b(0x12f),'jDoMl':function(_0x46d191){return _0x46d191();},'siJwY':'خطأ\x20في\x20حذف\x20المستخدم:\x20'};if(!_0x5165ef[_0x32400b(0xb1)](confirm,_0x5165ef[_0x32400b(0x176)]))return;try{await _0x5165ef[_0x32400b(0x1dc)](deleteDoc,_0x5165ef[_0x32400b(0x204)](doc,db,_0x5165ef['hhBAC'],_0x2e4be8)),_0x5165ef[_0x32400b(0x12e)](showNotification,_0x5165ef[_0x32400b(0x121)],'success'),_0x5165ef['jDoMl'](loadUsers);}catch(_0x3bfff5){showNotification(_0x5165ef['siJwY']+_0x3bfff5[_0x32400b(0x108)],_0x32400b(0x1be));}},window['manageUserPermissions']=async function(_0x2e362a){const _0x2e0ab6=_0x5cb18d,_0x4c1468={'uNNvi':function(_0x55d3bf,_0x542c18){return _0x55d3bf(_0x542c18);},'HBWLu':function(_0x8f720,_0x46cb51,_0x38fa34,_0x756afe){return _0x8f720(_0x46cb51,_0x38fa34,_0x756afe);},'lZktT':'div','fDpkV':_0x2e0ab6(0x1c4),'ixHWk':_0x2e0ab6(0x15d),'jtwGx':_0x2e0ab6(0x1e3),'ZoOeo':'السكاشن','PaOoG':_0x2e0ab6(0x197),'osWGK':_0x2e0ab6(0xb9),'jJwnt':_0x2e0ab6(0xc1),'KUiFz':'summaries','bCsBg':_0x2e0ab6(0xf6),'lKmJa':_0x2e0ab6(0x18f),'lzPVu':'userPermissionsList'},_0x1d16d5=await _0x4c1468['uNNvi'](getDoc,_0x4c1468[_0x2e0ab6(0x217)](doc,db,_0x2e0ab6(0xcc),_0x2e362a));if(!_0x1d16d5[_0x2e0ab6(0x11b)]())return;const _0x245245=_0x1d16d5['data'](),_0x30b4ed=_0x245245[_0x2e0ab6(0xdd)]||[],_0x3fb28a=document[_0x2e0ab6(0x134)](_0x4c1468[_0x2e0ab6(0x1ee)]);_0x3fb28a[_0x2e0ab6(0x1ec)]=_0x2e0ab6(0x21d),_0x3fb28a[_0x2e0ab6(0x191)]['display']=_0x4c1468[_0x2e0ab6(0x1a6)],_0x3fb28a[_0x2e0ab6(0x167)]=_0x2e0ab6(0x10a)+_0x245245['name']+_0x2e0ab6(0xc6)+_0x2e362a+_0x2e0ab6(0xfa),document[_0x2e0ab6(0x19d)][_0x2e0ab6(0x23e)](_0x3fb28a);const _0x2c8864=[{'id':_0x4c1468[_0x2e0ab6(0xb5)],'name':_0x4c1468[_0x2e0ab6(0x21a)]},{'id':'sections','name':_0x4c1468['ZoOeo']},{'id':_0x4c1468[_0x2e0ab6(0x1c3)],'name':_0x4c1468[_0x2e0ab6(0x109)]},{'id':'tasks','name':_0x4c1468[_0x2e0ab6(0x11f)]},{'id':_0x4c1468[_0x2e0ab6(0xd7)],'name':_0x2e0ab6(0x224)},{'id':_0x4c1468[_0x2e0ab6(0x135)],'name':_0x4c1468[_0x2e0ab6(0x1ca)]}],_0x2a7b4b=document['getElementById'](_0x4c1468[_0x2e0ab6(0xa8)]);_0x2a7b4b[_0x2e0ab6(0x167)]=_0x2c8864[_0x2e0ab6(0x110)](_0xad00ab=>_0x2e0ab6(0x1b9)+_0xad00ab['id']+'\x22\x20'+(_0x30b4ed[_0x2e0ab6(0xed)](_0xad00ab['id'])?_0x2e0ab6(0x1d7):'')+_0x2e0ab6(0x156)+_0xad00ab['id']+'\x22>'+_0xad00ab[_0x2e0ab6(0x11a)]+_0x2e0ab6(0x1ce))['join']('');},window[_0x5cb18d(0x24b)]=function(){const _0xd4527c=_0x5cb18d,_0x3005fa={'qdLWJ':_0xd4527c(0x1ed)},_0x261c24=document[_0xd4527c(0x139)](_0x3005fa[_0xd4527c(0x100)]),_0x114d98=document[_0xd4527c(0x139)](_0xd4527c(0x222));if(_0x261c24)_0x261c24[_0xd4527c(0xce)]();if(_0x114d98)_0x114d98['remove']();},window[_0x5cb18d(0xc0)]=async function(_0x3e476b){const _0x111ecb=_0x5cb18d,_0x31ee11={'FmKJA':_0x111ecb(0x239),'JWPQM':_0x111ecb(0x1a9),'KVQzb':function(_0x4dd39f,_0x35b1bf,_0x374ea2){return _0x4dd39f(_0x35b1bf,_0x374ea2);},'jDeQc':function(_0x58dd31,_0x6522d3,_0x21a712,_0x2a1dd9){return _0x58dd31(_0x6522d3,_0x21a712,_0x2a1dd9);},'puUrx':'users','NdBKz':'تم\x20حفظ\x20صلاحيات\x20المستخدم\x20بنجاح!','AGqHF':function(_0x4d7037){return _0x4d7037();},'IYbdN':function(_0x493084){return _0x493084();},'VRuZo':_0x111ecb(0xca),'hAnqn':_0x111ecb(0x1be)},_0x2d4909=document['querySelectorAll'](_0x31ee11[_0x111ecb(0x219)]),_0x20053b=[];_0x2d4909[_0x111ecb(0x208)](_0x384b9d=>{const _0x47a471=_0x111ecb;if(_0x384b9d[_0x47a471(0x1d7)])_0x20053b['push'](_0x384b9d['id'][_0x47a471(0x113)](_0x31ee11[_0x47a471(0x242)],''));});try{await _0x31ee11[_0x111ecb(0x13d)](updateDoc,_0x31ee11[_0x111ecb(0x1bd)](doc,db,_0x31ee11['puUrx'],_0x3e476b),{'restrictedPages':_0x20053b}),_0x31ee11[_0x111ecb(0x13d)](showNotification,_0x31ee11['NdBKz'],_0x111ecb(0x147)),_0x31ee11[_0x111ecb(0x153)](closeModal),_0x31ee11['IYbdN'](loadUsers);}catch(_0x2a2e2e){showNotification(_0x31ee11[_0x111ecb(0x22c)]+_0x2a2e2e['message'],_0x31ee11[_0x111ecb(0x174)]);}};function openAddAppointmentModal(){const _0x41d643=_0x5cb18d,_0x5f249b={'hWdrr':_0x41d643(0xcb),'YZJIs':_0x41d643(0x159),'DiTzU':_0x41d643(0x228),'HLCUw':'appointmentTime','nEKoM':_0x41d643(0x1bf),'xrugL':_0x41d643(0xcd),'COnGQ':'appointmentLocation'},_0x542214=_0x5f249b[_0x41d643(0xb4)]['split']('|');let _0x4f1d03=0x0;while(!![]){switch(_0x542214[_0x4f1d03++]){case'0':document[_0x41d643(0x12a)](_0x5f249b[_0x41d643(0x1f3)])[_0x41d643(0xee)]='';continue;case'1':document['getElementById'](_0x41d643(0x13e))[_0x41d643(0xee)]='';continue;case'2':document[_0x41d643(0x12a)](_0x5f249b['DiTzU'])[_0x41d643(0x1c1)]='➕\x20إضافة\x20موعد\x20عام';continue;case'3':document[_0x41d643(0x12a)](_0x5f249b['HLCUw'])[_0x41d643(0xee)]='';continue;case'4':document[_0x41d643(0x12a)](_0x41d643(0xf4))[_0x41d643(0x1c1)]=_0x41d643(0xad);continue;case'5':document['getElementById'](_0x5f249b[_0x41d643(0x106)])[_0x41d643(0xee)]='';continue;case'6':document[_0x41d643(0x12a)](_0x5f249b[_0x41d643(0x216)])[_0x41d643(0xee)]='';continue;case'7':document[_0x41d643(0x12a)](_0x41d643(0xf4))[_0x41d643(0xd5)]=saveAppointment;continue;case'8':document[_0x41d643(0x12a)](_0x5f249b['COnGQ'])[_0x41d643(0xee)]='';continue;}break;}}function openEditAppointmentModal(_0x1aed07,_0x78b163){const _0x47c8f9=_0x5cb18d,_0x51a18b={'usNSV':_0x47c8f9(0x1bf),'OayIR':_0x47c8f9(0xd1),'fLNih':'appointmentDay','XsSYK':_0x47c8f9(0x13e),'LBClX':_0x47c8f9(0x159),'ekeTT':_0x47c8f9(0x14b),'SbaCH':_0x47c8f9(0x18a),'RwrQX':'appointmentModalLabel','Keqsw':_0x47c8f9(0xf4)};document['getElementById'](_0x51a18b[_0x47c8f9(0x15f)])[_0x47c8f9(0xee)]=_0x1aed07;const _0x211210=(_0x78b163[_0x47c8f9(0x21f)]||'')[_0x47c8f9(0x234)](_0x51a18b['OayIR']);document[_0x47c8f9(0x12a)](_0x51a18b[_0x47c8f9(0x245)])[_0x47c8f9(0xee)]=_0x211210[0x0]||'',document[_0x47c8f9(0x12a)](_0x51a18b[_0x47c8f9(0xc2)])[_0x47c8f9(0xee)]=_0x211210[0x1]||'',document[_0x47c8f9(0x12a)](_0x51a18b[_0x47c8f9(0x194)])[_0x47c8f9(0xee)]=_0x211210[0x2]||'',document[_0x47c8f9(0x12a)](_0x51a18b[_0x47c8f9(0x1b1)])['value']=_0x211210[0x3]||'',document[_0x47c8f9(0x12a)](_0x51a18b['SbaCH'])[_0x47c8f9(0xee)]=_0x78b163[_0x47c8f9(0x188)]||'',document[_0x47c8f9(0x12a)](_0x51a18b[_0x47c8f9(0x107)])[_0x47c8f9(0x1c1)]=_0x47c8f9(0x123),document['getElementById'](_0x47c8f9(0xf4))[_0x47c8f9(0x1c1)]=_0x47c8f9(0x16d),document['getElementById'](_0x51a18b[_0x47c8f9(0x19e)])['onclick']=()=>updateAppointment(_0x1aed07);}async function saveAppointment(){const _0x240d94=_0x5cb18d,_0x22bd09={'DQnFp':_0x240d94(0xcd),'pvaRa':_0x240d94(0x13e),'PLwRs':'appointmentLocation','LUacW':_0x240d94(0x18a),'tPWos':function(_0x4db903,_0x47c53f,_0x1e0b46){return _0x4db903(_0x47c53f,_0x1e0b46);},'NHZyw':_0x240d94(0x138),'BDfjp':_0x240d94(0x1be),'kxQGh':function(_0x2aa37a,_0x3a980e,_0x4cc58b){return _0x2aa37a(_0x3a980e,_0x4cc58b);},'TJLuc':function(_0x4f47a6,_0x4f6e98,_0x1104cc){return _0x4f47a6(_0x4f6e98,_0x1104cc);},'PfaCn':_0x240d94(0x197),'nGbPO':_0x240d94(0x1d4),'mZVaP':'success','oGgGr':_0x240d94(0xe1),'cvpPd':function(_0xadaadc,_0x2a3ee2){return _0xadaadc+_0x2a3ee2;},'JsfYN':'خطأ\x20في\x20الحفظ:\x20'},_0x14c880=document[_0x240d94(0x12a)](_0x22bd09[_0x240d94(0x140)])[_0x240d94(0xee)]['trim'](),_0x1a9cc4=document[_0x240d94(0x12a)](_0x22bd09['pvaRa'])[_0x240d94(0xee)][_0x240d94(0x211)](),_0x51cbdc=document[_0x240d94(0x12a)](_0x240d94(0x159))['value'][_0x240d94(0x211)](),_0x280ef4=document[_0x240d94(0x12a)](_0x22bd09[_0x240d94(0x200)])[_0x240d94(0xee)][_0x240d94(0x211)](),_0x2abb82=document[_0x240d94(0x12a)](_0x22bd09['LUacW'])[_0x240d94(0xee)];if(!_0x14c880||!_0x1a9cc4||!_0x51cbdc||!_0x280ef4||!_0x2abb82){_0x22bd09[_0x240d94(0x241)](showNotification,_0x22bd09[_0x240d94(0x1cf)],_0x22bd09[_0x240d94(0x189)]);return;}const _0x3d66e0=_0x14c880+'\x20-\x20'+_0x1a9cc4+'\x20-\x20'+_0x51cbdc+_0x240d94(0xd1)+_0x280ef4;try{await _0x22bd09[_0x240d94(0x215)](addDoc,_0x22bd09[_0x240d94(0x1e2)](collection,db,_0x22bd09[_0x240d94(0xbf)]),{'isGlobal':!![],'title':_0x3d66e0,'time':_0x2abb82,'createdAt':new Date(),'createdBy':auth[_0x240d94(0x1b0)][_0x240d94(0x14d)]}),_0x22bd09['kxQGh'](showNotification,_0x22bd09[_0x240d94(0x177)],_0x22bd09[_0x240d94(0x181)]),bootstrap['Modal'][_0x240d94(0x17e)](document[_0x240d94(0x12a)](_0x22bd09[_0x240d94(0x23d)]))['hide'](),loadGlobalAppointments();}catch(_0x50c955){showNotification(_0x22bd09['cvpPd'](_0x22bd09['JsfYN'],_0x50c955[_0x240d94(0x108)]),_0x22bd09[_0x240d94(0x189)]);}}async function updateAppointment(_0x2f365c){const _0x2a9b8e=_0x5cb18d,_0xaeb64={'OwGWD':'appointmentDay','MUIHT':_0x2a9b8e(0x13e),'SUQGu':_0x2a9b8e(0x159),'czWZV':_0x2a9b8e(0x14b),'lQlfU':_0x2a9b8e(0x18a),'YnXjh':function(_0x2531b8,_0x19c71c){return _0x2531b8||_0x19c71c;},'mSAUv':_0x2a9b8e(0x138),'qeuAU':_0x2a9b8e(0x1be),'cbZTV':function(_0x5e4b8b,_0x562f84,_0x4b59f9){return _0x5e4b8b(_0x562f84,_0x4b59f9);},'smkXv':function(_0x4e17a4,_0x5049f4,_0xf010c6,_0x3fea7c){return _0x4e17a4(_0x5049f4,_0xf010c6,_0x3fea7c);},'CMEVv':_0x2a9b8e(0x197),'jKtEi':_0x2a9b8e(0x1de),'muYea':'success','StdMA':_0x2a9b8e(0xe1),'KzvHV':function(_0x587548,_0x4eda0a){return _0x587548+_0x4eda0a;},'QPNUm':_0x2a9b8e(0x154)},_0x6b7bea=document[_0x2a9b8e(0x12a)](_0xaeb64[_0x2a9b8e(0xd2)])['value']['trim'](),_0x105e65=document[_0x2a9b8e(0x12a)](_0xaeb64['MUIHT'])['value']['trim'](),_0xa028bc=document[_0x2a9b8e(0x12a)](_0xaeb64[_0x2a9b8e(0xef)])[_0x2a9b8e(0xee)][_0x2a9b8e(0x211)](),_0xba4c0d=document[_0x2a9b8e(0x12a)](_0xaeb64[_0x2a9b8e(0x227)])[_0x2a9b8e(0xee)][_0x2a9b8e(0x211)](),_0xfd5ef7=document[_0x2a9b8e(0x12a)](_0xaeb64[_0x2a9b8e(0x1f4)])['value'];if(_0xaeb64[_0x2a9b8e(0x238)](!_0x6b7bea,!_0x105e65)||!_0xa028bc||!_0xba4c0d||!_0xfd5ef7){showNotification(_0xaeb64[_0x2a9b8e(0x1d9)],_0xaeb64[_0x2a9b8e(0x182)]);return;}const _0x57e786=_0x6b7bea+_0x2a9b8e(0xd1)+_0x105e65+'\x20-\x20'+_0xa028bc+_0x2a9b8e(0xd1)+_0xba4c0d;try{await _0xaeb64[_0x2a9b8e(0x17d)](updateDoc,_0xaeb64[_0x2a9b8e(0x1e1)](doc,db,_0xaeb64[_0x2a9b8e(0x149)],_0x2f365c),{'title':_0x57e786,'time':_0xfd5ef7,'updatedAt':new Date()}),_0xaeb64['cbZTV'](showNotification,_0xaeb64[_0x2a9b8e(0x175)],_0xaeb64[_0x2a9b8e(0x24c)]),bootstrap[_0x2a9b8e(0x185)]['getInstance'](document[_0x2a9b8e(0x12a)](_0xaeb64[_0x2a9b8e(0xc7)]))[_0x2a9b8e(0x1a3)](),loadGlobalAppointments();}catch(_0x455dc8){_0xaeb64[_0x2a9b8e(0x17d)](showNotification,_0xaeb64[_0x2a9b8e(0x10c)](_0xaeb64[_0x2a9b8e(0x12d)],_0x455dc8['message']),'danger');}}window[_0x5cb18d(0x23f)]=async function(_0x380111){const _0x27eeee=_0x5cb18d,_0x1c769e={'KmBHQ':function(_0x5e5732,_0x29208a){return _0x5e5732(_0x29208a);},'vwpDy':_0x27eeee(0x117),'BxkoQ':function(_0x407ccd,_0x23e10b){return _0x407ccd(_0x23e10b);},'NqgJl':function(_0x4f7c9f,_0x50355f,_0x35ae2e,_0x4218e5){return _0x4f7c9f(_0x50355f,_0x35ae2e,_0x4218e5);},'Dlsjd':_0x27eeee(0x197),'zXdEW':function(_0x2f8fb7,_0x3647aa,_0x3b8ac4){return _0x2f8fb7(_0x3647aa,_0x3b8ac4);},'wqETH':_0x27eeee(0x172),'iNWEQ':_0x27eeee(0x147),'BAFAC':function(_0x46572f){return _0x46572f();},'lCJEV':function(_0x5d11e6,_0x5b139e){return _0x5d11e6+_0x5b139e;},'HTsEP':'خطأ\x20في\x20الحذف:\x20','cWolW':_0x27eeee(0x1be)};if(!_0x1c769e[_0x27eeee(0x1e4)](confirm,_0x1c769e[_0x27eeee(0x1b8)]))return;try{await _0x1c769e[_0x27eeee(0x1f0)](deleteDoc,_0x1c769e[_0x27eeee(0xfc)](doc,db,_0x1c769e['Dlsjd'],_0x380111)),_0x1c769e[_0x27eeee(0x249)](showNotification,_0x1c769e['wqETH'],_0x1c769e[_0x27eeee(0xbb)]),_0x1c769e[_0x27eeee(0x116)](loadGlobalAppointments);}catch(_0xf45af9){_0x1c769e[_0x27eeee(0x249)](showNotification,_0x1c769e['lCJEV'](_0x1c769e[_0x27eeee(0x144)],_0xf45af9[_0x27eeee(0x108)]),_0x1c769e[_0x27eeee(0x15e)]);}};function openAddTaskModal(){const _0x4598b3=_0x5cb18d,_0xcf6d63={'KCaYW':_0x4598b3(0x209),'hhBdH':_0x4598b3(0x225),'oTsMh':_0x4598b3(0x23b),'tsHxZ':_0x4598b3(0x201),'YuEDx':_0x4598b3(0xa2),'QURgh':'saveTaskBtn','JPYHI':_0x4598b3(0xc9)},_0x55251c=_0xcf6d63[_0x4598b3(0x1c0)][_0x4598b3(0x234)]('|');let _0x8ec1ac=0x0;while(!![]){switch(_0x55251c[_0x8ec1ac++]){case'0':document[_0x4598b3(0x12a)](_0xcf6d63[_0x4598b3(0x1b5)])[_0x4598b3(0xee)]='';continue;case'1':document[_0x4598b3(0x12a)](_0xcf6d63[_0x4598b3(0xe4)])[_0x4598b3(0x1c1)]=_0xcf6d63[_0x4598b3(0x18d)];continue;case'2':document[_0x4598b3(0x12a)](_0xcf6d63[_0x4598b3(0x207)])[_0x4598b3(0xee)]='';continue;case'3':document['getElementById'](_0xcf6d63[_0x4598b3(0x199)])['textContent']=_0xcf6d63[_0x4598b3(0x1f6)];continue;case'4':document[_0x4598b3(0x12a)](_0x4598b3(0x1ba))[_0x4598b3(0xd5)]=saveTask;continue;}break;}}function openEditTaskModal(_0x10413d,_0x33e7d4){const _0x268989=_0x5cb18d,_0x4a3da1={'aYVOU':'taskTitle','bsIII':_0x268989(0x23b),'lwoUK':_0x268989(0x213),'JqhIT':'saveTaskBtn'};document[_0x268989(0x12a)]('taskId')['value']=_0x10413d,document[_0x268989(0x12a)](_0x4a3da1['aYVOU'])[_0x268989(0xee)]=_0x33e7d4[_0x268989(0x21f)],document[_0x268989(0x12a)](_0x4a3da1['bsIII'])[_0x268989(0x1c1)]=_0x4a3da1['lwoUK'],document['getElementById'](_0x4a3da1[_0x268989(0x202)])['textContent']='تحديث\x20التاسك',document[_0x268989(0x12a)](_0x268989(0x1ba))['onclick']=()=>updateTask(_0x10413d);}async function saveTask(){const _0x2aeadb=_0x5cb18d,_0x5a31f3={'uNoJa':function(_0x29ddff,_0x58bd5a,_0x371bf2){return _0x29ddff(_0x58bd5a,_0x371bf2);},'SvUYr':'يرجى\x20إدخال\x20وصف\x20التاسك!','OjOnh':_0x2aeadb(0x1be),'CCbOz':function(_0x56cbd4,_0x18f36f,_0x17099f){return _0x56cbd4(_0x18f36f,_0x17099f);},'skQnz':_0x2aeadb(0x147),'evcLO':_0x2aeadb(0x1af),'EKoOp':function(_0x43a931){return _0x43a931();},'kjGns':function(_0x126700,_0x4d508f){return _0x126700+_0x4d508f;},'vkOdx':'خطأ\x20في\x20الحفظ:\x20'},_0x332333=document['getElementById'](_0x2aeadb(0xa2))[_0x2aeadb(0xee)][_0x2aeadb(0x211)]();if(!_0x332333){_0x5a31f3[_0x2aeadb(0x170)](showNotification,_0x5a31f3[_0x2aeadb(0xc4)],_0x5a31f3[_0x2aeadb(0xbe)]);return;}try{await _0x5a31f3['CCbOz'](addDoc,collection(db,_0x2aeadb(0x11d)),{'isGlobal':!![],'title':_0x332333,'createdAt':new Date(),'createdBy':auth[_0x2aeadb(0x1b0)][_0x2aeadb(0x14d)]}),_0x5a31f3[_0x2aeadb(0x170)](showNotification,_0x2aeadb(0x1d1),_0x5a31f3[_0x2aeadb(0x19f)]),bootstrap['Modal'][_0x2aeadb(0x17e)](document['getElementById'](_0x5a31f3[_0x2aeadb(0x23a)]))[_0x2aeadb(0x1a3)](),_0x5a31f3[_0x2aeadb(0x231)](loadGlobalTasks);}catch(_0x39dcdd){_0x5a31f3[_0x2aeadb(0x170)](showNotification,_0x5a31f3['kjGns'](_0x5a31f3[_0x2aeadb(0x10e)],_0x39dcdd[_0x2aeadb(0x108)]),_0x5a31f3[_0x2aeadb(0xbe)]);}}async function updateTask(_0x1f4ac6){const _0x11f00f=_0x5cb18d,_0x5d28c7={'BLXKM':'taskTitle','vWfcP':function(_0x2fc2bd,_0x581fa1,_0x5aee1b){return _0x2fc2bd(_0x581fa1,_0x5aee1b);},'WKVKU':_0x11f00f(0x1be),'VlEyd':_0x11f00f(0x11d),'iAUqT':function(_0x569769,_0x2b8e22,_0x5d6ef8){return _0x569769(_0x2b8e22,_0x5d6ef8);},'oxOJY':_0x11f00f(0x163),'EMKJH':_0x11f00f(0x147),'EXHCp':_0x11f00f(0x1af),'dDsHH':function(_0x4f4581){return _0x4f4581();},'UAkfy':function(_0x2e18cc,_0x3651e8,_0x2c6756){return _0x2e18cc(_0x3651e8,_0x2c6756);},'ShVBx':function(_0x435985,_0x2b38f8){return _0x435985+_0x2b38f8;},'HzpPT':'خطأ\x20في\x20التحديث:\x20'},_0x2ee874=document[_0x11f00f(0x12a)](_0x5d28c7[_0x11f00f(0x198)])['value']['trim']();if(!_0x2ee874){_0x5d28c7[_0x11f00f(0x16f)](showNotification,_0x11f00f(0xf8),_0x5d28c7[_0x11f00f(0xf2)]);return;}try{await _0x5d28c7['vWfcP'](updateDoc,doc(db,_0x5d28c7[_0x11f00f(0x22d)],_0x1f4ac6),{'title':_0x2ee874,'updatedAt':new Date()}),_0x5d28c7['iAUqT'](showNotification,_0x5d28c7[_0x11f00f(0x18c)],_0x5d28c7[_0x11f00f(0x1b7)]),bootstrap[_0x11f00f(0x185)][_0x11f00f(0x17e)](document[_0x11f00f(0x12a)](_0x5d28c7[_0x11f00f(0x246)]))['hide'](),_0x5d28c7[_0x11f00f(0xa7)](loadGlobalTasks);}catch(_0x49f0be){_0x5d28c7['UAkfy'](showNotification,_0x5d28c7[_0x11f00f(0xdb)](_0x5d28c7[_0x11f00f(0xfe)],_0x49f0be[_0x11f00f(0x108)]),_0x5d28c7[_0x11f00f(0xf2)]);}}window['deleteGlobalTask']=async function(_0x2da76f){const _0x1cf7c4=_0x5cb18d,_0x2174a9={'FenlJ':function(_0x1adce2,_0x588a3e){return _0x1adce2(_0x588a3e);},'orWfm':function(_0x4bd4f6,_0x230bd0,_0x13fb2b,_0x54a5cb){return _0x4bd4f6(_0x230bd0,_0x13fb2b,_0x54a5cb);},'vPfRQ':function(_0x222438,_0x59d6d8,_0x7a3748){return _0x222438(_0x59d6d8,_0x7a3748);},'eGZrG':_0x1cf7c4(0x21e),'zpieo':function(_0x18b959){return _0x18b959();},'QpeSW':function(_0x54e9b7,_0xff4be7){return _0x54e9b7+_0xff4be7;},'mQTrd':'خطأ\x20في\x20الحذف:\x20','ElqgY':'danger'};if(!_0x2174a9['FenlJ'](confirm,_0x1cf7c4(0x195)))return;try{await _0x2174a9[_0x1cf7c4(0x148)](deleteDoc,_0x2174a9[_0x1cf7c4(0x1df)](doc,db,_0x1cf7c4(0x11d),_0x2da76f)),_0x2174a9['vPfRQ'](showNotification,_0x2174a9[_0x1cf7c4(0x21c)],'success'),_0x2174a9[_0x1cf7c4(0x125)](loadGlobalTasks);}catch(_0x3f8576){showNotification(_0x2174a9['QpeSW'](_0x2174a9['mQTrd'],_0x3f8576[_0x1cf7c4(0x108)]),_0x2174a9['ElqgY']);}};async function loadQuizResults(){const _0x3be180=_0x5cb18d,_0x381d40={'AYHac':_0x3be180(0x178),'rnefB':'div','pAbrh':_0x3be180(0x24a),'SJlmj':_0x3be180(0x120),'NVOJo':function(_0x4a7f9e,_0xd52a70,_0x173abb){return _0x4a7f9e(_0xd52a70,_0x173abb);},'JHxhj':_0x3be180(0x14c),'toEez':function(_0x1f0470,_0x4d8ba3,_0x353df0){return _0x1f0470(_0x4d8ba3,_0x353df0);},'GtERB':_0x3be180(0x161),'LAtEw':function(_0x52a725,_0x534c85){return _0x52a725(_0x534c85);},'ZmxTD':_0x3be180(0x155)},_0x416116=document[_0x3be180(0x12a)](_0x381d40['pAbrh']);_0x416116[_0x3be180(0x167)]=_0x381d40[_0x3be180(0x1e6)];try{const _0x10ccd5=query(_0x381d40[_0x3be180(0x1da)](collection,db,_0x381d40[_0x3be180(0x11c)]),_0x381d40[_0x3be180(0x13c)](orderBy,_0x381d40[_0x3be180(0x20c)],_0x3be180(0xd8))),_0x3ca20f=await _0x381d40[_0x3be180(0x171)](getDocs,_0x10ccd5);_0x416116[_0x3be180(0x167)]='';if(_0x3ca20f['empty']){_0x416116[_0x3be180(0x167)]=_0x381d40[_0x3be180(0x169)];return;}_0x3ca20f[_0x3be180(0x208)](_0xcb21ad=>{const _0x49aac7=_0x3be180,_0x13b454=_0xcb21ad['data'](),_0x162050=new Date(_0x13b454[_0x49aac7(0x161)])['toLocaleString'](_0x381d40[_0x49aac7(0xa1)]),_0x5abfb9=_0x13b454[_0x49aac7(0x1b4)]||0x0,_0x3ec4e5=document[_0x49aac7(0x134)](_0x381d40[_0x49aac7(0x1d8)]);_0x3ec4e5[_0x49aac7(0x1ec)]=_0x49aac7(0x122),_0x3ec4e5[_0x49aac7(0x167)]=_0x49aac7(0x1f7)+_0x13b454[_0x49aac7(0x1c5)]+'\x20<span\x20class=\x22text-muted\x22>(ID:\x20'+_0x13b454[_0x49aac7(0x21b)]+_0x49aac7(0x126)+_0x13b454[_0x49aac7(0x17f)]+_0x49aac7(0x248)+_0x162050+_0x49aac7(0x1e0)+_0x13b454[_0x49aac7(0x1ea)]+'/'+_0x13b454[_0x49aac7(0xf7)]+'\x20('+_0x5abfb9+_0x49aac7(0x1cc)+JSON[_0x49aac7(0x173)](_0x13b454)[_0x49aac7(0x113)](/'/g,'\x5c\x27')+_0x49aac7(0x1dd),_0x416116['appendChild'](_0x3ec4e5);});}catch(_0x59d8d0){_0x416116[_0x3be180(0x167)]=_0x3be180(0xfb)+_0x59d8d0[_0x3be180(0x108)]+_0x3be180(0xec);}}window[_0x5cb18d(0x1d6)]=function(_0xc48ed5){const _0x3b25aa=_0x5cb18d,_0xd0580={'QWwGG':function(_0x1dd154,_0x3ff2ec){return _0x1dd154+_0x3ff2ec;},'mOVnp':function(_0x4ba1ec,_0x3e5eff){return _0x4ba1ec===_0x3e5eff;},'lCNCw':_0x3b25aa(0xe0),'jCUru':'لم\x20تجب','WBcAr':_0x3b25aa(0x178),'AyoIz':_0x3b25aa(0x1ae),'tsYrC':'resultDetailModal'};let _0x49e7a9=_0x3b25aa(0x13f)+_0xc48ed5[_0x3b25aa(0x1c5)]+_0x3b25aa(0xea)+_0xc48ed5[_0x3b25aa(0x21b)]+')</h5>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>المادة:</strong>\x20'+_0xc48ed5['subjectName']+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>النتيجة:</strong>\x20'+_0xc48ed5[_0x3b25aa(0x1ea)]+'/'+_0xc48ed5['totalMCQ']+'\x20('+_0xc48ed5['percentage']+'%)</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>وقت\x20الإرسال:</strong>\x20'+new Date(_0xc48ed5['timestamp'])[_0x3b25aa(0x152)](_0xd0580['WBcAr'])+_0x3b25aa(0x1a2);_0xc48ed5[_0x3b25aa(0x14e)][_0x3b25aa(0x208)]((_0x1cd886,_0x1df117)=>{const _0x26b33c=_0x3b25aa;_0x49e7a9+='<div\x20class=\x22explanation-detail\x22>',_0x49e7a9+=_0x26b33c(0x18e)+_0xd0580[_0x26b33c(0x1ac)](_0x1df117,0x1)+':\x20'+_0x1cd886[_0x26b33c(0x12c)]+_0x26b33c(0x1c9),_0xd0580[_0x26b33c(0x1a7)](_0x1cd886[_0x26b33c(0x1ef)],_0xd0580[_0x26b33c(0x112)])?(_0x49e7a9+=_0x26b33c(0x18b)+(_0x1cd886[_0x26b33c(0x22f)]||_0xd0580['jCUru'])+'</p>',_0x49e7a9+=_0x26b33c(0x13a)+_0x1cd886[_0x26b33c(0x1c7)]+'</p>',_0x49e7a9+='<p><strong>الشرح:</strong>\x20'+_0x1cd886[_0x26b33c(0x1ad)]+_0x26b33c(0xf5)):(_0x49e7a9+=_0x26b33c(0x18b)+(_0x1cd886[_0x26b33c(0x22f)]||_0x26b33c(0x203))+'</p>',_0x49e7a9+=_0x26b33c(0x1f8)+_0x1cd886[_0x26b33c(0x1ad)]+_0x26b33c(0xf5)),_0x49e7a9+=_0x26b33c(0xec);}),document[_0x3b25aa(0x12a)](_0xd0580[_0x3b25aa(0x1b2)])[_0x3b25aa(0x167)]=_0x49e7a9;const _0x208ee4=new bootstrap['Modal'](document[_0x3b25aa(0x12a)](_0xd0580[_0x3b25aa(0x104)]));_0x208ee4[_0x3b25aa(0x160)]();};async function loadUsers(){const _0x52a19c=_0x5cb18d,_0xff08fa={'XhqKq':_0x52a19c(0xe5),'PgoPI':_0x52a19c(0x20e),'sjUXx':'2px\x20solid\x20var(--admin-danger)','CMDUK':function(_0x2d3736,_0x4f7a25){return _0x2d3736===_0x4f7a25;},'UPsyV':_0x52a19c(0x1e5),'pofZQ':_0x52a19c(0x229),'WxGaR':_0x52a19c(0x187),'NWtdR':_0x52a19c(0x20f),'qFbiY':_0x52a19c(0x127),'pcNTf':function(_0x3670bf,_0x1f8358){return _0x3670bf!==_0x1f8358;},'EUGsR':function(_0x575d23,_0x4a6168){return _0x575d23===_0x4a6168;},'cDOHp':_0x52a19c(0x192),'PfonW':_0x52a19c(0x14f),'GDUis':_0x52a19c(0x179),'ZkGRY':_0x52a19c(0xc8),'LNqUQ':_0x52a19c(0x158),'xNRuF':_0x52a19c(0x120),'JVDqe':function(_0x4f1057,_0x2df7fd){return _0x4f1057(_0x2df7fd);},'OANDA':_0x52a19c(0xcc)},_0x32d581=document[_0x52a19c(0x12a)](_0xff08fa[_0x52a19c(0xbc)]);_0x32d581[_0x52a19c(0x167)]=_0xff08fa['xNRuF'];try{const _0x2d3dc7=await _0xff08fa[_0x52a19c(0x143)](getDocs,collection(db,_0xff08fa[_0x52a19c(0x218)]));_0x32d581[_0x52a19c(0x167)]='',_0x2d3dc7[_0x52a19c(0x208)](_0x26c761=>{const _0x5cec38=_0x52a19c,_0x23946d=_0x26c761[_0x5cec38(0x165)](),_0x1c7e0c=_0x23946d['banned']||![],_0x326d5c=_0x23946d[_0x5cec38(0x230)]||0x0,_0x3dd9f8=document[_0x5cec38(0x134)](_0xff08fa[_0x5cec38(0xff)]);_0x3dd9f8['className']=_0xff08fa[_0x5cec38(0x221)],_0x1c7e0c&&(_0x3dd9f8[_0x5cec38(0x191)][_0x5cec38(0xe2)]=_0x5cec38(0x186),_0x3dd9f8['style'][_0x5cec38(0x136)]=_0xff08fa['sjUXx']),_0x3dd9f8[_0x5cec38(0x167)]=_0x5cec38(0x1f7)+_0x23946d['name']+_0x5cec38(0x1d5)+(_0xff08fa[_0x5cec38(0x223)](_0x23946d[_0x5cec38(0x193)],_0x5cec38(0x229))?_0x5cec38(0xa9):_0xff08fa['UPsyV'])+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0xff08fa[_0x5cec38(0x223)](_0x23946d[_0x5cec38(0x193)],_0xff08fa['pofZQ'])?_0xff08fa['WxGaR']:_0xff08fa[_0x5cec38(0x22e)])+_0x5cec38(0xd9)+(_0x1c7e0c?'<span\x20class=\x22badge\x20badge-banned\x20ms-2\x22>محظور</span>':'')+_0x5cec38(0xa6)+_0x23946d[_0x5cec38(0x1d2)]+_0x5cec38(0xe6)+_0x23946d['id']+_0x5cec38(0x137)+(new Date(_0x23946d[_0x5cec38(0x244)]?.[_0x5cec38(0x1ff)]())['toLocaleDateString'](_0x5cec38(0x178))||_0xff08fa[_0x5cec38(0x145)])+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22small\x22><span\x20class=\x22visits-count\x22><i\x20class=\x22fas\x20fa-eye\x22></i>\x20عدد\x20الزيارات:\x20'+_0x326d5c+'</span></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22d-flex\x20flex-column\x20gap-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0xff08fa[_0x5cec38(0x130)](_0x23946d['role'],_0xff08fa['pofZQ'])?_0x5cec38(0x118)+_0x26c761['id']+_0x5cec38(0x1a0)+_0x23946d[_0x5cec38(0x193)]+_0x5cec38(0x16b)+(_0xff08fa[_0x5cec38(0xd0)](_0x23946d['role'],_0xff08fa[_0x5cec38(0x205)])?'ترقية\x20لأدمن':_0x5cec38(0xbd))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20'+(_0x1c7e0c?_0xff08fa[_0x5cec38(0x129)]:_0xff08fa['GDUis'])+'\x20btn-sm\x22\x20onclick=\x22toggleUserBan(\x27'+_0x26c761['id']+_0x5cec38(0x162)+_0x1c7e0c+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x1c7e0c?_0x5cec38(0x190):_0xff08fa[_0x5cec38(0xaf)])+_0x5cec38(0x16e)+_0x26c761['id']+_0x5cec38(0x1cb):'<span\x20class=\x22text-muted\x22>لا\x20إجراءات</span>')+_0x5cec38(0x128),_0x32d581['appendChild'](_0x3dd9f8);});}catch(_0x43b56a){_0x32d581['innerHTML']=_0x52a19c(0xac)+_0x43b56a[_0x52a19c(0x108)]+_0x52a19c(0xec);}}async function loadGlobalAppointments(){const _0x46d718=_0x5cb18d,_0x2982af={'EzEtx':_0x46d718(0xe5),'KcMJB':'user-item','tMYZG':_0x46d718(0x127),'Rtcmc':'<div\x20class=\x22text-center\x22><div\x20class=\x22spinner-border\x20text-warning\x22></div></div>','GLobe':function(_0x465ae2,_0xde3124,_0x3c60ce,_0x513869){return _0x465ae2(_0xde3124,_0x3c60ce,_0x513869);},'sedew':_0x46d718(0x197),'TIJZP':_0x46d718(0x1a1),'QxBfJ':function(_0x452495,_0x42252b,_0x33152e){return _0x452495(_0x42252b,_0x33152e);},'agoyF':_0x46d718(0xd8),'mRKrf':function(_0x3d9ed3,_0x2c7553){return _0x3d9ed3(_0x2c7553);},'UKYCp':_0x46d718(0x236)},_0x14e812=document['getElementById'](_0x46d718(0x1b6));_0x14e812['innerHTML']=_0x2982af[_0x46d718(0x1b3)];try{const _0xa10656=_0x2982af[_0x46d718(0x1e7)](query,collection(db,_0x2982af[_0x46d718(0x12b)]),_0x2982af[_0x46d718(0x1e7)](where,_0x2982af[_0x46d718(0x132)],'==',!![]),_0x2982af[_0x46d718(0x11e)](orderBy,_0x46d718(0x244),_0x2982af[_0x46d718(0xe8)])),_0x2ac181=await _0x2982af[_0x46d718(0x1fc)](getDocs,_0xa10656);_0x14e812['innerHTML']='';if(_0x2ac181['empty']){_0x14e812[_0x46d718(0x167)]=_0x2982af[_0x46d718(0xeb)];return;}_0x2ac181[_0x46d718(0x208)](_0x20140d=>{const _0x3bafaa=_0x46d718,_0x24c653=_0x20140d[_0x3bafaa(0x165)](),_0x4c0d5d=document[_0x3bafaa(0x134)](_0x2982af[_0x3bafaa(0x1fb)]);_0x4c0d5d[_0x3bafaa(0x1ec)]=_0x2982af[_0x3bafaa(0x247)],_0x4c0d5d['innerHTML']=_0x3bafaa(0x1f7)+_0x24c653[_0x3bafaa(0x21f)]+_0x3bafaa(0x1fe)+(_0x24c653[_0x3bafaa(0x188)]||_0x2982af[_0x3bafaa(0x146)])+_0x3bafaa(0x168)+_0x20140d['id']+'\x27,\x20'+JSON['stringify'](_0x24c653)[_0x3bafaa(0x113)](/'/g,'\x5c\x27')+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-edit\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-danger-sm\x20btn-sm\x22\x20onclick=\x22deleteGlobalAppointment(\x27'+_0x20140d['id']+_0x3bafaa(0x17a),_0x14e812[_0x3bafaa(0x23e)](_0x4c0d5d);});}catch(_0x242452){_0x14e812[_0x46d718(0x167)]=_0x46d718(0x19a)+_0x242452[_0x46d718(0x108)]+'</div>';}}async function loadGlobalTasks(){const _0x18b013=_0x5cb18d,_0x57f17a={'WnKTc':_0x18b013(0xe5),'KbCcK':_0x18b013(0x20e),'FhCOY':'globalTasksList','fpthW':'<div\x20class=\x22text-center\x22><div\x20class=\x22spinner-border\x20text-warning\x22></div></div>','HnJrI':function(_0x4ca0a8,_0x45c4ba,_0x84bf6f,_0xadf8e6){return _0x4ca0a8(_0x45c4ba,_0x84bf6f,_0xadf8e6);},'ZnglF':function(_0x4876b3,_0x842ce1,_0x2827ce){return _0x4876b3(_0x842ce1,_0x2827ce);},'GuZUm':function(_0x234006,_0x24321d,_0x162eeb,_0x437061){return _0x234006(_0x24321d,_0x162eeb,_0x437061);},'UUvdk':_0x18b013(0x1a1),'qtPug':function(_0x13e346,_0xd9d423,_0x58971f){return _0x13e346(_0xd9d423,_0x58971f);},'KKZma':'desc','cPesK':function(_0x4d683b,_0x1056ce){return _0x4d683b(_0x1056ce);},'bFCGN':_0x18b013(0x184)},_0x59cdfb=document[_0x18b013(0x12a)](_0x57f17a[_0x18b013(0x151)]);_0x59cdfb[_0x18b013(0x167)]=_0x57f17a[_0x18b013(0x1c6)];try{const _0x4c33a9=_0x57f17a[_0x18b013(0x240)](query,_0x57f17a[_0x18b013(0x23c)](collection,db,'tasks'),_0x57f17a[_0x18b013(0x1fa)](where,_0x57f17a[_0x18b013(0x103)],'==',!![]),_0x57f17a[_0x18b013(0xd3)](orderBy,_0x18b013(0x244),_0x57f17a['KKZma'])),_0x5f4810=await _0x57f17a['cPesK'](getDocs,_0x4c33a9);_0x59cdfb[_0x18b013(0x167)]='';if(_0x5f4810[_0x18b013(0x1c2)]){_0x59cdfb[_0x18b013(0x167)]=_0x57f17a[_0x18b013(0x166)];return;}_0x5f4810[_0x18b013(0x208)](_0x2ea55a=>{const _0x4595b5=_0x18b013,_0x4d2220=_0x2ea55a['data'](),_0x1ba72f=document['createElement'](_0x57f17a['WnKTc']);_0x1ba72f[_0x4595b5(0x1ec)]=_0x57f17a['KbCcK'],_0x1ba72f[_0x4595b5(0x167)]=_0x4595b5(0x1f7)+_0x4d2220[_0x4595b5(0x21f)]+_0x4595b5(0x214)+_0x2ea55a['id']+_0x4595b5(0x162)+JSON[_0x4595b5(0x173)](_0x4d2220)['replace'](/'/g,'\x5c\x27')+_0x4595b5(0xe7)+_0x2ea55a['id']+_0x4595b5(0x17a),_0x59cdfb[_0x4595b5(0x23e)](_0x1ba72f);});}catch(_0xe3199c){_0x59cdfb['innerHTML']=_0x18b013(0x19a)+_0xe3199c[_0x18b013(0x108)]+_0x18b013(0xec);}}onAuthStateChanged(auth,async _0x7ecb1f=>{const _0x543fa2=_0x5cb18d,_0x4e5997={'JWJYn':function(_0xa2cf27,_0x1b5061,_0x5f59f6,_0x53a41a){return _0xa2cf27(_0x1b5061,_0x5f59f6,_0x53a41a);},'ilWZy':_0x543fa2(0xcc),'CqQiS':function(_0x1097a1,_0x2fc843){return _0x1097a1===_0x2fc843;},'leGJL':function(_0x338a15){return _0x338a15();},'snXoT':function(_0x2e76a7){return _0x2e76a7();},'qHRCx':function(_0x32f9b3){return _0x32f9b3();},'elifs':_0x543fa2(0x220),'GpOdV':_0x543fa2(0x243)};if(_0x7ecb1f){const _0x1d42e5=await getDoc(_0x4e5997[_0x543fa2(0x20a)](doc,db,_0x4e5997[_0x543fa2(0x1e9)],_0x7ecb1f[_0x543fa2(0x14d)]));_0x1d42e5['exists']()&&_0x4e5997[_0x543fa2(0xd6)](_0x1d42e5[_0x543fa2(0x165)]()[_0x543fa2(0x193)],_0x543fa2(0x229))?(_0x4e5997[_0x543fa2(0xb6)](loadUsers),_0x4e5997[_0x543fa2(0x226)](loadQuizResults),_0x4e5997[_0x543fa2(0x15a)](loadGlobalAppointments),_0x4e5997[_0x543fa2(0xb6)](loadGlobalTasks)):(alert(_0x4e5997[_0x543fa2(0x1f9)]),window[_0x543fa2(0xb3)]['href']=_0x4e5997[_0x543fa2(0x115)]);}else window[_0x543fa2(0xb3)][_0x543fa2(0xcf)]=_0x543fa2(0x243);}),document[_0x5cb18d(0x12a)](_0x5cb18d(0x1db))[_0x5cb18d(0x180)](_0x5cb18d(0x20d),function(){const _0x2fbd54=_0x5cb18d;signOut(auth)[_0x2fbd54(0x183)](()=>{const _0xce4baa=_0x2fbd54;window['location'][_0xce4baa(0xcf)]=_0xce4baa(0x243);});}),document[_0x5cb18d(0x12a)](_0x5cb18d(0xf4))[_0x5cb18d(0x180)](_0x5cb18d(0x20d),saveAppointment),document['getElementById'](_0x5cb18d(0x1ba))['addEventListener']('click',saveTask),document[_0x5cb18d(0x139)](_0x5cb18d(0xba))[_0x5cb18d(0x180)]('click',openAddAppointmentModal),document[_0x5cb18d(0x139)](_0x5cb18d(0x17b))[_0x5cb18d(0x180)](_0x5cb18d(0x20d),openAddTaskModal);function showNotification(_0x514e72,_0x183ce6){const _0x146311=_0x5cb18d,_0x31434a={'LglGW':'div','wIZez':function(_0x3a5e4,_0x75766b,_0x3e76d2){return _0x3a5e4(_0x75766b,_0x3e76d2);}},_0x5b9932=document['createElement'](_0x31434a['LglGW']);_0x5b9932[_0x146311(0x1ec)]='alert\x20alert-'+_0x183ce6+_0x146311(0x19b),_0x5b9932[_0x146311(0x191)][_0x146311(0x15b)]=0x270f,_0x5b9932['innerHTML']=_0x146311(0xdf)+_0x514e72,document[_0x146311(0x19d)][_0x146311(0x23e)](_0x5b9932),_0x31434a['wIZez'](setTimeout,()=>_0x5b9932[_0x146311(0xce)](),0xbb8);}function _0x2ee12f(_0x3c2ba7){const _0x20b243=_0x5cb18d,_0x17638a={'eKBqG':_0x20b243(0x1aa),'kZZJA':_0x20b243(0x141),'iDFqI':function(_0x112df9,_0x1f49fa){return _0x112df9!==_0x1f49fa;},'iZtUO':function(_0x400801,_0x25ce5a){return _0x400801+_0x25ce5a;},'gWaKI':function(_0x4178ff,_0x21eade){return _0x4178ff/_0x21eade;},'YbosQ':_0x20b243(0x1f1),'xarPV':function(_0x2d620c,_0x29c306){return _0x2d620c===_0x29c306;},'aEvRy':function(_0x89ebfd,_0x44d59f){return _0x89ebfd%_0x44d59f;},'IsHBb':_0x20b243(0xf3),'MDXGd':_0x20b243(0x17c),'zouqT':_0x20b243(0x15c),'wfkVo':function(_0x334d61,_0x3faf95){return _0x334d61+_0x3faf95;},'kRVwy':function(_0x4aeef1,_0x506f65){return _0x4aeef1(_0x506f65);}};function _0x3301cb(_0x211498){const _0x11e4f0=_0x20b243;if(typeof _0x211498===_0x17638a[_0x11e4f0(0x1a4)])return function(_0x28c6f7){}[_0x11e4f0(0x101)]('while\x20(true)\x20{}')['apply'](_0x17638a['kZZJA']);else _0x17638a[_0x11e4f0(0x210)](_0x17638a[_0x11e4f0(0xaa)]('',_0x17638a[_0x11e4f0(0xb0)](_0x211498,_0x211498))[_0x17638a[_0x11e4f0(0x105)]],0x1)||_0x17638a['xarPV'](_0x17638a[_0x11e4f0(0x1f2)](_0x211498,0x14),0x0)?function(){return!![];}[_0x11e4f0(0x101)](_0x17638a[_0x11e4f0(0x10d)]+_0x17638a[_0x11e4f0(0x150)])[_0x11e4f0(0x233)](_0x17638a[_0x11e4f0(0xf1)]):function(){return![];}[_0x11e4f0(0x101)](_0x17638a['wfkVo'](_0x17638a[_0x11e4f0(0x10d)],'gger'))[_0x11e4f0(0x10b)](_0x11e4f0(0x111));_0x3301cb(++_0x211498);}try{if(_0x3c2ba7)return _0x3301cb;else _0x17638a[_0x20b243(0xab)](_0x3301cb,0x0);}catch(_0x544550){}}
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    updateDoc, 
+    collection, 
+    getDocs, 
+    deleteDoc, 
+    addDoc, 
+    query, 
+    where, 
+    orderBy 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
+    authDomain: "sit-el-kol.firebaseapp.com",
+    projectId: "sit-el-kol",
+    storageBucket: "sit-el-kol.firebasestorage.app",
+    messagingSenderId: "573924344198",
+    appId: "1:573924344198:web:fec2e9a54c1c152cd16c07",
+    measurementId: "G-CWVJDKPS0M"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentDocId = null;
+
+// =============== دوال إدارة المستخدمين ===============
+async function toggleUserRole(userId, currentRole) {
+    if (!confirm(`هل أنت متأكد أنك تريد ${currentRole === 'user' ? 'ترقية' : 'تنزيل'} هذا المستخدم؟`)) return;
+    try {
+        await updateDoc(doc(db, "users", userId), { role: currentRole === 'user' ? 'admin' : 'user' });
+        showNotification('تم تعديل صلاحية المستخدم بنجاح!', 'success');
+        loadUsers();
+    } catch (error) {
+        showNotification('خطأ في تعديل الصلاحية: ' + error.message, 'danger');
+    }
+}
+
+async function toggleUserBan(userId, isCurrentlyBanned) {
+    try {
+        await updateDoc(doc(db, "users", userId), { banned: !isCurrentlyBanned });
+        showNotification(isCurrentlyBanned ? 'تم إلغاء حظر المستخدم!' : 'تم حظر المستخدم!', 'warning');
+        loadUsers();
+    } catch (error) {
+        showNotification('خطأ في تعديل حالة الحظر: ' + error.message, 'danger');
+    }
+}
+
+async function deleteUser(userId) {
+    if (!confirm('هل أنت متأكد أنك تريد حذف هذا المستخدم نهائيًا؟')) return;
+    try {
+        await deleteDoc(doc(db, "users", userId));
+        showNotification('تم حذف المستخدم بنجاح!', 'success');
+        loadUsers();
+    } catch (error) {
+        showNotification('خطأ في حذف المستخدم: ' + error.message, 'danger');
+    }
+}
+
+async function manageUserPermissions(userId) {
+    const userDoc = await getDoc(doc(db, "users", userId));
+    if (!userDoc.exists()) return;
+    const userData = userDoc.data();
+    const restrictedPages = userData.restrictedPages || [];
+    const modal = document.createElement('div');
+    modal.className = 'modal fade show';
+    modal.style.display = 'block';
+    modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">🔐 إدارة صلاحيات: ${userData.name}</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="closeModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <p>اختر الصفحات اللي عايز تمنع المستخدم من دخولها:</p>
+                    <div id="userPermissionsList"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+                    <button type="button" class="btn btn-admin" onclick="saveUserPermissions('${userId}')">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show"></div>
+    `;
+    document.body.appendChild(modal);
+    const pages = [
+        { id: 'lectures', name: 'محاضراتي' },
+        { id: 'sections', name: 'السكاشن' },
+        { id: 'appointments', name: 'مواعيدي' },
+        { id: 'tasks', name: 'تاسكاتي' },
+        { id: 'summaries', name: 'تلخيصاتي' },
+        { id: 'questions', name: 'أسئلتي' }
+    ];
+    const permissionsList = document.getElementById('userPermissionsList');
+    permissionsList.innerHTML = pages.map(page => `
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="userPage_${page.id}" ${restrictedPages.includes(page.id) ? 'checked' : ''}>
+            <label class="form-check-label" for="userPage_${page.id}">${page.name}</label>
+        </div>
+    `).join('');
+}
+
+function closeModal() {
+    const modal = document.querySelector('.modal');
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (modal) modal.remove();
+    if (backdrop) backdrop.remove();
+}
+
+async function saveUserPermissions(userId) {
+    const checkboxes = document.querySelectorAll('#userPermissionsList input[type="checkbox"]');
+    const restrictedPages = [];
+    checkboxes.forEach(cb => {
+        if (cb.checked) restrictedPages.push(cb.id.replace('userPage_', ''));
+    });
+    try {
+        await updateDoc(doc(db, "users", userId), { restrictedPages });
+        showNotification('تم حفظ صلاحيات المستخدم بنجاح!', 'success');
+        closeModal();
+        loadUsers();
+    } catch (error) {
+        showNotification('خطأ في حفظ الصلاحيات: ' + error.message, 'danger');
+    }
+}
+
+// =============== دوال إدارة المواعيد ===============
+function openAddAppointmentModal() {
+    document.getElementById('appointmentId').value = '';
+    document.getElementById('appointmentDay').value = '';
+    document.getElementById('appointmentSubject').value = '';
+    document.getElementById('appointmentDoctor').value = '';
+    document.getElementById('appointmentLocation').value = '';
+    document.getElementById('appointmentTime').value = '';
+    document.getElementById('appointmentModalLabel').textContent = '➕ إضافة موعد عام';
+    document.getElementById('saveAppointmentBtn').textContent = 'حفظ الموعد';
+    document.getElementById('saveAppointmentBtn').onclick = saveAppointment;
+}
+
+function openEditAppointmentModal(id, data) {
+    document.getElementById('appointmentId').value = id;
+    const parts = (data.title || '').split(' - ');
+    document.getElementById('appointmentDay').value = parts[0] || '';
+    document.getElementById('appointmentSubject').value = parts[1] || '';
+    document.getElementById('appointmentDoctor').value = parts[2] || '';
+    document.getElementById('appointmentLocation').value = parts[3] || '';
+    document.getElementById('appointmentTime').value = data.time || '';
+    document.getElementById('appointmentModalLabel').textContent = '✏️ تعديل موعد عام';
+    document.getElementById('saveAppointmentBtn').textContent = 'تحديث الموعد';
+    document.getElementById('saveAppointmentBtn').onclick = () => updateAppointment(id);
+}
+
+async function saveAppointment() {
+    const day = document.getElementById('appointmentDay').value.trim();
+    const subject = document.getElementById('appointmentSubject').value.trim();
+    const doctor = document.getElementById('appointmentDoctor').value.trim();
+    const location = document.getElementById('appointmentLocation').value.trim();
+    const time = document.getElementById('appointmentTime').value;
+    if (!day || !subject || !doctor || !location || !time) {
+        showNotification('يرجى ملء جميع الحقول!', 'danger');
+        return;
+    }
+    const title = `${day} - ${subject} - ${doctor} - ${location}`;
+    try {
+        await addDoc(collection(db, "appointments"), {
+            isGlobal: true,
+            title: title, 
+            time: time,
+            createdAt: new Date(),
+            createdBy: auth.currentUser.uid
+        });
+        showNotification('تم إضافة الموعد العام بنجاح!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('appointmentModal')).hide();
+        loadGlobalAppointments();
+    } catch (error) {
+        showNotification('خطأ في الحفظ: ' + error.message, 'danger');
+    }
+}
+
+async function updateAppointment(id) {
+    const day = document.getElementById('appointmentDay').value.trim();
+    const subject = document.getElementById('appointmentSubject').value.trim();
+    const doctor = document.getElementById('appointmentDoctor').value.trim();
+    const location = document.getElementById('appointmentLocation').value.trim();
+    const time = document.getElementById('appointmentTime').value;
+    if (!day || !subject || !doctor || !location || !time) {
+        showNotification('يرجى ملء جميع الحقول!', 'danger');
+        return;
+    }
+    const title = `${day} - ${subject} - ${doctor} - ${location}`;
+    try {
+        await updateDoc(doc(db, "appointments", id), {
+            title: title,
+            time: time,
+            updatedAt: new Date()
+        });
+        showNotification('تم تحديث الموعد بنجاح!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('appointmentModal')).hide();
+        loadGlobalAppointments();
+    } catch (error) {
+        showNotification('خطأ في التحديث: ' + error.message, 'danger');
+    }
+}
+
+async function deleteGlobalAppointment(id) {
+    if (!confirm('هل أنت متأكد من حذف هذا الموعد العام؟ سيختفي من جميع المستخدمين!')) return;
+    try {
+        await deleteDoc(doc(db, "appointments", id));
+        showNotification('تم حذف الموعد العام!', 'success');
+        loadGlobalAppointments();
+    } catch (error) {
+        showNotification('خطأ في الحذف: ' + error.message, 'danger');
+    }
+}
+
+// =============== دوال إدارة التاسكات ===============
+function openAddTaskModal() {
+    document.getElementById('taskId').value = '';
+    document.getElementById('taskTitle').value = '';
+    document.getElementById('taskModalLabel').textContent = '➕ إضافة تاسك عام';
+    document.getElementById('saveTaskBtn').textContent = 'حفظ التاسك';
+    document.getElementById('saveTaskBtn').onclick = saveTask;
+}
+
+function openEditTaskModal(id, data) {
+    document.getElementById('taskId').value = id;
+    document.getElementById('taskTitle').value = data.title;
+    document.getElementById('taskModalLabel').textContent = '✏️ تعديل تاسك عام';
+    document.getElementById('saveTaskBtn').textContent = 'تحديث التاسك';
+    document.getElementById('saveTaskBtn').onclick = () => updateTask(id);
+}
+
+async function saveTask() {
+    const title = document.getElementById('taskTitle').value.trim();
+    if (!title) {
+        showNotification('يرجى إدخال وصف التاسك!', 'danger');
+        return;
+    }
+    try {
+        await addDoc(collection(db, "tasks"), {
+            isGlobal: true,
+            title: title,
+            createdAt: new Date(),
+            createdBy: auth.currentUser.uid
+        });
+        showNotification('تم إضافة التاسك العام بنجاح!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
+        loadGlobalTasks();
+    } catch (error) {
+        showNotification('خطأ في الحفظ: ' + error.message, 'danger');
+    }
+}
+
+async function updateTask(id) {
+    const title = document.getElementById('taskTitle').value.trim();
+    if (!title) {
+        showNotification('يرجى إدخال وصف التاسك!', 'danger');
+        return;
+    }
+    try {
+        await updateDoc(doc(db, "tasks", id), {
+            title: title,
+            updatedAt: new Date()
+        });
+        showNotification('تم تحديث التاسك بنجاح!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
+        loadGlobalTasks();
+    } catch (error) {
+        showNotification('خطأ في التحديث: ' + error.message, 'danger');
+    }
+}
+
+async function deleteGlobalTask(id) {
+    if (!confirm('هل أنت متأكد من حذف هذا التاسك العام؟ سيختفي من جميع المستخدمين!')) return;
+    try {
+        await deleteDoc(doc(db, "tasks", id));
+        showNotification('تم حذف التاسك العام!', 'success');
+        loadGlobalTasks();
+    } catch (error) {
+        showNotification('خطأ في الحذف: ' + error.message, 'danger');
+    }
+}
+
+// =============== دوال نتائج الاختبارات ===============
+async function loadQuizResults() {
+    const container = document.getElementById('quizResultsList');
+    container.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-warning" role="status"><span class="visually-hidden">جارٍ التحميل...</span></div></div>';
+    try {
+        const q = query(collection(db, "quiz_submissions"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
+        container.innerHTML = '';
+        if (snapshot.empty) {
+            container.innerHTML = '<div class="alert alert-info text-center py-4 rounded-3">لا توجد نتائج اختبارات حتى الآن.</div>';
+            return;
+        }
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const docId = doc.id;
+            const time = new Date(data.timestamp).toLocaleString('ar-EG', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+            const percentage = data.percentage || 0;
+            const badgeClass = percentage >= 80 ? 'bg-success' : percentage >= 60 ? 'bg-warning' : 'bg-danger';
+
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result-item p-3 mb-2';
+            resultDiv.style.background = 'rgba(255, 255, 255, 0.08)';
+            resultDiv.style.border = '1px solid rgba(255, 215, 0, 0.15)';
+            resultDiv.style.borderRadius = '12px';
+
+            resultDiv.innerHTML = `
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
+                    <div class="flex-grow-1">
+                        <h5 class="mb-1 fw-bold text-light">
+                            ${data.studentName}
+                            <small class="text-muted d-block d-md-inline">(ID: ${data.studentId})</small>
+                        </h5>
+                        <div class="text-muted small mb-1">
+                            <i class="fas fa-book me-1"></i> ${data.subjectName}
+                            <span class="mx-2">•</span>
+                            <i class="fas fa-clock me-1"></i> ${time}
+                        </div>
+                        <span class="badge ${badgeClass} rounded-pill px-3 py-2 fw-bold">
+                            ${data.score}/${data.totalMCQ} (${percentage}%)
+                        </span>
+                    </div>
+                    <div class="d-flex flex-wrap gap-1">
+                        <button class="btn btn-outline-info btn-sm px-3 view-btn">
+                            <i class="fas fa-eye"></i> عرض
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm px-3 delete-btn">
+                            <i class="fas fa-trash-alt"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(resultDiv);
+
+            // ✅ ربط الأحداث ديناميكيًا (الطريقة الصحيحة داخل module)
+            const viewBtn = resultDiv.querySelector('.view-btn');
+            const deleteBtn = resultDiv.querySelector('.delete-btn');
+
+            if (viewBtn) {
+                viewBtn.addEventListener('click', () => viewResultDetails(data, docId));
+            }
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => deleteQuizResultDirect(docId));
+            }
+        });
+    } catch (error) {
+        console.error("خطأ في تحميل النتائج:", error);
+        container.innerHTML = `<div class="alert alert-danger text-center rounded-3 py-3">${error.message || 'حدث خطأ غير متوقع.'}</div>`;
+    }
+}
+
+function viewResultDetails(data, docId) {
+    currentDocId = docId;
+
+    let html = `
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h5 class="fw-bold text-warning mb-1">${data.studentName}</h5>
+                <p class="text-light mb-1"><i class="fas fa-id-card me-2"></i> ID: ${data.studentId}</p>
+                <p class="text-light mb-0"><i class="fas fa-book me-2"></i> <strong>المادة:</strong> ${data.subjectName}</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="bg-dark p-2 d-inline-block rounded">
+                    <span class="fw-bold text-success">${data.score}/${data.totalMCQ}</span>
+                    <span class="text-light ms-2">(${data.percentage}%)</span>
+                </div>
+                <p class="text-light small mb-0 mt-1">
+                    <i class="fas fa-calendar-check me-1"></i>
+                    ${new Date(data.timestamp).toLocaleString('ar-EG')}
+                </p>
+            </div>
+        </div>
+        <hr class="border-secondary my-3">
+        <h5 class="mb-3 text-warning"><i class="fas fa-list-ol me-2"></i> الإجابات الكاملة</h5>
+    `;
+
+    data.answers.forEach((ans, i) => {
+        const isCorrect = ans.type === 'mcq' && ans.userAnswer === ans.correctAnswer;
+        html += `
+            <div class="explanation-detail mb-4 p-3" style="background: rgba(40, 45, 75, 0.6); border-radius: 10px;">
+                <h6 class="mb-2 text-warning">
+                    <span class="badge bg-secondary me-2">${i + 1}</span>
+                    ${ans.question}
+                </h6>
+        `;
+        if (ans.type === 'mcq') {
+            const userAnswerText = ans.userAnswer !== undefined && ans.userAnswer !== null 
+                ? ans.userAnswer : '<span class="text-muted">لم تُجب</span>';
+            html += `
+                <p class="mb-1"><strong>إجابتك:</strong> 
+                    <span class="${isCorrect ? 'text-success' : 'text-danger'} fw-bold">${userAnswerText}</span>
+                    ${isCorrect ? '<span class="text-success mx-1">✓</span>' : '<span class="text-danger mx-1">✗</span>'}
+                </p>
+                <p class="mb-1 text-info"><strong>الإجابة الصحيحة:</strong> ${ans.correctAnswer}</p>
+                <p class="mb-0 text-light fst-italic"><strong>الشرح:</strong> ${ans.explanation || '—'}</p>
+            `;
+        } else {
+            html += `
+                <p class="mb-1 text-light"><strong>إجابتك:</strong></p>
+                <div class="bg-dark p-2 rounded mb-2" style="min-height:60px; white-space:pre-wrap;">
+                    ${ans.userAnswer || '<span class="text-muted">لم تُجب</span>'}
+                </div>
+                <p class="mb-1 text-light"><strong>الإجابة النموذجية:</strong></p>
+                <div class="bg-dark p-2 rounded" style="min-height:60px; white-space:pre-wrap;">
+                    ${ans.explanation || '—'}
+                </div>
+            `;
+        }
+        html += `</div>`;
+    });
+
+    document.getElementById('resultDetailBody').innerHTML = html;
+
+    const delBtn = document.getElementById('deleteResultBtn');
+    if (delBtn) {
+        delBtn.replaceWith(delBtn.cloneNode(true));
+        document.getElementById('deleteResultBtn').addEventListener('click', () => {
+            if (confirm('⚠️ حذف نهائي؟ لا يمكن التراجع.')) {
+                deleteResultFromDB(currentDocId);
+            }
+        });
+    }
+
+    const modal = new bootstrap.Modal(document.getElementById('resultDetailModal'));
+    modal.show();
+}
+
+async function deleteQuizResultDirect(docId) {
+    if (!confirm('⚠️ هل أنت متأكد من حذف نتيجة هذا الطالب؟\nلا يمكن التراجع.')) return;
+    try {
+        await deleteDoc(doc(db, "quiz_submissions", docId));
+        showNotification('✓ تم الحذف بنجاح.', 'success');
+        loadQuizResults();
+    } catch (error) {
+        console.error("فشل الحذف:", error);
+        showNotification('❌ خطأ: ' + (error.message || 'فشل الحذف'), 'danger');
+    }
+}
+
+async function deleteResultFromDB(docId) {
+    try {
+        await deleteDoc(doc(db, "quiz_submissions", docId));
+        bootstrap.Modal.getInstance(document.getElementById('resultDetailModal'))?.hide();
+        showNotification('✓ تم الحذف بنجاح.', 'success');
+        loadQuizResults();
+    } catch (error) {
+        console.error("فشل الحذف:", error);
+        showNotification('❌ خطأ: ' + (error.message || 'فشل الحذف'), 'danger');
+    }
+}
+
+// =============== دوال تحميل البيانات (محدثة لاستخدام addEventListener) ===============
+async function loadUsers() {
+    const usersList = document.getElementById('usersList');
+    usersList.innerHTML = '<div class="text-center"><div class="spinner-border text-warning"></div></div>';
+    try {
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        usersList.innerHTML = '';
+        usersSnapshot.forEach(doc => {
+            const user = doc.data();
+            const userId = doc.id;
+            const isBanned = user.banned || false;
+            const visitsCount = user.visitsCount || 0;
+            const userDiv = document.createElement('div');
+            userDiv.className = 'user-item';
+            if (isBanned) {
+                userDiv.style.opacity = '0.7';
+                userDiv.style.border = '2px solid var(--admin-danger)';
+            }
+            userDiv.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5>${user.name} 
+                            <span class="badge ${user.role === 'admin' ? 'badge-admin' : 'badge-user'}">
+                                ${user.role === 'admin' ? 'أدمن' : 'مستخدم'}
+                            </span>
+                            ${isBanned ? '<span class="badge badge-banned ms-2">محظور</span>' : ''}
+                        </h5>
+                        <p class="mb-1">${user.email}</p>
+                        <p class="small">ID: ${user.id} | منذ: ${new Date(user.createdAt?.toDate()).toLocaleDateString('ar-EG') || 'غير محدد'}</p>
+                        <p class="small"><span class="visits-count"><i class="fas fa-eye"></i> عدد الزيارات: ${visitsCount}</span></p>
+                    </div>
+                    <div class="d-flex flex-column gap-1">
+                        ${user.role !== 'admin' ? `
+                        <button class="btn btn-admin btn-sm toggle-role-btn">
+                            ${user.role === 'user' ? 'ترقية لأدمن' : 'تنزيل لمستخدم عادي'}
+                        </button>
+                        <button class="btn ${isBanned ? 'btn-warning-sm' : 'btn-danger-sm'} btn-sm toggle-ban-btn">
+                            ${isBanned ? '<i class="fas fa-user-check"></i> إلغاء الحظر' : '<i class="fas fa-user-slash"></i> حظر'}
+                        </button>
+                        <button class="btn btn-danger-sm btn-sm delete-user-btn">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>` : '<span class="text-muted">لا إجراءات</span>'}
+                    </div>
+                </div>
+            `;
+            usersList.appendChild(userDiv);
+
+            // ✅ ربط أزرار المستخدمين ديناميكيًا أيضًا (لتحسين التوافق)
+            const toggleRoleBtn = userDiv.querySelector('.toggle-role-btn');
+            const toggleBanBtn = userDiv.querySelector('.toggle-ban-btn');
+            const deleteUserBtn = userDiv.querySelector('.delete-user-btn');
+
+            if (toggleRoleBtn) {
+                toggleRoleBtn.addEventListener('click', () => toggleUserRole(userId, user.role));
+            }
+            if (toggleBanBtn) {
+                toggleBanBtn.addEventListener('click', () => toggleUserBan(userId, isBanned));
+            }
+            if (deleteUserBtn) {
+                deleteUserBtn.addEventListener('click', () => deleteUser(userId));
+            }
+        });
+    } catch (error) {
+        usersList.innerHTML = `<div class="alert alert-danger">خطأ في تحميل المستخدمين: ${error.message}</div>`;
+    }
+}
+
+async function loadGlobalAppointments() {
+    const list = document.getElementById('globalAppointmentsList');
+    list.innerHTML = '<div class="text-center"><div class="spinner-border text-warning"></div></div>';
+    try {
+        const q = query(collection(db, "appointments"), where("isGlobal", "==", true), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        list.innerHTML = '';
+        if (snapshot.empty) {
+            list.innerHTML = '<div class="alert alert-info">لا توجد مواعيد عامة حتى الآن.</div>';
+            return;
+        }
+        snapshot.forEach(doc => {
+            const appt = doc.data();
+            const docId = doc.id;
+            const div = document.createElement('div');
+            div.className = 'user-item';
+            div.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5>${appt.title}</h5>
+                        <p class="text-warning"><i class="far fa-clock"></i> ${appt.time || 'غير محدد'}</p>
+                    </div>
+                    <div class="d-flex gap-1">
+                        <button class="btn btn-admin btn-sm edit-appt-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger-sm btn-sm delete-appt-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            list.appendChild(div);
+
+            const editBtn = div.querySelector('.edit-appt-btn');
+            const deleteBtn = div.querySelector('.delete-appt-btn');
+
+            if (editBtn) {
+                editBtn.addEventListener('click', () => openEditAppointmentModal(docId, appt));
+            }
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => deleteGlobalAppointment(docId));
+            }
+        });
+    } catch (error) {
+        console.error("خطأ في تحميل المواعيد:", error);
+        list.innerHTML = `<div class="alert alert-danger">خطأ: ${error.message}</div>`;
+    }
+}
+
+async function loadGlobalTasks() {
+    const list = document.getElementById('globalTasksList');
+    list.innerHTML = '<div class="text-center"><div class="spinner-border text-warning"></div></div>';
+    try {
+        const q = query(collection(db, "tasks"), where("isGlobal", "==", true), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+        list.innerHTML = '';
+        if (snapshot.empty) {
+            list.innerHTML = '<div class="alert alert-info">لا توجد تاسكات عامة حتى الآن.</div>';
+            return;
+        }
+        snapshot.forEach(doc => {
+            const task = doc.data();
+            const docId = doc.id;
+            const div = document.createElement('div');
+            div.className = 'user-item';
+            div.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5>${task.title}</h5>
+                    </div>
+                    <div class="d-flex gap-1">
+                        <button class="btn btn-admin btn-sm edit-task-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger-sm btn-sm delete-task-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            list.appendChild(div);
+
+            const editBtn = div.querySelector('.edit-task-btn');
+            const deleteBtn = div.querySelector('.delete-task-btn');
+
+            if (editBtn) {
+                editBtn.addEventListener('click', () => openEditTaskModal(docId, task));
+            }
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => deleteGlobalTask(docId));
+            }
+        });
+    } catch (error) {
+        console.error("خطأ في تحميل التاسكات:", error);
+        list.innerHTML = `<div class="alert alert-danger">خطأ: ${error.message}</div>`;
+    }
+}
+
+// =============== دوال مساعدة ===============
+function showNotification(msg, type) {
+    const div = document.createElement('div');
+    div.className = `alert alert-${type} position-fixed bottom-0 end-0 m-3`;
+    div.style.zIndex = 9999;
+    div.innerHTML = `<i class="fas fa-bell me-2"></i>${msg}`;
+    document.body.appendChild(div);
+    setTimeout(() => div.remove(), 3000);
+}
+
+// =============== التحميل عند التشغيل ===============
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists() && userDoc.data().role === "admin") {
+            loadUsers();
+            loadQuizResults(); 
+            loadGlobalAppointments();
+            loadGlobalTasks();
+        } else {
+            alert("ليس لديك صلاحية الوصول لهذه الصفحة!");
+            window.location.href = 'index.html';
+        }
+    } else {
+        window.location.href = 'index.html';
+    }
+});
+
+document.getElementById('adminLogout').addEventListener('click', () => {
+    signOut(auth).then(() => window.location.href = 'index.html');
+});
+
+document.getElementById('saveAppointmentBtn').addEventListener('click', saveAppointment);
+document.getElementById('saveTaskBtn').addEventListener('click', saveTask);
+document.querySelector('[data-bs-target="#appointmentModal"]').addEventListener('click', openAddAppointmentModal);
+document.querySelector('[data-bs-target="#taskModal"]').addEventListener('click', openAddTaskModal);
     </script>
 </body>
 </html>
