@@ -1,326 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-        <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اللغة العربية - ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-    /* Ensure all elements respect responsive sizing */
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
-    .lesson-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: 1.25rem;
-        margin-bottom: 1.25rem;
-        transition: transform 0.3s;
-        max-width: 100%;
-        overflow-wrap: break-word;
-    }
-
-    .lesson-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
-    }
-
-    .lesson-card h4 {
-        color: var(--text-light);
-        font-weight: 700;
-        margin-top: 0;
-        font-size: 1.25rem; /* responsive-friendly */
-    }
-
-    .lesson-list {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .lesson-list li {
-        padding: 0.7rem 1rem;
-        margin: 0.5rem 0;
-        background: rgba(30, 30, 50, 0.6);
-        border-radius: 12px;
-        border-right: 3px solid var(--accent-orange);
-        font-size: 0.95rem;
-        word-break: break-word;
-    }
-
-    /* Back to Home Button – responsive safe zone */
-    .back-to-home-btn {
-        position: fixed;
-        bottom: 16px;
-        left: 16px;
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-    }
-
-    .back-to-home-btn:hover {
-        background: #e05a2a;
-        box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
-        transform: scale(1.03);
-    }
-
-    /* Theme Toggle Button – safe on all screens */
-    .theme-toggle-btn {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        box-shadow: 0 4px 12px var(--shadow-orange);
-        transition: all 0.3s ease;
-    }
-
-    .theme-toggle-btn:hover {
-        background: var(--accent-orange-hover);
-        transform: translateY(-2px) rotate(10deg);
-    }
-
-    /* ✅ Responsive Breakpoints */
-    @media (max-width: 768px) {
-        .lesson-card {
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .lesson-card h4 {
-            font-size: 1.15rem;
-        }
-
-        .lesson-list li {
-            padding: 0.6rem 0.9rem;
-            font-size: 0.9rem;
-        }
-
-        .back-to-home-btn {
-            padding: 9px 16px;
-            font-size: 0.9rem;
-            bottom: 14px;
-            left: 14px;
-        }
-
-        .theme-toggle-btn {
-            width: 40px;
-            height: 40px;
-            top: 14px;
-            right: 14px;
-            font-size: 1rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .lesson-card {
-            padding: 0.9rem;
-        }
-
-        .lesson-card h4 {
-            font-size: 1.1rem;
-        }
-
-        .lesson-list li {
-            padding: 0.5rem 0.8rem;
-            font-size: 0.85rem;
-        }
-
-        .back-to-home-btn {
-            padding: 8px 14px;
-            font-size: 0.85rem;
-            bottom: 12px;
-            left: 12px;
-        }
-
-        .theme-toggle-btn {
-            width: 38px;
-            height: 38px;
-            top: 12px;
-            right: 12px;
-            font-size: 0.95rem;
-        }
-    }
-</style>
-</head>
-<body>
-    <div class="container py-4 py-md-5">
-        <h1 class="neon-title text-center mb-4 mb-md-5">اللغة العربية</h1>
-
-        <!-- وحدات المادة -->
-       <div class="lesson-card">
-    <h4>الوحدة 1: مدخل تأسيسي — اللغة العربية كمهارة جوهرية</h4>
-
-    <h5>📌 المهارات الأساسية للنجاح بعد التخرج</h5>
-    <ul class="lesson-list">
-        <li><strong>اللغوية:</strong> العربية أولًا + لغات أجنبية</li>
-        <li><strong>التفكير:</strong> تحليل، استنتاج، إبداع</li>
-        <li><strong>الاتصال:</strong> كيف تسمع، تتكلم، وتكتب بذكاء</li>
-    </ul>
-    <p>هذه المهارات ميّزت الإنسان، وهي أساس الشخصية، الانتماء، والنجاح المهني.</p>
-
-    <h5>📌 أهمية الاتصال في المجتمع الإنساني</h5>
-    <ul class="lesson-list">
-        <li>الإنسان كائن اجتماعي — لا حياة من دون تواصل.</li>
-        <li>الفرق بيننا وبين الحيوان: استخدام لغة معقدة لنقل الأفكار المجردة وبناء المعرفة عبر الأجيال.</li>
-        <li><strong>نوعا الاتصال:</strong>
-            <ul>
-                <li><em>لفظي:</em> الكلام (باللسان والحنجرة)</li>
-                <li><em>غير لفظي:</em> الإشارات، حركات الجسد، والكتابة</li>
-            </ul>
-        </li>
-        <li>الاتصال شرط لوجود أي مجتمع — والاختلاف اللغوي قد يهدمه (مثل قصة بابل).</li>
-        <li>قال تعالى: «عَلَّمَهُ البَيَانَ» — المهم هو الوضوح، الدقة، والقدرة على الإقناع.</li>
-    </ul>
-
-    <h5>📌 لماذا تفوّق الإنسان رغم ضعفه الجسدي؟</h5>
-    <ul class="lesson-list">
-        <li>صناعة الأدوات مكّنته من أن يصبح:
-            <ul>
-                <li>أقوى من الأسد</li>
-                <li>أسرع من الفهد</li>
-                <li>يطير، يغوص، ويصل إلى القمر!</li>
-            </ul>
-        </li>
-        <li><strong>السر:</strong> التفكير + التواصل اللغوي → تراكم المعرفة ونقلها عبر الأجيال.</li>
-    </ul>
-
-    <h5>📌 وظائف وأهمية اللغة في حياة الفرد والمجتمع</h5>
-    <p>اللغة ليست أداة تكلم فحسب، بل هي:</p>
-    <ul class="lesson-list">
-        <li>وسيلة تعبير عن الأفكار والمشاعر</li>
-        <li>أداة تفكير (حتى التفكير الداخلي كلمات!)</li>
-        <li>رابط بين الماضي والحاضر</li>
-        <li>جزء من الهوية (العربي يفتخر بلغته)</li>
-        <li>أساس العلم والتعلم</li>
-    </ul>
-    <p><strong>وظائفها في الحياة:</strong> تفاهم، إشباع الحاجات، فهم الآخرين، حفظ التراث، نقل الخبرات، دعم الإبداع، وتقدّم الحضارة (أو انهيارها لو أُسيء استخدامها).</p>
-
-    <h5>📌 المهارات اللغوية: تعريف وأهمية</h5>
-    <p><strong>المهارات اللغوية =</strong> أداء لغوي (منطوق أو مكتوب) بسرعة، دقة، وسلاسة.</p>
-    <ul class="lesson-list">
-        <li><strong>المهارات الأساسية:</strong> الاستماع، التحدث، القراءة، الكتابة، التعبير.</li>
-        <li><strong>الأنواع:</strong>
-            <ul>
-                <li><em>صوتي:</em> قراءة جهرية، إلقاء، تذوق بلاغي</li>
-                <li><em>غير صوتي:</em> استماع جيد، كتابة (إبداعية/أكاديمية)، تذوق جمالي</li>
-            </ul>
-        </li>
-        <li><strong>لماذا مهمة؟</strong>
-            <ul>
-                <li>كل التخصصات (طبيب، مهندس، مدرّس، فري لانسر) تحتاج دقة في الكلمة.</li>
-                <li>تبقى معك مدى الحياة، بعكس المعلومات المؤقتة.</li>
-                <li>إهمالها = ضعف فهم، صعوبة تعلّم، ومشاكل اجتماعية.</li>
-            </ul>
-        </li>
-    </ul>
-
-    <h5>📌 اللغة الأم ودورها في تشكيل الشخصية</h5>
-    <ul class="lesson-list">
-        <li>اللغة الأم = لغة الطفولة الأولى (غالبًا لغة الأم)</li>
-        <li>قناة لتشكيل الهوية، الانتماء، والشخصية</li>
-        <li><strong>دراسات لسانيات:</strong>
-            <ul>
-                <li>طفل غربي (3 سنوات): ~16 ألف كلمة</li>
-                <li>طفل عربي (يعتمد على العامية): ~3 آلاف كلمة</li>
-                <li>الفرق يؤثر على التفكير والإبداع</li>
-            </ul>
-        </li>
-        <li>في التراث الإسلامي: حفظ القرآن (50 ألف+ كلمة) وتعلم النحو مبكّرًا → شخصية أقوى</li>
-        <li>قال المستعمرون: "الكتّاب هو اللي خلّى الفرد المسلم قوي"!</li>
-    </ul>
-
-    <h5>📌 مراحل اكتساب اللغة عند الطفل</h5>
-    <ul class="lesson-list">
-        <li><strong>من الولادة – 12 شهر:</strong> مناغاة → ثرثرة → فهم كلمات بسيطة (مثل الاسم)</li>
-        <li><strong>12–18 شهر:</strong> كلمات مفردة → "انفجار لغوي"</li>
-        <li><strong>18–24 شهر:</strong> تركيب كلمتين (مثال: "أريد حليب")</li>
-        <li><strong>24–30 شهر:</strong> جمل من ٣ كلمات + تطبيق قواعد بسيطة</li>
-        <li><strong>من 30 شهر فما فوق:</strong>
-            <ul>
-                <li>جمل طويلة ومعقدة</li>
-                <li>استخدام روابط (لأن، إذا، ثم)</li>
-                <li>سرد أحداث، وتعديل الأسلوب حسب الموقف (يلبق، يعتذر...)</li>
-            </ul>
-        </li>
-    </ul>
-
-    <h5>📌 المهارات اللغوية الأساسية الأربع</h5>
-    <ol class="lesson-list">
-        <li><strong>الاستماع:</strong> فهم ما يُقال — أول مهارة نكتسبها</li>
-        <li><strong>التحدث:</strong> التعبير بوضوح وثقة</li>
-        <li><strong>القراءة:</strong> فهم النصوص، استخراج المعاني، والتفكير النقدي</li>
-        <li><strong>الكتابة:</strong> تنظيم الأفكار، سلامة الأسلوب، وتأثير في القارئ</li>
-    </ol>
-    <p><em>هذه المهارات مترابطة — تطوير واحدة يُثري الأخرى. إتقانها ليس رفاهية، بل ضرورة للنجاح والوعي والمنافسة.</em></p>
-</div>
-    </div>
-
-    <a href="../lectures.html" class="back-to-home-btn">
-        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
-    </a>
-
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // تبديل الوضع
-            const themeToggle = document.getElementById('themeToggle');
-            const root = document.documentElement;
-
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                themeToggle.classList.add('day');
-            } else {
-                themeToggle.classList.add('night');
-            }
-
-            themeToggle.addEventListener('click', function() {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    themeToggle.classList.remove('day');
-                    themeToggle.classList.add('night');
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    themeToggle.classList.remove('night');
-                    themeToggle.classList.add('day');
-                }
-            });
-        });
-    </script>
-</body>
-</html>

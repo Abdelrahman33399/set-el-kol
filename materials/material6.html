@@ -1,893 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شبكات الحاسب - ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-    /* Prevent layout overflow & improve responsiveness */
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
-    .lesson-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: clamp(1rem, 4vw, 1.5rem);
-        margin-bottom: clamp(1rem, 3vw, 1.5rem);
-        transition: transform 0.3s;
-        max-width: 100%;
-        overflow-wrap: break-word;
-    }
-
-    .lesson-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
-    }
-
-    .lesson-card h4 {
-        color: var(--text-light);
-        font-weight: 700;
-        margin-top: 0;
-        font-size: clamp(1.15rem, 4.5vw, 1.4rem);
-    }
-
-    .lesson-list {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .lesson-list li {
-        padding: clamp(0.5rem, 2.8vw, 0.7rem) clamp(0.8rem, 3.2vw, 1rem);
-        margin: clamp(0.3rem, 1.5vw, 0.5rem) 0;
-        background: rgba(30, 30, 50, 0.6);
-        border-radius: 12px;
-        border-right: 3px solid var(--accent-orange);
-        font-size: clamp(0.875rem, 3.4vw, 1rem);
-        line-height: 1.5;
-        word-break: break-word;
-    }
-
-    .back-to-home-btn {
-        position: fixed;
-        bottom: clamp(12px, 2.5vw, 20px);
-        left: clamp(12px, 2.5vw, 20px);
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        padding: clamp(10px, 2.2vw, 12px) clamp(16px, 3.5vw, 20px);
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: clamp(0.9rem, 2.7vw, 1rem);
-        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-    }
-
-    .back-to-home-btn:hover {
-        background: #e05a2a;
-        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
-        transform: scale(1.05);
-    }
-
-    .theme-toggle-btn {
-        position: fixed;
-        top: clamp(12px, 2.5vw, 20px);
-        right: clamp(12px, 2.5vw, 20px);
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        width: clamp(38px, 5.8vw, 45px);
-        height: clamp(38px, 5.8vw, 45px);
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: clamp(1rem, 3.6vw, 1.2rem);
-        box-shadow: 0 4px 15px var(--shadow-orange);
-        transition: all 0.3s ease;
-    }
-
-    .theme-toggle-btn:hover {
-        background: var(--accent-orange-hover);
-        transform: translateY(-3px) rotate(15deg);
-    }
-
-    .text-content {
-        line-height: 1.8;
-        color: var(--text-light);
-        font-size: clamp(0.95rem, 3.6vw, 1.1rem);
-        margin: 1rem 0;
-        text-align: justify;
-        text-justify: inter-word;
-    }
-
-    .section-title {
-        margin-top: clamp(1rem, 3.2vw, 1.5rem);
-        margin-bottom: clamp(0.5rem, 1.8vw, 0.75rem);
-        color: var(--accent-orange);
-        font-weight: bold;
-        font-size: clamp(1.15rem, 4.2vw, 1.4rem);
-    }
-
-    .sub-list {
-        padding-right: clamp(0.75rem, 3vw, 1.5rem);
-        margin: clamp(0.5rem, 1.8vw, 0.75rem) 0 0 0;
-    }
-
-   
-    @supports (padding-top: env(safe-area-inset-top)) {
-        .theme-toggle-btn { top: calc(clamp(12px, 2.5vw, 20px) + env(safe-area-inset-top)); }
-        .back-to-home-btn { bottom: calc(clamp(12px, 2.5vw, 20px) + env(safe-area-inset-bottom)); }
-    }
-</style>
-</head>
-<body>
-    <div class="container py-4 py-md-5">
-        <h1 class="neon-title text-center mb-4 mb-md-5">شبكات الحاسب</h1>
-<div class="lesson-card">
-    <h4>١. الشبكات الواسعة (WAN)</h4>
-
-    <div class="section-title">✅ ما هي؟</div>
-    <p>شبكة اتصالات تغطي مناطق واسعة (قد تتجاوز حدود الدول)، وتربط بين شبكات محلية (LANs) أو مناطق متباعدة، أو حتى العالم كله.</p>
-
-    <div class="section-title">✅ مواصفات WAN:</div>
-    <ul class="lesson-list">
-        <li>تُستخدم في الشركات والحكومات لتبادل البيانات بين الموظفين/العملاء/الموردين.</li>
-        <li>تعمل على الطبقات الثلاث السفلية من نموذج OSI:
-            <ul class="sub-list">
-                <li><strong>الفيزيائية:</strong> الكابلات، المودم</li>
-                <li><strong>رابطة البيانات:</strong> Frame Relay, X.25, ATM</li>
-                <li><strong>الشبكة:</strong> IP, ICMP</li>
-            </ul>
-        </li>
-        <li>العميل يستخدم TCP/IP.</li>
-        <li>مزوّد الخدمة يستخدم: ATM، Frame Relay، أو X.25 (قديمًا).</li>
-    </ul>
-
-    <div class="section-title">✅ طرق التوصيل في WAN:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الطريقة</th>
-                <th>الوصف</th>
-                <th>المميزات</th>
-                <th>العيوب</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>الخطوط التليفونية المؤجرة</strong></td>
-                <td>اتصال مباشر من نقطة إلى نقطة عبر خط فيزيائي مخصص</td>
-                <td>• متاحة 24/7<br>• سعة مخصصة دائمة<br>• اتصال مباشر</td>
-                <td>• تكلفة عالية<br>• أقل مرونة من الخدمات التشاركية</td>
-            </tr>
-            <tr>
-                <td><strong>تبديل الدوائر</strong></td>
-                <td>مثل خط التليفون: اتصال يُنشأ عند الحاجة ويُلغى بعدها (مثال: ISDN)</td>
-                <td>• اتصال مضمون أثناء الجلسة</td>
-                <td>• غير فعّال لنقل البيانات المتقطعة</td>
-            </tr>
-            <tr>
-                <td><strong>تبديل الحزم</strong></td>
-                <td>مشاركة المصادر بين عملاء → تكلفة أقل (مثل: ATM، FR، X.25)</td>
-                <td>• كفاءة أعلى<br>• تكلفة منخفضة</td>
-                <td>• قد يحدث تأخير (Latency)</td>
-            </tr>
-            <tr>
-                <td><strong>الدوائر التخيلية (Virtual Circuits)</strong></td>
-                <td>دوائر منطقية تُنشأ داخل الشبكة لربط جهازين</td>
-                <td>• تقليل التكلفة<br>• مرونة في النقل</td>
-                <td>—</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">🔹 أنواع الدوائر التخيلية:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>المعدل</th>
-                <th>السعة</th>
-                <th>التكلفة</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>ثابتة (PVC)</strong></td>
-                <td>ثابت</td>
-                <td>أقل</td>
-                <td>أعلى (لكن مستقرة)</td>
-                <td>اتصال دائم (مثل: فرع بنك)</td>
-            </tr>
-            <tr>
-                <td><strong>مؤقتة (SVC)</strong></td>
-                <td>متغير</td>
-                <td>أعلى (بسبب إنشاء/إلغاء ديناميكي)</td>
-                <td>أقل إذا استُخدمت مدة طويلة</td>
-                <td>اتصال حسب الحاجة (مثل: نقل ملف كبير)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>💡 ملاحظة:</strong></p>
-    <ul class="lesson-list">
-        <li><strong>DDR (Dial-on-Demand Routing):</strong> اتصال مؤقت عند الحاجة.</li>
-        <li><strong>الاتصال الاحتياطي:</strong> دائرة بديلة تُفعّل تلقائيًا عند تعطّل الرئيسية.</li>
-    </ul>
-
-    <div class="section-title">✅ أجهزة الشبكة الواسعة:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الجهاز</th>
-                <th>الوظيفة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>مبدلات WAN</strong></td>
-                <td>تربط بين الشبكات، وتنقل تدفقات FR/X.25 — تعمل على طبقة رابطة البيانات</td>
-            </tr>
-            <tr>
-                <td><strong>خوادم الوصول</strong></td>
-                <td>نقاط تجميع للوصلات قبل دخولها WAN</td>
-            </tr>
-            <tr>
-                <td><strong>وحدة خدمة القنوات (CSU)</strong></td>
-                <td>واجهة رقمية لتوصيل الموجه بالدائرة الرقمية</td>
-            </tr>
-            <tr>
-                <td><strong>المودم</strong></td>
-                <td>يحوّل الإشارات الرقمية ↔ تناظرية (للإرسال عبر خطوط الهاتف الصوتية)</td>
-            </tr>
-            <tr>
-                <td><strong>موائمة ISDN الطرفية (TA)</strong></td>
-                <td>مثل مودم ISDN، لكنها لا تحول (لأن ISDN رقمي من الأساس) — تُستخدم لربط أجهزة غير ISDN بالشبكة</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>٢. التشبيك الشبكي (Internetworking)</h4>
-
-    <div class="section-title">✅ ما هو؟</div>
-    <p>تجميع شبكات فردية في شبكة واحدة منطقية كبيرة، باستخدام أجهزة وسيطة (مثل الموجهات).</p>
-
-    <div class="section-title">✅ المشكلات والحلول:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المشكلة</th>
-                <th>الحل</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>كيف نُتمّ التوصيل؟</td>
-                <td>استخدام موجهات وبروتوكولات توجيه</td>
-            </tr>
-            <tr>
-                <td>كيف نضمن الاعتمادية؟</td>
-                <td>تكرار المكونات (مثل: موجه احتياطي)</td>
-            </tr>
-            <tr>
-                <td>كيف نُحسّن الإدارة؟</td>
-                <td>دعم مركزي + تقسيم شبكي (مناطق، أنظمة متكاملة)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ العناوين في الشبكات:</div>
-    <p><strong>أ. العنوان الفيزيائي (MAC)</strong></p>
-    <ul class="lesson-list">
-        <li>48 بت (12 رقم سداسي عشري).</li>
-        <li>أول 6 أرقام → OUI (يحددها IEEE = معرّف الشركة).</li>
-        <li>آخر 6 أرقام → رقم تسلسلي للجهاز.</li>
-        <li>مخزّن في ROM، وينسخ لـ RAM عند التشغيل.</li>
-    </ul>
-
-    <p><strong>ب. العنوان المنطقي (IP)</strong></p>
-    <ul class="lesson-list">
-        <li>على طبقة الشبكة.</li>
-        <li>في IPv4: 32 بت → ≈4.3 مليار عنوان.</li>
-        <li>في IPv6: 128 بت → ≈3.4×10³⁸ عنوان!</li>
-        <li>الموجه يحتاج عنوان IP لكل واجهة فيزيائية (مثال: موجه بـ3 واجهات × 3 بروتوكولات = 9 عناوين!).</li>
-    </ul>
-
-    <div class="section-title">✅ ترجمة العناوين (Address Translation):</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>البروتوكول</th>
-                <th>الوظيفة</th>
-                <th>الطبقة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>ARP</strong></td>
-                <td>يحوّل IP → MAC</td>
-                <td>رابطة البيانات</td>
-            </tr>
-            <tr>
-                <td><strong>RARP</strong></td>
-                <td>يحوّل MAC → IP (لأجهزة لا تعرف عنوانها)</td>
-                <td>رابطة البيانات</td>
-            </tr>
-            <tr>
-                <td><strong>DNS</strong></td>
-                <td>يحوّل اسم النطاق → IP (مثل: www.google.com → 142.250.185.206)</td>
-                <td>التطبيقات</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>🌐 مثال DNS:</strong><br>
-جهازك يطلب www.wikipedia.org → الخادم المحلي يسأل خادم الجذر → يوجّه لـ خادم .org → ثم لـ ويكيبيديا → يُرجع العنوان 207.142.131.234.</p>
-</div>
-
-<div class="lesson-card">
-    <h4>٣. التحكم في التدفق والأخطاء والتجميع</h4>
-
-    <div class="section-title">✅ التحكم في التدفق (Flow Control):</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الطريقة</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>المخازن المؤقتة (Buffers)</strong></td>
-                <td>تخزين مؤقت للبيانات الزائدة — لكن إن امتلأت → حذف البيانات!</td>
-            </tr>
-            <tr>
-                <td><strong>رسائل الاختناق</strong></td>
-                <td>إرسال تنبيه للمرسل عند الازدحام (مثل: وضع علامة في رأس الحزمة)</td>
-            </tr>
-            <tr>
-                <td><strong>الشباك المنزلق (Sliding Window)</strong></td>
-                <td>المرسل ينتظر تأكيدًا بعد كل N حزمة (N = حجم الشباك)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ مراجعة الأخطاء:</div>
-    <ul class="lesson-list">
-        <li>تُستخدم CRC (Cyclic Redundancy Check) لكشف التلف.</li>
-        <li>الإصلاح يُجرى في الطبقات العليا من OSI (مثل: إعادة إرسال الحزمة في TCP).</li>
-    </ul>
-
-    <div class="section-title">✅ التجميع (Multiplexing):</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوصف</th>
-                <th>المثال</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>تقسيم الزمن (TDM)</strong></td>
-                <td>كل قناة لها فترة زمنية مخصصة</td>
-                <td>E1/T1 lines</td>
-            </tr>
-            <tr>
-                <td><strong>تقسيم الزمن غير المتزامن (ATDM)</strong></td>
-                <td>فترة زمنية فقط عند الحاجة</td>
-                <td>Frame Relay</td>
-            </tr>
-            <tr>
-                <td><strong>تقسيم التردد (FDM)</strong></td>
-                <td>كل قناة لها نطاق ترددي مخصص</td>
-                <td>الإذاعة، التلفزيون</td>
-            </tr>
-            <tr>
-                <td><strong>التجميع الإحصائي</strong></td>
-                <td>تخصيص السعة ديناميكيًّا حسب الحاجة</td>
-                <td>ATM</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>٤. مقارنة بين WAN و LAN</h4>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المعيار</th>
-                <th>WAN</th>
-                <th>LAN</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>المسافة</strong></td>
-                <td>حتى آلاف الكيلومترات</td>
-                <td>حتى 2.4 ميل</td>
-            </tr>
-            <tr>
-                <td><strong>السرعة</strong></td>
-                <td>من 56 kbps → 10 Gbps</td>
-                <td>من 10 Mbps → 10 Gbps</td>
-            </tr>
-            <tr>
-                <td><strong>التجميع</strong></td>
-                <td>نعم (عدة دوائر منطقية على فيزيائية واحدة)</td>
-                <td>نادرًا</td>
-            </tr>
-            <tr>
-                <td><strong>الارتباط</strong></td>
-                <td>بشبكة حاملة (Carrier)</td>
-                <td>مباشرة بين أجهزة</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>٥. تقنيات WAN الشهيرة</h4>
-
-    <div class="section-title">أ. X.25</div>
-    <ul class="lesson-list">
-        <li>بروتوكول قديم لـ شبكات تبديل الحزم.</li>
-        <li><strong>الأجهزة:</strong>
-            <ul class="sub-list">
-                <li><strong>DTE:</strong> أجهزة طرفية (حاسبات، شاشات).</li>
-                <li><strong>DCE:</strong> أجهزة اتصال (مودم، مبدّلات).</li>
-                <li><strong>PSE:</strong> مفاتيح تبديل الحزم.</li>
-            </ul>
-        </li>
-        <li><strong>البروتوكولات الفرعية:</strong>
-            <ul class="sub-list">
-                <li><strong>PLP (طبقة الشبكة):</strong> يدير تبديل الحزم.</li>
-                <li><strong>LAPB (طبقة رابطة البيانات):</strong> يدير الاتصال بين DTE و DCE.</li>
-                <li><strong>X.21bis / EIA-232 (الفيزيائية).</strong></li>
-            </ul>
-        </li>
-    </ul>
-
-    <div class="section-title">ب. Frame Relay (FR)</div>
-    <ul class="lesson-list">
-        <li>نسخة محسّنة من X.25 — أسرع وأقل تعقيدًا.</li>
-        <li>يعمل على الفيزيائية + رابطة البيانات.</li>
-        <li><strong>مميزاته:</strong>
-            <ul class="sub-list">
-                <li>حزم مختلفة الأطوال.</li>
-                <li>تجميع إحصائي → كفاءة أعلى.</li>
-                <li>مصمم لـ ISDN.</li>
-            </ul>
-        </li>
-        <li><strong>✅ خلاصة:</strong> FR ركّز على الأداء العالي، بينما X.25 ركّز على الموثوقية (حتى لو أبطأ).</li>
-    </ul>
-</div>
-
-<div class="lesson-card">
-    <h4>٦. الإنترنت ونموذج TCP/IP</h4>
-
-    <div class="section-title">✅ الإنترنت:</div>
-    <p>شبكة عالمية تربط شبكات أصغر عبر بروتوكول موحد (TCP/IP).</p>
-
-    <div class="section-title">✅ مبادئ المعمار المنطقي:</div>
-    <ul class="lesson-list">
-        <li><strong>مبدأ الطرف-للطرف (End-to-End):</strong><br>
-        الصيانة تتم عند أطراف الشبكة (أجهزة المستخدمين)، مش في الوسط.<br>
-        (تغير بسبب الحاجة لـ الجدران النارية، NAT، المخازن المؤقتة).</li>
-        <li><strong>مبدأ الصلابة (Robustness):</strong><br>
-        المرسل مسؤول عن صحة الشكل.<br>
-        المستقبل حر في رفض البيانات.</li>
-    </ul>
-
-    <div class="section-title">✅ طبقات TCP/IP والبروتوكولات:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الطبقة</th>
-                <th>البروتوكولات</th>
-                <th>الوظيفة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>الرابط (Link)</strong></td><td>ARP, RARP</td><td>ترجمة العناوين (IP ↔ MAC)</td></tr>
-            <tr><td></td><td>OSPF, IS-IS</td><td>توجيه داخل النظام الواحد (AS)</td></tr>
-            <tr><td><strong>الإنترنت</strong></td><td>IPv4, IPv6</td><td>توجيه الحزم بين الشبكات</td></tr>
-            <tr><td></td><td>ICMP</td><td>إرسال رسائل خطأ (مثل: "الوجهة غير متاحة")</td></tr>
-            <tr><td></td><td>IGMP</td><td>إدارة البث المتعدد (Multicast) في IPv4 فقط</td></tr>
-            <tr><td></td><td>IPSec</td><td>تأمين الاتصال (تشفير + توثيق)</td></tr>
-            <tr><td><strong>النقل</strong></td><td>TCP</td><td>اتصال موثوق (يُفتح قناة قبل الإرسال)</td></tr>
-            <tr><td></td><td>UDP</td><td>إرسال مباشر (بدون قناة — أسرع، لكن غير مضمون)</td></tr>
-            <tr><td></td><td>DCCP</td><td>تحكم في الاختناق (للألعاب، الوسائط)</td></tr>
-            <tr><td></td><td>SCTP</td><td>مزيج من TCP+UDP (موثوق + متعدد المسارات)</td></tr>
-            <tr><td><strong>التطبيقات</strong></td><td>HTTP</td><td>تحميل صفحات الويب</td></tr>
-            <tr><td></td><td>FTP</td><td>نقل الملفات (يستخدم قناة بيانات + تحكم منفصلتين)</td></tr>
-            <tr><td></td><td>SMTP</td><td>إرسال البريد الإلكتروني</td></tr>
-            <tr><td></td><td>POP3</td><td>استلام البريد من الخادم</td></tr>
-            <tr><td></td><td>Telnet</td><td>الدخول عن بعد (كتابة فقط — غير آمن!)</td></tr>
-            <tr><td></td><td>SNMP</td><td>مراقبة أجهزة الشبكة (موجهات، طابعات...)</td></tr>
-            <tr><td></td><td>TFTP</td><td>نقل ملفات بسيط (غير موثوق — يستخدم UDP)</td></tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ IPv4 vs IPv6:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المعيار</th>
-                <th>IPv4</th>
-                <th>IPv6</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>الطول</strong></td><td>32 بت</td><td>128 بت</td></tr>
-            <tr><td><strong>عدد العناوين</strong></td><td>4.3 مليار</td><td>3.4×10³⁸</td></tr>
-            <tr><td><strong>التوافق</strong></td><td>—</td><td>غير متوافق مع IPv4 → نحتاج بوابات ترجمة</td></tr>
-            <tr><td><strong>آليات الانتقال</strong></td><td>—</td><td>• 6in4: وضع IPv6 داخل نفق IPv4<br>• 4in6: وضع IPv4 داخل نفق IPv6</td></tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>٧. التوجيه (Routing)</h4>
-
-    <div class="section-title">✅ نوعا التوجيه:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوصف</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>ساكن (Static)</strong></td>
-                <td>يكتبه مدير الشبكة يدويًّا في جدول التوجيه</td>
-                <td>• لأسباب أمنية<br>• لضبط "المسار الافتراضي"</td>
-            </tr>
-            <tr>
-                <td><strong>ديناميكي (Dynamic)</strong></td>
-                <td>الموجهات تتبادل المعرفة تلقائيًّا</td>
-                <td>• شبكات متغيرة<br>• مرونة أعلى</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ بروتوكولات التوجيه:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>المبدأ</th>
-                <th>البروتوكولات</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Distance Vector</strong></td>
-                <td>كل موجه يعلم جيرانه فقط، ويُحدّث جدوله دوريًّا</td>
-                <td>RIP, IGRP</td>
-            </tr>
-            <tr>
-                <td><strong>Link State</strong></td>
-                <td>كل موجه يعرف كل الشبكة، ويُحدّث عند أي تغيير</td>
-                <td>OSPF, IS-IS, BGP</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>📌 ملاحظة:</strong><br>
-OSPF وIS-IS يعملان داخل نظام متكامل واحد (AS).<br>
-BGP يعمل بين الأنظمة (AS to AS) — مثل اتصال شركات الاتصالات.</p>
-</div>
-
-<div class="lesson-card">
-    <h4>٨. خدمة الاستضافة (Web Hosting)</h4>
-
-    <div class="section-title">✅ ما هي؟</div>
-    <p>خدمة تشغيلية تسمح للأفراد/المنظمات بإضافة محتوى على الإنترنت.</p>
-
-    <div class="section-title">✅ أنواع الخدمات:</div>
-    <p>استضافة على جهاز فعلي أو افتراضي.<br>
-توصيل بالإنترنت، تعليم عن بعد، تشارك محتوى، دردشة، ألعاب جماعية، بريد إلكتروني، تجارة إلكترونية...</p>
-
-    <div class="section-title">✅ ما يجب التأكد منه عند الشراء:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>العنصر</th>
-                <th>التفاصيل</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>مساحة القرص</strong></td><td>10–100MB (مواقع صغيرة)، أكثر لو في فيديو/صوت</td></tr>
-            <tr><td><strong>السعة الشهرية</strong></td><td>1–10GB (لمواقع صغيرة/متوسطة)</td></tr>
-            <tr><td><strong>سرعة الاتصال</strong></td><td>من 64 kbps → 2.5 Gbps</td></tr>
-            <tr><td><strong>حسابات بريد</strong></td><td>عدد كافٍ للمستخدمين</td></tr>
-            <tr><td><strong>لوحة تحكم</strong></td><td>لإدارة الموقع (مثل: cPanel)</td></tr>
-            <tr><td><strong>النسخ الاحتياطي</strong></td><td>آلي ومنتظم</td></tr>
-            <tr><td><strong>دعم فني</strong></td><td>متاح 24/7</td></tr>
-            <tr><td><strong>أحدث التقنيات</strong></td><td>دعم PHP, SSL, قواعد بيانات (MySQL, Oracle...)</td></tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>٩. الحماية والأمن</h4>
-
-    <div class="section-title">✅ الجدار الناري (Firewall)</div>
-    <p><strong>ما هو؟</strong> جهاز/برنامج يحمي الشبكة من الوصول غير المصرح به — مثل "الجسر المُراقَب" في القلعة.</p>
-
-    <div class="section-title">✅ وظائفه الأساسية:</div>
-    <ul class="lesson-list">
-        <li>منع دخول غير مصرّح به.</li>
-        <li>حماية الخدمات الهامة.</li>
-        <li>حماية عامة من الهجمات.</li>
-    </ul>
-
-    <div class="section-title">✅ مكوناته:</div>
-    <ul class="lesson-list">
-        <li><strong>منفذ الفرز:</strong> يفحص المصدر/الوجهة/المنفذ/البروتوكول.</li>
-        <li><strong>مخدم بروكسي:</strong> يتصل بالمضيف الخارجي، ويختبر المعلومات قبل تمريرها.</li>
-    </ul>
-
-    <div class="section-title">✅ المزايا:</div>
-    <ul class="lesson-list">
-        <li>حماية المعلومات.</li>
-        <li>دعم التشفير.</li>
-        <li>متوافق مع ATM وغيرها.</li>
-        <li>تسجيل العمليات.</li>
-        <li>متابعة المستخدمين.</li>
-    </ul>
-
-    <div class="section-title">✅ العيوب:</div>
-    <ul class="lesson-list">
-        <li>لا يحمي من البرامج الداخلية المُهاجمة.</li>
-        <li>لا يحمي من البث التلفزيوني/الإذاعي.</li>
-    </ul>
-
-    <div class="section-title">✅ تقنيات الجدار الناري:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>التقنية</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>تصفية الحزم</strong></td><td>يفحص رؤوس الحزم (IP, Port, Protocol) ويقرّر السماح/الرفض</td></tr>
-            <tr><td><strong>عناوين MAC</strong></td><td>تسمح لأجهزة محددة فقط (للاستخدام الداخلي)</td></tr>
-            <tr><td><strong>عناوين IP</strong></td><td>تسمح بـ IP معين فقط (للإنترنت)</td></tr>
-            <tr><td><strong>المنافذ</strong></td><td>يغلق منافذ خطرة (مثل: 23 لـ Telnet)</td></tr>
-            <tr><td><strong>NAT</strong></td><td>يُخفي عناوين IP الداخلية — يحمي من المتطفلين</td></tr>
-            <tr><td><strong>البروكسي</strong></td><td>وسيط بين المستخدم والإنترنت — يخزّن المحتوى (Caching) ويفرض قيودًا</td></tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ بروتوكولات الأمان:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>البروتوكول</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>IPSec</strong></td><td>تأمين على طبقة الشبكة — تشفير + توثيق — معيار أمان الإنترنت</td></tr>
-            <tr><td><strong>PPTP</strong></td><td>يُنشئ VPN عبر الإنترنت (يستخدم RSA للتشفير)</td></tr>
-            <tr><td><strong>SSL</strong></td><td>تأمين على طبقة النقل — يستخدم مفاتيح عامة/خاصة — لتأمين المواقع (HTTPS)</td></tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>١٠. أمن الشبكات المحلية</h4>
-
-    <div class="section-title">✅ مستويات الحماية:</div>
-    <p><strong>كلمات المرور:</strong></p>
-    <ul class="lesson-list">
-        <li>يجب أن تكون:
-            <ul class="sub-list">
-                <li>طويلة (≥6 أحرف).</li>
-                <li>معقدة (أحرف كبيرة + صغيرة + أرقام).</li>
-                <li>تُغيّر دوريًّا.</li>
-                <li>تُخزن مشفرة (مثل: في Windows NT/2000/2003).</li>
-            </ul>
-        </li>
-    </ul>
-
-    <p><strong>نماذج الأمان:</strong></p>
-    <ul class="lesson-list">
-        <li><strong>على مستوى المستخدم (User-Level):</strong> أذونات حسب المستخدم — أكثر أمانًا.</li>
-        <li><strong>على مستوى المورد (Share-Level):</strong> كلمة مرور لكل مورد — بسيط لكن أقل أمانًا.</li>
-    </ul>
-
-    <p><strong>حسابات المستخدمين:</strong></p>
-    <ul class="lesson-list">
-        <li>لكل مستخدم: اسم + كلمة مرور + صلاحيات.</li>
-        <li>يمكن تقسيمهم إلى مجموعات (كل مجموعة لها صلاحيات موحدة).</li>
-    </ul>
-
-    <p><strong>الصلاحيات:</strong></p>
-    <ul class="lesson-list">
-        <li>قراءة / كتابة / تعديل / حذف / إنشاء.</li>
-        <li>تُطبّق على: ملفات، فهارس، مرافق.</li>
-    </ul>
-
-    <p><strong>إجازة الأعطال (Fault Tolerance):</strong></p>
-    <ul class="lesson-list">
-        <li>عمل مرآة (Mirror) للملفات أو الأقراص (قرص احتياطي).</li>
-    </ul>
-
-    <p><strong>التدقيق:</strong></p>
-    <ul class="lesson-list">
-        <li>قراءة بعد الكتابة: يعيد قراءة البيانات بعد حفظها للتأكد من الدقة.</li>
-        <li>برامج تشخيص الأخطاء.</li>
-    </ul>
-
-    <div class="section-title">✅ الوسائل المادية للأمان:</div>
-    <ul class="lesson-list">
-        <li>أقفال إلكترونية على الأبواب.</li>
-        <li>إيقاف لوحة المفاتيح/الشاشة عن بُعد.</li>
-        <li>إنذار آلي.</li>
-        <li>حذف محرك الأقراص المرنة (لحماية من النسخ غير المشروع).</li>
-    </ul>
-</div>
-
-<div class="lesson-card">
-    <h4>١١. هجمات الشبكة وطرق الحماية (باستخدام IPSec)</h4>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الهجوم</th>
-                <th>الوصف</th>
-                <th>كيف يحمي IPSec؟</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Eavesdropping</strong></td>
-                <td>اعتراض الحزم وقراءتها</td>
-                <td>تشفير الحزمة — حتى لو اعترضت، ما تُقرأش</td>
-            </tr>
-            <tr>
-                <td><strong>Data Modification</strong></td>
-                <td>تعديل البيانات في الطريق</td>
-                <td>هاش + تشفير — المستقبل يتحقق من الـChecksum</td>
-            </tr>
-            <tr>
-                <td><strong>Spoofing</strong></td>
-                <td>انتحال هوية المرسل</td>
-                <td>توثيق الطرفين (بـ Kerberos / Certificates / PSK)</td>
-            </tr>
-            <tr>
-                <td><strong>DoS</strong></td>
-                <td>إغراق السيرفر لتعطيل الخدمة</td>
-                <td>تصفية المنافذ — إغلاق المنافذ غير الضرورية</td>
-            </tr>
-            <tr>
-                <td><strong>MITM</strong></td>
-                <td>طرف ثالث يعترض ويُعدّل</td>
-                <td>توثيق ثنائي — ما يبدأش الاتصال إلا بعد التأكّد من الهوية</td>
-            </tr>
-            <tr>
-                <td><strong>Key Interception</strong></td>
-                <td>سرقة مفتاح التشفير</td>
-                <td>تغيير دوري للمفاتيح (مثل: في Windows XP)</td>
-            </tr>
-            <tr>
-                <td><strong>هجمات التطبيقات</strong></td>
-                <td>فيروسات، ثغرات برمجية</td>
-                <td>فلترة على طبقة IP — إسقاط الحزم غير المطابقة</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>🔐 ملاحظة أخيرة:</strong></p>
-    <ul class="lesson-list">
-        <li><strong>WEP:</strong> تشفير شبكات لاسلكية (64/128 بت) — مناسب للمنزل.</li>
-        <li><strong>WPA:</strong> أكثر أمانًا — ضروري للشركات.</li>
-    </ul>
-</div>
-
-<div class="lesson-card">
-    <h4>١٢. التشفير</h4>
-
-    <div class="section-title">✅ نوعا التشفير:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوصف</th>
-                <th>العيوب</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>مفتاح خاص (Symmetric)</strong></td>
-                <td>نفس المفتاح للتشفير وفكه (مثل: AES)</td>
-                <td>• صعوبة تبادل المفتاح الآمن<br>• مفتاح لكل اتصال → كثرة المفاتيح</td>
-            </tr>
-            <tr>
-                <td><strong>مفتاح عام/خاص (Asymmetric)</strong></td>
-                <td>زوج مفاتيح: عام (للجميع) + خاص (سرّي) — مثل RSA</td>
-                <td>• أبطأ من المتماثل</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ أمثلة:</div>
-    <ul class="lesson-list">
-        <li><strong>PGP:</strong> لتشفير البريد الإلكتروني.</li>
-        <li><strong>SSL/TLS:</strong> لتشفير الاتصال بالمواقع (HTTPS).</li>
-        <li><strong>WEP/WPA:</strong> لتشفير الشبكات اللاسلكية.</li>
-    </ul>
-
-    <div class="text-content" style="text-align: center; font-weight: 600; font-size: 1.1rem; color: var(--accent-orange);">
-        🌟 <strong>السرية + مراقبة الدخول = هدف التشفير.</strong>
-    </div>
-</div>
-
-    </div>
-
-    <a href="../lectures.html" class="back-to-home-btn">
-        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
-    </a>
-
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const root = document.documentElement;
-
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                themeToggle.classList.add('day');
-            } else {
-                themeToggle.classList.add('night');
-            }
-
-            themeToggle.addEventListener('click', function() {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    themeToggle.classList.remove('day');
-                    themeToggle.classList.add('night');
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    themeToggle.classList.remove('night');
-                    themeToggle.classList.add('day');
-                }
-            });
-        });
-    </script>
-</body>
-</html>

@@ -1,545 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقات الجداول الإلكترونية - ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-    /* Prevent overflow & ensure safe spacing on all screens */
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
-    .lesson-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: clamp(1rem, 4vw, 1.5rem);
-        margin-bottom: clamp(1rem, 3vw, 1.5rem);
-        transition: transform 0.3s;
-        max-width: 100%;
-        overflow-wrap: break-word;
-    }
-
-    .lesson-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
-    }
-
-    .lesson-card h4 {
-        color: var(--text-light);
-        font-weight: 700;
-        margin-top: 0;
-        font-size: clamp(1.15rem, 4.5vw, 1.4rem);
-    }
-
-    .lesson-list {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .lesson-list li {
-        padding: clamp(0.5rem, 2.8vw, 0.7rem) clamp(0.8rem, 3.2vw, 1rem);
-        margin: clamp(0.3rem, 1.5vw, 0.5rem) 0;
-        background: rgba(30, 30, 50, 0.6);
-        border-radius: 12px;
-        border-right: 3px solid var(--accent-orange);
-        font-size: clamp(0.875rem, 3.4vw, 1rem);
-        line-height: 1.5;
-        word-break: break-word;
-    }
-
-    .back-to-home-btn {
-        position: fixed;
-        bottom: clamp(12px, 2.5vw, 20px);
-        left: clamp(12px, 2.5vw, 20px);
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        padding: clamp(10px, 2.2vw, 12px) clamp(16px, 3.5vw, 20px);
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: clamp(0.9rem, 2.7vw, 1rem);
-        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-    }
-
-    .back-to-home-btn:hover {
-        background: #e05a2a;
-        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
-        transform: scale(1.05);
-    }
-
-    .theme-toggle-btn {
-        position: fixed;
-        top: clamp(12px, 2.5vw, 20px);
-        right: clamp(12px, 2.5vw, 20px);
-        z-index: 1000;
-        background: var(--accent-orange);
-        color: white;
-        border: none;
-        width: clamp(38px, 5.8vw, 45px);
-        height: clamp(38px, 5.8vw, 45px);
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: clamp(1rem, 3.6vw, 1.2rem);
-        box-shadow: 0 4px 15px var(--shadow-orange);
-        transition: all 0.3s ease;
-    }
-
-    .theme-toggle-btn:hover {
-        background: var(--accent-orange-hover);
-        transform: translateY(-3px) rotate(15deg);
-    }
-</style>
-</head>
-<body>
-    <div class="container py-4 py-md-5">
-        <h1 class="neon-title text-center mb-4 mb-md-5">تطبيقات الجداول الإلكترونية</h1>
-
-        <div class="lesson-card">
-    <h4>الوحدة 1: الدوال الأساسية</h4>
-
-    <div class="section-title">🧮 1. العمليات الحسابية الأساسية</div>
-    <p>كل صيغة تبدأ بـ <code>=</code>، وتحسب حسب أولوية العمليات:<br>
-    <strong>() → ^ → * / → + –</strong><br>
-    مثال: <code>=2 + 3 * 4</code> → 14، لكن <code>=(2 + 3) * 4</code> → 20.</p>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>العملية</th>
-                <th>العامل</th>
-                <th>مثال</th>
-                <th>الناتج</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>الجمع</td><td><code>+</code></td><td><code>=A1 + B1</code></td><td>15 ← 10 + 5</td></tr>
-            <tr><td>الطرح</td><td><code>–</code></td><td><code>=A1 – B1</code></td><td>5 ← 10 – 5</td></tr>
-            <tr><td>الضرب</td><td><code>*</code></td><td><code>=A1 * B1</code></td><td>50 ← 10 × 5</td></tr>
-            <tr><td>القسمة</td><td><code>/</code></td><td><code>=A1 / B1</code></td><td>2 ← 10 ÷ 5</td></tr>
-            <tr><td>الأس</td><td><code>^</code></td><td><code>=A1 ^ 2</code></td><td>100 ← 10²</td></tr>
-            <tr><td>الباقي (Modulo)</td><td><code>MOD()</code></td><td><code>=MOD(10, 3)</code></td><td>1</td></tr>
-        </tbody>
-    </table>
-
-    <hr>
-
-    <div class="section-title">🔢 2. العدّ (Counting) — لتحليل بيانات الطلاب</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الدالة</th>
-                <th>الوظيفة</th>
-                <th>مثال</th>
-                <th>ملاحظة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><code>COUNT</code></td>
-                <td>تعد الخلايا الرقمية فقط</td>
-                <td><code>=COUNT(A1:A5)</code><br>[1,2,"نص",4,5] → 4</td>
-                <td>مهم لتحليل الدرجات</td>
-            </tr>
-            <tr>
-                <td><code>COUNTA</code></td>
-                <td>تعد جميع الخلايا غير الفارغة</td>
-                <td><code>=COUNTA(B1:B4)</code><br>[أحمد, 90, "", "غائب"] → 3</td>
-                <td>لحساب عدد الطلاب المسجّلين</td>
-            </tr>
-            <tr>
-                <td><code>COUNTBLANK</code></td>
-                <td>تعد الخلايا الفارغة</td>
-                <td><code>=COUNTBLANK(C1:C10)</code></td>
-                <td>لاكتشاف البيانات الناقصة</td>
-            </tr>
-            <tr>
-                <td><code>COUNTIF</code></td>
-                <td>تعد حسب شرط واحد</td>
-                <td><code>=COUNTIF(D1:D10, ">80")</code></td>
-                <td>عدد الطلاب الناجحين</td>
-            </tr>
-            <tr>
-                <td><code>COUNTIFS</code></td>
-                <td>تعد حسب عدة شروط</td>
-                <td><code>=COUNTIFS(النتائج!C2:C100, "≥85", الحضور!B2:B100, "حاضر")</code></td>
-                <td>✅ <strong>مثال من مشروعك التخرجي</strong></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr>
-
-    <div class="section-title">🔀 3. الدالة الشرطية <code>IF</code> وحالاتها المتقدمة</div>
-    <p><strong>✅ الصيغة الأساسية:</strong><br>
-    <code>=IF(الشرط, القيمة_إذا_صح, القيمة_إذا_خطأ)</code><br>
-    مثال: <code>=IF(B2>=50, "ناجح", "راسب")</code></p>
-
-    <div class="section-title">أ. <code>IF</code> المتداخل (Nested IF)</div>
-    <pre><code class="language-excel">=IF(B2>=90, "ممتاز",
-   IF(B2>=80, "جيد جدًا",
-      IF(B2>=70, "جيد",
-         IF(B2>=60, "مقبول", "ضعيف"))))</code></pre>
-    <p><strong>⚠️ عيب:</strong> صعبة القراءة والتعديل.</p>
-
-    <div class="section-title">ب. <code>IFS</code> — البديل الأفضل (Excel 2019/365+)</div>
-    <pre><code class="language-excel">=IFS(
-   B2>=90, "ممتاز",
-   B2>=80, "جيد جدًا",
-   B2>=70, "جيد",
-   B2>=60, "مقبول",
-   TRUE,   "ضعيف")  // ← "else"</code></pre>
-    <p><strong>✅ مميزات:</strong> أوضح، أسرع، أقل أخطاء.</p>
-
-    <div class="section-title">ج. دمج <code>IF</code> مع <code>AND</code> و <code>OR</code></div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الدالة</th>
-                <th>الوظيفة</th>
-                <th>مثال تطبيقي</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><code>AND</code></td>
-                <td>كل الشروط يجب أن تكون صحيحة</td>
-                <td><code>=AND(B2>=50, C2="حاضر")</code><br>→ ناجح وحاضر</td>
-            </tr>
-            <tr>
-                <td><code>OR</code></td>
-                <td>أي شرط صحيح يكفي</td>
-                <td><code>=OR(B2>=90, D2="متفوق سابق")</code><br>→ معفى من الامتحان</td>
-            </tr>
-        </tbody>
-    </table>
-    <p><strong>🎯 مثال كامل (قبول في دورة):</strong><br>
-    <code>=IF(AND(العمر>=18, الدرجة>=75, OR(التخصص="حاسبات", التخصص="ذكاء اصطناعي")), "مقبول", "غير مؤهل")</code></p>
-    <p><strong>💡 نصيحة لـ EdTech:</strong><br>
-    استخدم <code>AND/OR</code> مع <code>IF</code> في أنظمة التوصيات التكيفية (مثل: إذا أجاب الطالب 3 مرات خاطئة → عرض فيديو توضيحي تلقائيًا).</p>
-
-    <hr>
-
-    <div class="section-title">🧩 4. دوال متقدمة مفيدة في EdTech</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الدالة</th>
-                <th>الاستخدام</th>
-                <th>مثال</th>
-                <th>نصيحة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><code>VLOOKUP</code></td>
-                <td>بحث رأسي (مثل: جلب اسم من رقم الجلوس)</td>
-                <td><code>=VLOOKUP(123, A2:D100, 2, FALSE)</code></td>
-                <td>❌ تجنبه إذا البيانات متغيرة</td>
-            </tr>
-            <tr>
-                <td><strong><code>XLOOKUP</code> ✅</strong></td>
-                <td>بديل حديث — يدعم بحث يسار/يمين، خطأ مخصص</td>
-                <td><code>=XLOOKUP(123, A2:A100, B2:B100, "غير موجود")</code></td>
-                <td>⭐ <strong>الأفضل دائمًا</strong></td>
-            </tr>
-            <tr>
-                <td><code>SUMIFS</code></td>
-                <td>جمع قيم حسب شروط متعددة</td>
-                <td><code>=SUMIFS(الدرجات, الحضور, "حاضر", التخصص, "ذكاء اصطناعي")</code></td>
-                <td>لتحليل التحصيل حسب المعايير</td>
-            </tr>
-            <tr>
-                <td><code>TEXT</code></td>
-                <td>تنسيق التواريخ/الأرقام كنص</td>
-                <td><code>=TEXT(TODAY(), "dddd, dd mmmm yyyy")</code><br>→ السبت, 08 نوفمبر 2025</td>
-                <td>لإنشاء تقارير بتنسيق جميل</td>
-            </tr>
-            <tr>
-                <td><code>TEXTJOIN</code></td>
-                <td>دمج خلايا مع فاصل</td>
-                <td><code>=TEXTJOIN(", ", TRUE, A2, B2, C2)</code><br>→ أحمد, 20, ذكاء اصطناعي</td>
-                <td>لتصدير بيانات جاهزة للعرض</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">📁 نصائح احترافية (من خبرتك كـ Front-End & EdTech Designer)</div>
-    <ul class="lesson-list">
-        <li><strong>استخدم Excel كـ Database مؤقت:</strong><br>
-        عرّف أسماء جداول: <code>=SUM(Students[الدرجة])</code> — أوضح وأقل أخطاء.</li>
-        <li><strong>دمج مع التصميم:</strong><br>
-        في Excel 365: انسخ المخطط → لصقه في Illustrator كـ <strong>SVG قابل للتعديل</strong> → غيّر الألوان والخطوط لتناسب هوية منصتك.</li>
-        <li><strong>أتمتة التقارير:</strong><br>
-        سجّل ماكرو بسيط (20 دقيقة) لإرسال تقرير أداء أسبوعي تلقائيًا عبر VBA.</li>
-    </ul>
-</div>
-<div class="lesson-card">
-    <h4>الوحدة 2: الجداول المحورية</h4>
-
-    <div class="section-title">📊 1. ما هي PivotTable؟</div>
-    <p>أداة قوية لـ <strong>تلخيص، تحليل، واستكشاف</strong> كميات كبيرة من البيانات دون كتابة صيغ.<br>
-    مثال: تحويل 10,000 صف من درجات الطلاب إلى تقرير تفاعلي في 30 ثانية.</p>
-
-    <div class="section-title">✅ 2. خطوات إنشاء PivotTable</div>
-    <ol class="lesson-list">
-        <li>اختر نطاق البيانات (مع رؤوس أعمدة واضحة، بدون خلايا فارغة في الرؤوس).</li>
-        <li>اذهب إلى: <strong>Insert → PivotTable → New Worksheet</strong>.</li>
-        <li>في نافذة الحقول:
-            <ul>
-                <li><strong>Rows:</strong> ما تريد تجميعه (مثل: التخصص، الدفعة)</li>
-                <li><strong>Columns:</strong> ما تريد مقارنته (مثل: النوع: ذكر/أنثى)</li>
-                <li><strong>Values:</strong> ما تريد حسابه (متوسط، مجموع، عدّ)</li>
-                <li><strong>Filters:</strong> لتصفية (مثل: الدورة فقط)</li>
-            </ul>
-        </li>
-    </ol>
-
-    <div class="section-title">🎯 3. أمثلة عملية من البيئة التعليمية</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الهدف</th>
-                <th>الإعدادات</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>متوسط درجات كل تخصص</td>
-                <td><strong>Rows:</strong> التخصص<br><strong>Values:</strong> Average of الدرجة</td>
-            </tr>
-            <tr>
-                <td>عدد الحاضرين vs الغائبين لكل دفعة</td>
-                <td><strong>Rows:</strong> الدفعة<br><strong>Columns:</strong> الحضور<br><strong>Values:</strong> Count of الاسم</td>
-            </tr>
-            <tr>
-                <td>إجمالي الساعات لكل مُدرّب</td>
-                <td><strong>Rows:</strong> اسم المُدرّب<br><strong>Values:</strong> Sum of الساعات</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>✅ ميزة خفية:</strong><br>
-    انقر بزر الماوس الأيمن على أي رقم → <strong>Value Field Settings</strong> → غيّر من <code>Sum</code> إلى:<br>
-    • <code>% of Grand Total</code> • <code>Running Total</code> • <code>Difference From</code></p>
-
-    <hr>
-
-    <div class="section-title">📈 4. PivotChart — رسوم بيانية تفاعلية</div>
-    <p>بعد إنشاء PivotTable → <strong>Analyze → PivotChart</strong> → اختر نوع المخطط.<br>
-    <strong>الميزة:</strong> يتحديث تلقائيًا عند تغيير فلاتر الـ PivotTable.</p>
-
-    <div class="section-title">🎨 نصائح تصميم احترافية (من خبرتك في الجرافيك)</div>
-    <ul class="lesson-list">
-        <li>✅ استخدم <strong>أقصى 3 ألوان رئيسية</strong> (حسب الهوية البصرية — استخدم Adobe Color).</li>
-        <li>✅ أضف عناوين واضحة + وحدات قياس (مثل: <code>"%"</code>, <code>"ساعة"</code>).</li>
-        <li>❌ تجنب التأثيرات <strong>3D</strong> — تُشوّه النسب.</li>
-        <li>✅ في Excel 365: <strong>Chart Styles → Monochrome</strong> أو <strong>Colorblind Friendly</strong>.</li>
-        <li>🎯 <strong>حيلة احترافية:</strong><br>
-        بعد إنشاء المخطط → <strong>Format → Fill & Line</strong> → غيّر <strong>Transparency</strong> للخلفية → يندمج مع تصميم العرض التقديمي.</li>
-    </ul>
-
-    <hr>
-
-    <div class="section-title">📉 5. أنواع المخططات وأفضل استخدام لها</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>شكله</th>
-                <th>أفضل استخدام</th>
-                <th>مثال من EdTech</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>أعمدة (Column)</strong></td>
-                <td>أعمدة رأسية</td>
-                <td>مقارنة قيم بين فئات</td>
-                <td>مقارنة درجات الطلاب في 5 وحدات</td>
-            </tr>
-            <tr>
-                <td><strong>أشرطة (Bar)</strong></td>
-                <td>أعمدة أفقية</td>
-                <td>أمثلة أسماء طويلة</td>
-                <td>أداء المدرّسين (أسماء طويلة)</td>
-            </tr>
-            <tr>
-                <td><strong>خطي (Line)</strong></td>
-                <td>خطوط متصلة</td>
-                <td>تتبع تغيّر مع الزمن</td>
-                <td>تطور أداء طالب على 12 أسبوعًا</td>
-            </tr>
-            <tr>
-                <td><strong>دائري (Pie)</strong></td>
-                <td>دائرة مقسّمة</td>
-                <td>عرض <strong>نسبة مئوية</strong> من الكل</td>
-                <td>توزيع الطلاب حسب التخصص (≤5 فئات)</td>
-            </tr>
-            <tr>
-                <td><strong>XY (Scatter)</strong></td>
-                <td>نقاط متناثرة</td>
-                <td>العلاقة بين متغيرين</td>
-                <td>العلاقة بين "عدد المحاولات" و"الدرجة"</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr>
-
-    <div class="section-title">🎨 6. التنسيقات (Formatting) — احتراف المظهر</div>
-    <p><strong>✅ التنسيقات الأساسية:</strong></p>
-    <ul class="lesson-list">
-        <li><strong>تنسيق الأرقام:</strong> <kbd>Ctrl+1</kbd> → اختر نوع: نسبة مئوية، عملة، تاريخ.</li>
-        <li><strong>التنسيق الشرطي:</strong> <code>Home → Conditional Formatting</code>:
-            <ul>
-                <li><strong>Data Bars:</strong> أشرطة داخل الخلية</li>
-                <li><strong>Color Scales:</strong> درجات لونية (أحمر → أخضر)</li>
-                <li><strong>Icon Sets:</strong> أيقونات (↑, ↓, ●)</li>
-            </ul>
-        </li>
-        <li><strong>الجداول الذكية:</strong> <kbd>Ctrl+T</kbd> → ألوان متناوبة، فلترة تلقائية، تحديث صيغ تلقائي.</li>
-    </ul>
-
-    <div class="section-title">✅ أمثلة تطبيقية للتنسيق الشرطي</div>
-    <ol class="lesson-list">
-        <li><strong>تلوين المتفوقين (≥90):</strong><br>
-        Conditional Formatting → Highlight Cells → Greater Than → 90 → لون أخضر.</li>
-        <li><strong>تحليل أداء الطالب (3 ألوان):</strong><br>
-        Color Scales → Green-Yellow-Red: أخضر (≥85)، أصفر (70–84)، أحمر (<70).</li>
-        <li><strong>عرض "↑" عند تحسن >10 نقاط:</strong><br>
-        <code>=IF(الجديدة - القديمة > 10, "↑", "")</code> + Icon Set.</li>
-    </ol>
-
-    <hr>
-
-    <div class="section-title">📁 7. أتمتة التقارير ودمجها مع منصتك التعليمية</div>
-    <ul class="lesson-list">
-        <li><strong>Power Query:</strong> <code>Data → Get Data</code> لاستيراد بيانات الطلاب من CSV أو Google Sheets تلقائيًا.</li>
-        <li><strong>تصدير تقارير:</strong> PivotTable → Export as PDF/PNG → أدرجها في موقعك (مثل: صفحة "إحصائيات الدورة").</li>
-        <li><strong>دمج مع التصميم:</strong>
-            <ul>
-                <li>في Excel 365: انسخ المخطط → لصقه في Illustrator كـ <strong>SVG</strong>.</li>
-                <li>عدّل الألوان والخطوط لتناسب هوية منصتك التعليمية.</li>
-            </ul>
-        </li>
-        <li><strong>VBA بسيط:</strong> 20 دقيقة تكفي لكتابة ماكرو لإرسال تقرير أداء أسبوعي تلقائيًا.</li>
-    </ul>
-
-    <hr>
-
-    <div class="section-title">📚 8. مصادر تعلّم موثوقة</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المصدر</th>
-                <th>النوع</th>
-                <th>الرابط</th>
-                <th>التقييم</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Microsoft Excel Training</td>
-                <td>رسمي — مجاني</td>
-                <td>support.microsoft.com/excel</td>
-                <td>⭐⭐⭐⭐</td>
-            </tr>
-            <tr>
-                <td>Excel Exposure</td>
-                <td>دليل + فيديوهات</td>
-                <td>excelexposure.com</td>
-                <td>⭐⭐⭐⭐⭐</td>
-            </tr>
-            <tr>
-                <td>Chandoo.org</td>
-                <td>مدونة متقدمة (Dashboards)</td>
-                <td>chandoo.org</td>
-                <td>⭐⭐⭐⭐⭐</td>
-            </tr>
-            <tr>
-                <td>Leila Gharani (YouTube)</td>
-                <td>شرح عملي — احترافي</td>
-                <td>youtube.com/c/LeilaGharani</td>
-                <td>⭐⭐⭐⭐⭐</td>
-            </tr>
-            <tr>
-                <td>Excel Practice Online</td>
-                <td>تدريب مباشر في المتصفح</td>
-                <td>excel-practice-online.com</td>
-                <td>⭐⭐⭐⭐</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr>
-
-    <div class="section-title">🎁 خلاصة سريعة (Flash Cards Style)</div>
-    <ul class="lesson-list">
-        <li><strong>🧮 العمليات:</strong> <code>=A1+B1</code> — لا تنسَ <code>=</code>!</li>
-        <li><strong>🔢 العدّ:</strong> <code>COUNT</code> (أرقام)، <code>COUNTA</code> (كل غير فارغ)</li>
-        <li><strong>🔀 IF:</strong> استخدم <code>IFS</code> بدل <code>IF</code> المتداخل</li>
-        <li><strong>🔗 AND/OR:</strong> ضعها داخل <code>IF</code> لاتخاذ قرارات معقدة</li>
-        <li><strong>📊 PivotTable:</strong> أسرع طريقة لتحليل 10,000 سجل</li>
-        <li><strong>📈 المخططات:</strong> أعمدة للمقارنة، خطي للاتجاهات، دائري للنِسَب</li>
-        <li><strong>🎨 التنسيقات:</strong> Conditional Formatting → Color Scales لتحليل بصري فوري</li>
-    </ul>
-</div>
-    </div>
-
-    <a href="../lectures.html" class="back-to-home-btn">
-        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
-    </a>
-
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const root = document.documentElement;
-
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                themeToggle.classList.add('day');
-            } else {
-                themeToggle.classList.add('night');
-            }
-
-            themeToggle.addEventListener('click', function() {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    themeToggle.classList.remove('day');
-                    themeToggle.classList.add('night');
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    themeToggle.classList.remove('night');
-                    themeToggle.classList.add('day');
-                }
-            });
-        });
-    </script>
-</body>
-</html>

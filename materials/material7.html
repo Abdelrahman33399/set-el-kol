@@ -1,1227 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظومة الحاسب - ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .lesson-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s;
-        }
-        .lesson-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
-        }
-        .lesson-card h4 {
-            color: var(--text-light);
-            font-weight: 700;
-        }
-        .lesson-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .lesson-list li {
-            padding: 0.7rem 1rem;
-            margin: 0.5rem 0;
-            background: rgba(30, 30, 50, 0.6);
-            border-radius: 12px;
-            border-right: 3px solid var(--accent-orange);
-        }
-        .back-to-home-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-            transition: all 0.3s ease;
-        }
-        .back-to-home-btn:hover {
-            background: #e05a2a;
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
-            transform: scale(1.05);
-        }
-        .theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px var(--shadow-orange);
-            transition: all 0.3s ease;
-        }
-        .theme-toggle-btn:hover {
-            background: var(--accent-orange-hover);
-            transform: translateY(-3px) rotate(15deg);
-        }
-    </style>
-</head>
-<body>
-    <div class="container py-4 py-md-5">
-        <h1 class="neon-title text-center mb-4 mb-md-5">منظومة الحاسب</h1>
-
-     <div class="lesson-card">
-    <h4>الفصل 1: مقدمة عن منظومة الحاسب الآلي</h4>
-
-    <div class="section-title">✅ ما هي المنظومة؟</div>
-    <p>ليست مجرد جهاز، بل نظام متكامل من 4 مكونات لا تُستغنى عن أيٍّ منها:</p>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المكون</th>
-                <th>الدور</th>
-                <th>مثال</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>المادية (Hardware)</strong></td>
-                <td>الجسد – كل ما يُلمس</td>
-                <td>شاشة، لوحة مفاتيح، CPU</td>
-            </tr>
-            <tr>
-                <td><strong>البرمجية (Software)</strong></td>
-                <td>الروح – التعليمات غير المرئية</td>
-                <td>ويندوز، وورد، كروم</td>
-            </tr>
-            <tr>
-                <td><strong>البيانات (Data)</strong></td>
-                <td>المادة الخام</td>
-                <td>أرقام، نصوص، صور</td>
-            </tr>
-            <tr>
-                <td><strong>المستخدم (User)</strong></td>
-                <td>المُوجِّه — من يحدّد الهدف ويُقيّم الناتج</td>
-                <td>أنت!</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>🌟 تشبيه:</strong> مثل جسم الإنسان:</p>
-    <ul class="lesson-list">
-        <li>الدماغ = CPU</li>
-        <li>الأعصاب = ناقل البيانات</li>
-        <li>الحواس = وحدات الإدخال</li>
-        <li>الأطراف = وحدات الإخراج</li>
-    </ul>
-
-    <div class="section-title">✅ المكونات المادية الأساسية:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوظيفة</th>
-                <th>أمثلة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>وحدات الإدخال</strong></td>
-                <td>تُدخل البيانات للحاسب</td>
-                <td>لوحة مفاتيح، فأرة، ماسح ضوئي، ميكروفون</td>
-            </tr>
-            <tr>
-                <td><strong>وحدة المعالجة المركزية (CPU)</strong></td>
-                <td>"العقل" — يُجري الحسابات والمنطق</td>
-                <td>Core i7, Ryzen 9</td>
-            </tr>
-            <tr>
-                <td><strong>الذاكرة</strong></td>
-                <td>تخزين مؤقت أو دائم</td>
-                <td>RAM (مؤقتة)، SSD/HDD (دائمة)</td>
-            </tr>
-            <tr>
-                <td><strong>وحدات الإخراج</strong></td>
-                <td>تُظهر النتائج</td>
-                <td>شاشة، طابعة، سماعات</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 2: اللوحة الأم (Motherboard)</h4>
-
-    <div class="section-title">✅ ما هي؟</div>
-    <p>اللوحة الرئيسية (PCB) اللي تربط كل المكونات مع بعضها — الهيكل العظمي للحاسوب.</p>
-
-    <div class="section-title">✅ عوامل الشكل (Form Factors) — حجم اللوحة:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الأبعاد</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>ATX</strong></td>
-                <td>30.5 × 24.4 سم</td>
-                <td>الحواسيب المكتبية القياسية</td>
-            </tr>
-            <tr>
-                <td><strong>Micro-ATX</strong></td>
-                <td>24.4 × 24.4 سم</td>
-                <td>أصغر، أقل تكلفة، كافي للاستخدام اليومي</td>
-            </tr>
-            <tr>
-                <td><strong>Mini-ITX</strong></td>
-                <td>17 × 17 سم</td>
-                <td>حواسيب صغيرة جدًا (مثل HTPC)</td>
-            </tr>
-            <tr>
-                <td><strong>E-ATX</strong></td>
-                <td>أكبر من ATX</td>
-                <td>خوادم، محطات عمل، كسر سرعة متقدم</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ المكونات الرئيسية على اللوحة الأم:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المكون</th>
-                <th>الوظيفة</th>
-                <th>ملاحظات</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>مقبس المعالج (CPU Socket)</strong></td>
-                <td>مكان تركيب الـCPU</td>
-                <td>نوعان:<br>
-                LGA (إنتل + AMD حديث): الإبر على اللوحة<br>
-                PGA (AMD قديم): الإبر على المعالج</td>
-            </tr>
-            <tr>
-                <td><strong>مجموعة الشريحة (Chipset)</strong></td>
-                <td>"مدير المرور" — تتحكم في سرعة/عدد المنافذ</td>
-                <td>مثال:<br>
-                Z790 (إنتل): يدعم كسر سرعة كامل<br>
-                B650 (AMD): كسر سرعة ذاكرة فقط</td>
-            </tr>
-            <tr>
-                <td><strong>فتحات RAM</strong></td>
-                <td>تركيب ذاكرة الوصول العشوائي</td>
-                <td>تدعم القناة المزدوجة — ضروري لزيادة الأداء</td>
-            </tr>
-            <tr>
-                <td><strong>فتحات PCIe</strong></td>
-                <td>تركيب كروت التوسعة (شاشة، شبكة، صوت...)</td>
-                <td>x16: لكرت الشاشة<br>
-                x4/x1: لـ SSD NVMe أو كروت إضافية</td>
-            </tr>
-            <tr>
-                <td><strong>موصلات التخزين</strong></td>
-                <td>توصيل الأقراص</td>
-                <td>SATA: لأقراص HDD/SSD عادية<br>
-                M.2: لأقراص SSD سريعة (تدعم SATA أو NVMe)</td>
-            </tr>
-            <tr>
-                <td><strong>BIOS/UEFI</strong></td>
-                <td>البرنامج الأول اللي يشتغل عند التشغيل</td>
-                <td>UEFI أحدث: واجهة رسومية، أمان (Secure Boot)، دعم أقراص &gt;2 تيرا</td>
-            </tr>
-            <tr>
-                <td><strong>موصلات الطاقة</strong></td>
-                <td>لتوصيل مزود الطاقة (PSU)</td>
-                <td>24-pin: رئيسي<br>
-                8-pin: خاص بالمعالج (ضروري للمعالجات القوية)</td>
-            </tr>
-            <tr>
-                <td><strong>لوحة المنافذ الخلفية</strong></td>
-                <td>لتوصيل الأجهزة الطرفية</td>
-                <td>USB (2.0/3.x/Type-C)، HDMI، شبكة، صوت، Wi-Fi</td>
-            </tr>
-            <tr>
-                <td><strong>VRM</strong></td>
-                <td>يحوّل 12V → جهد منخفض للمعالج (1.0–1.4V)</td>
-                <td>كلما كثرت مراحل الطاقة ووضعت مبددات حرارية — أفضل لأداء كسر السرعة</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ كيف تختار اللوحة المناسبة؟</div>
-    <ul class="lesson-list">
-        <li>توافق المعالج: تحقق من المقبس (مثل: AM5 لمعالجات Ryzen 7000).</li>
-        <li>عامل الشكل: هل يناسب صندوقك؟</li>
-        <li>دعم الذاكرة: DDR4 أم DDR5؟ السرعة؟ السعة القصوى؟</li>
-        <li>التوسعة المستقبلية: كم M.2؟ كم PCIe؟ هل فيها Wi-Fi مدمج؟</li>
-        <li>الميزانية: لا تشترِ أغلى لوحة — غالبًا الوسطى توفر أفضل توازن.</li>
-    </ul>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 3: وحدة المعالجة المركزية (CPU)</h4>
-
-    <div class="section-title">✅ ما هي؟</div>
-    <p>"العقل" — شريحة إلكترونية فيها مليارات الترانزستورات، تُجري ملايين العمليات في الثانية.</p>
-
-    <div class="section-title">✅ دورة العمل (Instruction Cycle):</div>
-    <ul class="lesson-list">
-        <li><strong>الجلب (Fetch):</strong> جلب التعليمات من الذاكرة (RAM).</li>
-        <li><strong>فك التشفير (Decode):</strong> فهم نوع العملية (جمع، مقارنة...).</li>
-        <li><strong>التنفيذ (Execute):</strong> تنفيذ العملية عبر وحدة الحساب والمنطق (ALU).</li>
-        <li><strong>الكتابة (Write-back):</strong> حفظ النتيجة في الرجِسترات أو الذاكرة.</li>
-    </ul>
-
-    <div class="section-title">✅ المواصفات الأساسية:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المواصفة</th>
-                <th>الوصف</th>
-                <th>مثال</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>النوى (Cores)</strong></td>
-                <td>وحدات معالجة مستقلة داخل الشريحة</td>
-                <td>Ryzen 5 7600X — 6 نوى</td>
-            </tr>
-            <tr>
-                <td><strong>الخيوط (Threads)</strong></td>
-                <td>مهام تُعالج في نفس الوقت (Hyper-Threading/SMT)</td>
-                <td>6 نوى = 12 خيطًا</td>
-            </tr>
-            <tr>
-                <td><strong>سرعة الساعة (GHz)</strong></td>
-                <td>دوارات في الثانية — كلما زادت، زاد الأداء (خاصة في المهام أحادية النواة)</td>
-                <td>3.8 GHz (أساسية)، 5.1 GHz (معززة)</td>
-            </tr>
-            <tr>
-                <td><strong>الذاكرة المخبأة (Cache)</strong></td>
-                <td>ذاكرة سريعة جدًا داخل المعالج</td>
-                <td>L1: أسرع، خاصة بكل نواة<br>
-                L3: مشتركة، تهم في الألعاب</td>
-            </tr>
-            <tr>
-                <td><strong>TDP (Watt)</strong></td>
-                <td>مؤشر لحرارة/استهلاك الطاقة — مهم لاختيار نظام التبريد</td>
-                <td>65W (موفر)، 125W (أداء عالي)</td>
-            </tr>
-            <tr>
-                <td><strong>iGPU</strong></td>
-                <td>رسوميات مدمجة — تكفي للمهام البسيطة (مشاهدة، مكتب)</td>
-                <td>Intel UHD Graphics، AMD Radeon Graphics</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ كسر السرعة (Overclocking)</div>
-    <p><strong>متى؟</strong> مع معالج "غير مقفّل" (مثل: Intel Core i7-14700K، أو أي AMD Ryzen).<br>
-    <strong>لماذا؟</strong> زيادة الأداء (خاصة في الألعاب والتطبيقات الثقيلة).</p>
-    <p><strong>المتطلبات:</strong></p>
-    <ul class="lesson-list">
-        <li>لوحة أم تدعم كسر السرعة (Z-series لإنتل، X/B-series لـAMD).</li>
-        <li>تبريد قوي (مبرد مائي أو هوائي ضخم).</li>
-    </ul>
-    <p><strong>المخاطر:</strong></p>
-    <ul class="lesson-list">
-        <li>ارتفاع الحرارة → تلف المعالج</li>
-        <li>إلغاء الضمان</li>
-        <li>عدم استقرار النظام</li>
-    </ul>
-
-    <div class="section-title">✅ تبريد المعالج:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>كيف يعمل؟</th>
-                <th>مميزات</th>
-                <th>مناسب لـ</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>هوائي</strong></td>
-                <td>نحاس + زعانف + مروح</td>
-                <td>رخيص، موثوق</td>
-                <td>الاستخدام العادي أو كسر سرعة متوسط</td>
-            </tr>
-            <tr>
-                <td><strong>مائي (AIO)</strong></td>
-                <td>سائل → مشعاع → مروح</td>
-                <td>أهدأ، أكثر كفاءة</td>
-                <td>كسر سرعة عالي، ألعاب، إنتاج احترافي</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 4: الذاكرة (RAM & ROM)</h4>
-
-    <div class="section-title">✅ الذاكرة المتطايرة (RAM) — "الذاكرة قصيرة المدى"</div>
-    <ul class="lesson-list">
-        <li>تُمسح عند إطفاء الجهاز.</li>
-        <li>تُستخدم لتشغيل البرامج النشطة.</li>
-    </ul>
-
-    <p><strong>أجيال الذاكرة:</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الجيل</th>
-                <th>السرعة</th>
-                <th>الجهد</th>
-                <th>السعة القصوى للشريحة</th>
-                <th>الملاحظة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>DDR4</strong></td>
-                <td>حتى 3200 MT/s</td>
-                <td>1.2V</td>
-                <td>32GB</td>
-                <td>معيار قديم، لكنه ما زال شائع</td>
-            </tr>
-            <tr>
-                <td><strong>DDR5</strong></td>
-                <td>من 4800 → 8400+ MT/s</td>
-                <td>1.1V</td>
-                <td>64GB+</td>
-                <td>أسرع، أكثر كفاءة، غير متوافق مع DDR4</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>المواصفات المهمة:</strong></p>
-    <ul class="lesson-list">
-        <li><strong>السعة:</strong> 16GB (كافي للغالبية)، 32GB+ (لمحترفي المونتاج/الذكاء الاصطناعي).</li>
-        <li><strong>التوقيت (CL):</strong> كلما قلّ (مثل CL16)، كانت أسرع.</li>
-        <li><strong>XMP/EXPO:</strong> ملف في الـBIOS لتفعيل السرعة الكاملة للذاكرة (خاصة لو اشتريتها 6000MT/s لكنها تشتغل بـ4800 افتراضيًا).</li>
-    </ul>
-
-    <div class="section-title">✅ الذاكرة غير المتطايرة (ROM) — تحتفظ بالبيانات للأبد</div>
-    <ul class="lesson-list">
-        <li>BIOS/UEFI مخزّن على شريحة Flash ROM.</li>
-        <li>يمكن تحديثها ("flashing BIOS") لإضافة دعم لمكونات جديدة أو إصلاح أخطاء.</li>
-    </ul>
-
-    <div class="section-title">✅ التسلسل الهرمي للذاكرة (من الأسرع → الأبطأ):</div>
-    <ol class="lesson-list">
-        <li>سجلات المعالج (داخل الـCPU)</li>
-        <li>ذاكرة الكاش (L1 → L2 → L3)</li>
-        <li>RAM</li>
-        <li>وحدات التخزين (SSD/HDD)</li>
-    </ol>
-    <p><strong>✅ الهدف:</strong> تقليل "الاختناقات" — المعالج يستخدم الأسرع أولًا، وبس يخلص، يروح لللي بعده.</p>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 5: وحدات التخزين (HDD / SSD / RAID)</h4>
-
-    <div class="section-title">✅ محركات الأقراص الصلبة (HDD)</div>
-    <ul class="lesson-list">
-        <li><strong>آلية العمل:</strong> أقراص مغناطيسية دوارة + رأس قراءة/كتابة.</li>
-        <li><strong>السرعة:</strong> 5400 أو 7200 RPM — كلما زادت، زاد الأداء.</li>
-        <li><strong>تقنيات التسجيل:</strong>
-            <ul>
-                <li><strong>CMR:</strong> تقليدي — أداء ثابت.</li>
-                <li><strong>SMR:</strong> أقراص "متداخلة" — سعة أعلى، لكن أبطأ في إعادة الكتابة (مش مناسبة للنظام).</li>
-            </ul>
-        </li>
-    </ul>
-
-    <div class="section-title">✅ محركات الحالة الصلبة (SSD)</div>
-    <ul class="lesson-list">
-        <li>لا أجزاء متحركة → أسرع، أهدأ، أكثر متانة.</li>
-        <li><strong>أنواع NAND (عدد البتات في الخلية):</strong></li>
-    </ul>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>البتات/خلية</th>
-                <th>السرعة</th>
-                <th>التحمل</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>SLC</strong></td>
-                <td>1</td>
-                <td>⭐⭐⭐⭐⭐</td>
-                <td>⭐⭐⭐⭐⭐</td>
-                <td>صناعي/عسكري</td>
-            </tr>
-            <tr>
-                <td><strong>MLC</strong></td>
-                <td>2</td>
-                <td>⭐⭐⭐⭐</td>
-                <td>⭐⭐⭐⭐</td>
-                <td>احترافي</td>
-            </tr>
-            <tr>
-                <td><strong>TLC</strong></td>
-                <td>3</td>
-                <td>⭐⭐⭐</td>
-                <td>⭐⭐⭐</td>
-                <td>الاستهلاك اليومي (الأكثر انتشارًا)</td>
-            </tr>
-            <tr>
-                <td><strong>QLC</strong></td>
-                <td>4</td>
-                <td>⭐⭐</td>
-                <td>⭐⭐</td>
-                <td>تخزين ملفات (فيديو، ألعاب) — "تُقرأ" أكثر من "تُكتب"</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ الأشكال والواجهات:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوصف</th>
-                <th>السرعة القصوى</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>2.5" SATA SSD</strong></td>
-                <td>يشبه الـHDD في الشكل</td>
-                <td>~550 ميجابايت/ثانية</td>
-            </tr>
-            <tr>
-                <td><strong>M.2 SATA</strong></td>
-                <td>صغير، يركب على اللوحة</td>
-                <td>~550 ميجابايت/ثانية</td>
-            </tr>
-            <tr>
-                <td><strong>M.2 NVMe</strong></td>
-                <td>يستخدم PCIe مباشرة — بدون "عنق زجاجة" SATA</td>
-                <td>حتى 7300+ ميجابايت/ثانية</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>💡 نصيحة:</strong> خذ NVMe لو ميزانيتك تسمح — فرق الأداء في إقلاع النظام وفتح البرامج واضح جدًا.</p>
-
-    <div class="section-title">✅ RAID — تجميع الأقراص لتحسين الأداء أو الموثوقية</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>الوصف</th>
-                <th>السعة الفعلية</th>
-                <th>الموثوقية</th>
-                <th>الأداء</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>RAID 0</strong></td>
-                <td>توزيع البيانات على قرصين+</td>
-                <td>مجموع السعات</td>
-                <td>❌ (لو فشل قرص → خسارة كل البيانات)</td>
-                <td>⬆️⬆️</td>
-            </tr>
-            <tr>
-                <td><strong>RAID 1</strong></td>
-                <td>نسخة طبق الأصل</td>
-                <td>سعة قرص واحد</td>
-                <td>✅ (لو فشل قرص → الثاني يعمل)</td>
-                <td>↔️</td>
-            </tr>
-            <tr>
-                <td><strong>RAID 5</strong></td>
-                <td>توزيع + "باريتي" (بيانات تصحيح)</td>
-                <td>(عدد الأقراص -1) × السعة</td>
-                <td>✅ (يتحمّل فشل قرص واحد)</td>
-                <td>⬆️</td>
-            </tr>
-            <tr>
-                <td><strong>RAID 10</strong></td>
-                <td>دمج RAID 1 + RAID 0</td>
-                <td>نصف المجموع</td>
-                <td>✅✅ (يتحمّل فشل قرصين، لو من مجموعتين مختلفة)</td>
-                <td>⬆️⬆️</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 6: كروت التوسعة</h4>
-
-    <div class="section-title">✅ منافذ التوسعة (التطور من الأقدم → الأحدث):</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المنفذ</th>
-                <th>السرعة القصوى</th>
-                <th>الحالة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>ISA</strong></td>
-                <td>11 ميجابايت/ثانية</td>
-                <td>❌ توقف (قديم جدًا)</td>
-            </tr>
-            <tr>
-                <td><strong>PCI</strong></td>
-                <td>133 ميجابايت/ثانية</td>
-                <td>⚠️ نادر الاستخدام</td>
-            </tr>
-            <tr>
-                <td><strong>AGP</strong></td>
-                <td>حتى 2.1 جيجابايت/ثانية</td>
-                <td>❌ توقف (مخصص للشاشة فقط)</td>
-            </tr>
-            <tr>
-                <td><strong>PCIe</strong></td>
-                <td>حتى 63 جيجابايت/ثانية (PCIe 5.0 x16)</td>
-                <td>✅ المعيار الحالي</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>سرعات PCIe (x16):</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الجيل</th>
-                <th>السرعة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>PCIe 3.0</strong></td><td>15.75 جيجابايت/ثانية</td></tr>
-            <tr><td><strong>PCIe 4.0</strong></td><td>31.5 جيجابايت/ثانية</td></tr>
-            <tr><td><strong>PCIe 5.0</strong></td><td>63 جيجابايت/ثانية</td></tr>
-        </tbody>
-    </table>
-
-    <p><strong>⚠️ تنبيه:</strong> كرت PCIe 4.0 يشتغل في فتحة PCIe 3.0، لكن بسرعتها الأقل.</p>
-
-    <div class="section-title">✅ كروت الشاشة (GPU)</div>
-    <p><strong>المواصفات الأساسية:</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>البند</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>GPU</strong></td>
-                <td>القلب — عدد الأنوية (CUDA لـNVIDIA، Stream لـAMD) + سرعة الساعة</td>
-            </tr>
-            <tr>
-                <td><strong>VRAM</strong></td>
-                <td>الذاكرة المخصصة — السعة (8GB+ للألعاب بدقة 4K)، النوع (GDDR6/GDDR6X/HBM)، عرض النطاق (256-bit أفضل من 128-bit)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>الشركات الرئيسية:</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الشركة</th>
-                <th>السلسلة الحالية</th>
-                <th>التقنيات المميزة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>NVIDIA</strong></td>
-                <td>RTX 40 Series</td>
-                <td>Ray Tracing، DLSS، CUDA</td>
-            </tr>
-            <tr>
-                <td><strong>AMD</strong></td>
-                <td>RX 7000 Series</td>
-                <td>FSR، RDNA 3</td>
-            </tr>
-            <tr>
-                <td><strong>Intel</strong></td>
-                <td>Arc A Series</td>
-                <td>XeSS، تشفير AV1</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ كروت أخرى مفيدة:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الكارت</th>
-                <th>الفائدة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>الصوت</strong></td>
-                <td>جودة أعلى، دعم 7.1، إدخال XLR للميكروفونات الاحترافية</td>
-            </tr>
-            <tr>
-                <td><strong>الشبكة</strong></td>
-                <td>سرعات أعلى (10 جيجابت)، دعم Wi-Fi 6E/7، ميزات أمان متقدمة</td>
-            </tr>
-            <tr>
-                <td><strong>التقاط الفيديو</strong></td>
-                <td>لتسجيل/بث الألعاب من كونسول أو كاميرات خارجية</td>
-            </tr>
-            <tr>
-                <td><strong>RAID</strong></td>
-                <td>إدارة مصفوفات أقراص متطورة (Hot Swap، BBU)</td>
-            </tr>
-            <tr>
-                <td><strong>USB إضافي</strong></td>
-                <td>منافذ USB 3.2/4 أو Type-C عالي السرعة</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 7: الأجهزة الطرفية وتوصيلاتها</h4>
-
-    <div class="section-title">✅ أجهزة الإدخال:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الجهاز</th>
-                <th>الأنواع</th>
-                <th>ملاحظات</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>لوحة المفاتيح</strong></td>
-                <td>ميكانيكية (أفضل للألعاب)، غشائية (رخيصة)، لاسلكية، مرنة</td>
-                <td>مفاتيح Cherry MX هي الأشهر</td>
-            </tr>
-            <tr>
-                <td><strong>الفأرة</strong></td>
-                <td>ضوئية، ليزر، ألعاب (DPI قابل للتعديل، أزرار قابلة للبرمجة)</td>
-                <td>DPI &gt; 16000 = دقة عالية جدًا</td>
-            </tr>
-            <tr>
-                <td><strong>الماسح الضوئي</strong></td>
-                <td>مسطح، محمول، ADF (تلقائي)، 3D</td>
-                <td>الدقة: 300–9600 DPI</td>
-            </tr>
-            <tr>
-                <td><strong>كامي ا ر الويب</strong></td>
-                <td>1080p/4K، معدل إطارات 30/60fps</td>
-                <td>مثالية للعمل عن بعد</td>
-            </tr>
-            <tr>
-                <td><strong>الميكروفون</strong></td>
-                <td>ديناميكي (متين)، مكثف (احترافي)، USB (سهل)</td>
-                <td>المكثف يحتاج phantom power</td>
-            </tr>
-            <tr>
-                <td><strong>قلم الرسم</strong></td>
-                <td>مستويات ضغط (8192+)، دقة (LPI)</td>
-                <td>ضروري للمصممين</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ أجهزة الإخراج:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الجهاز</th>
-                <th>التقنيات</th>
-                <th>المواصفات المهمة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>الشاشة</strong></td>
-                <td>LCD، LED، OLED، IPS</td>
-                <td>الدقة (4K)، معدل التحديث (144Hz+ للألعاب)، زمن الاستجابة (1ms)</td>
-            </tr>
-            <tr>
-                <td><strong>الطابعة</strong></td>
-                <td>نفث حبري (أفضل للألوان)، ليزر (أسرع للنصوص)، 3D</td>
-                <td>السرعة (PPM)، الدقة (DPI)</td>
-            </tr>
-            <tr>
-                <td><strong>السماعات</strong></td>
-                <td>2.0، 2.1، 5.1، 7.1، ANC (عزل ضوضاء)</td>
-                <td>مناسبة للألعاب أو الاستماع</td>
-            </tr>
-            <tr>
-                <td><strong>جهاز العرض</strong></td>
-                <td>DLP، LCD، LED/Laser</td>
-                <td>السطوع (Lumens)، الدقة</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ أجهزة إدخال + إخراج:</div>
-    <ul class="lesson-list">
-        <li><strong>شاشات اللمس:</strong> مقاومية (أرخص)، سعوية (أكثر دقة، تدعم لمس متعدد).</li>
-        <li><strong>طابعات متعددة الوظائف (MFP):</strong> طباعة + نسخ + مسح + فاكس.</li>
-        <li><strong>أجهزة تخزين خارجية:</strong> HDD (سعة كبيرة)، SSD (سرعة)، USB فلاش (خفة).</li>
-    </ul>
-
-    <div class="section-title">✅ أنواع المنافذ والتوصيلات:</div>
-    <p><strong>1. USB (الأكثر استخدامًا):</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المعيار</th>
-                <th>السرعة</th>
-                <th>القدرة</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>USB 2.0</strong></td>
-                <td>480 ميجابت/ث</td>
-                <td>2.5 واط</td>
-                <td>فأرة، لوحة مفاتيح</td>
-            </tr>
-            <tr>
-                <td><strong>USB 3.2</strong></td>
-                <td>20 جيجابت/ث</td>
-                <td>4.5 واط</td>
-                <td>أقراص خارجية</td>
-            </tr>
-            <tr>
-                <td><strong>USB4 / Thunderbolt 4</strong></td>
-                <td>40 جيجابت/ث</td>
-                <td>حتى 100 واط</td>
-                <td>شاشات، eGPU، شحن سريع</td>
-            </tr>
-            <tr>
-                <td><strong>USB Type-C</strong></td>
-                <td>فيزيائي فقط — يدعم أي معيار من فوق</td>
-                <td>—</td>
-                <td>الأجهزة الحديثة (iPhone 15، لابتوبات)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>💡 ملاحظة:</strong> USB-C هو شكل الموصل، مش معيار السرعة — لازم تتأكد من المعيار المدعوم (USB 3.2 Gen 2x2 مثلاً).</p>
-
-    <p><strong>2. منافذ الفيديو:</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المنفذ</th>
-                <th>الدقة القصوى</th>
-                <th>الميزة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>HDMI 2.1</strong></td>
-                <td>8K@60Hz / 4K@120Hz</td>
-                <td>صوت + صورة، ARC/eARC</td>
-            </tr>
-            <tr>
-                <td><strong>DisplayPort 2.0</strong></td>
-                <td>16K@60Hz</td>
-                <td>Multi-Stream (شاشتين من منفذ واحد)، Adaptive Sync</td>
-            </tr>
-            <tr>
-                <td><strong>VGA</strong></td>
-                <td>2048×1536@85Hz</td>
-                <td>تناظري — قديم، للشاشات القديمة فقط</td>
-            </tr>
-            <tr>
-                <td><strong>DVI</strong></td>
-                <td>2560×1600</td>
-                <td>رقمي/تناظري — بين VGA وHDMI</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>3. الصوت (Audio Jacks):</strong></p>
-    <ul class="lesson-list">
-        <li><strong>أخضر:</strong> خرج رئيسي</li>
-        <li><strong>وردي:</strong> ميكروفون</li>
-        <li><strong>أزرق:</strong> دخل خطي</li>
-        <li><strong>أسود/رمادي/برتقالي:</strong> قنوات خلفية/جانبية/مضخم</li>
-    </ul>
-
-    <p><strong>4. الاتصال اللاسلكي:</strong></p>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>التقنية</th>
-                <th>المدى</th>
-                <th>السرعة</th>
-                <th>الاستخدام</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Bluetooth 5.3</strong></td>
-                <td>حتى 240 متر</td>
-                <td>2 ميجابت/ث</td>
-                <td>فأرة، سماعات، لوحة مفاتيح</td>
-            </tr>
-            <tr>
-                <td><strong>Wi-Fi 6E</strong></td>
-                <td>2.4/5/6 جيجاهرتز</td>
-                <td>حتى 9.6 جيجابت/ث</td>
-                <td>إنترنت، طابعات لاسلكية</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ التعريفات (Drivers)</div>
-    <ul class="lesson-list">
-        <li><strong>ما هي؟</strong> برامح تسمح للويندوز بالتواصل مع الجهاز.</li>
-        <li><strong>كيف تثبتها؟</strong>
-            <ul>
-                <li>تلقائي عبر Windows Update</li>
-                <li>من الموقع الرسمي (الأفضل — أحدث إصدار)</li>
-                <li>من قرص مرفق مع الجهاز</li>
-            </ul>
-        </li>
-        <li><strong>لماذا تُحدّث؟</strong>
-            <ul>
-                <li>تحسين الأداء</li>
-                <li>إصلاح أخطاء</li>
-                <li>دعم ميزات جديدة</li>
-                <li>تحديثات أمنية</li>
-            </ul>
-        </li>
-        <li><strong>⚠️ تحذير:</strong> لا تنزل تعريفات من مواقع غير موثوقة — ممكن تحتوي فيروسات.</li>
-    </ul>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 8: تشخيص أعطال الحاسب البسيطة</h4>
-
-    <div class="section-title">✅ منهجية الاستكشاف:</div>
-    <ul class="lesson-list">
-        <li>دوّن كل خطوة تأخذها.</li>
-        <li>التقط صورة لرسائل الخطأ.</li>
-        <li>تحقق من التوصيلات (طاقة، شاشة، فأرة).</li>
-        <li>أعد التشغيل — أبسط حل وأكثره فعالية.</li>
-        <li>استبعد المكونات (مثل: جرب الطابعة على جهاز ثاني).</li>
-    </ul>
-
-    <div class="section-title">✅ أعطال شائعة + الحلول:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>العطل</th>
-                <th>الأعراض</th>
-                <th>الحل</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>الجهاز لا يشتغل</strong></td>
-                <td>لا أضواء، لا صوت</td>
-                <td>1. تحقق من كابل الطاقة والمقبس<br>2. جرب PSU آخر</td>
-            </tr>
-            <tr>
-                <td><strong>شاشة سوداء</strong></td>
-                <td>الجهاز يعمل، لكن ما فيش صورة</td>
-                <td>1. تحقق من كابل الشاشة<br>2. أعد تركيب كرت الشاشة/RAM<br>3. جرب شاشة/منفذ آخر</td>
-            </tr>
-            <tr>
-                <td><strong>شاشة زرقاء (BSOD)</strong></td>
-                <td>رسالة خطأ + إعادة تشغيل</td>
-                <td>ابحث عن كود الخطأ في جوجل — غالبًا مشكلة تعريف أو ذاكرة</td>
-            </tr>
-            <tr>
-                <td><strong>الجهاز ساخن/يتجمد</strong></td>
-                <td>مراوح تدور بسرعة، بطء شديد</td>
-                <td>1. نظّف الغبار<br>2. غيّر المعجون الحراري<br>3. تحقق من نظام التبريد</td>
-            </tr>
-            <tr>
-                <td><strong>الجهاز بطيء</strong></td>
-                <td>إقلاع طويل، برامج بطيئة</td>
-                <td>1. أوقف برامح بدء التشغيل<br>2. فحص فيروسات<br>3. حرّر مساحة على الـC:<br>4. حدّث نظام التشغيل والتعريفات</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ أدوات تشخيص مدمجة في الويندوز:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الأداة</th>
-                <th>الأمر</th>
-                <th>الوظيفة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>SFC</strong></td>
-                <td><code>sfc /scannow</code></td>
-                <td>إصلاح ملفات النظام التالفة</td>
-            </tr>
-            <tr>
-                <td><strong>CHKDSK</strong></td>
-                <td><code>chkdsk C: /f /r</code></td>
-                <td>فحص وإصلاح الأخطاء على القرص</td>
-            </tr>
-            <tr>
-                <td><strong>Windows Memory Diagnostic</strong></td>
-                <td>ابحث في قائمة ابدأ</td>
-                <td>اختبار ذاكرة RAM</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 9: المواصفات الفنية — مقارنات سريعة</h4>
-
-    <div class="section-title">✅ CPU: Intel vs AMD (2024)</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المعيار</th>
-                <th>Intel</th>
-                <th>AMD</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>نقطة القوة</strong></td>
-                <td>أداء أحادي النواة (للألعاب)</td>
-                <td>عدد أنوية أعلى (للإنتاجية)</td>
-            </tr>
-            <tr>
-                <td><strong>أفضل للألعاب</strong></td>
-                <td>Core i5-14600K</td>
-                <td>Ryzen 5 7600X3D (بفضل 3D V-Cache)</td>
-            </tr>
-            <tr>
-                <td><strong>أفضل للإنتاجية</strong></td>
-                <td>Core i9-14900K</td>
-                <td>Ryzen 9 7950X</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="section-title">✅ RAM: DDR4 vs DDR5</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>المعيار</th>
-                <th>DDR4</th>
-                <th>DDR5</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>السرعة</strong></td>
-                <td>حتى 3200 MT/s</td>
-                <td>من 4800 → 8400+ MT/s</td>
-            </tr>
-            <tr>
-                <td><strong>الجهد</strong></td>
-                <td>1.2V</td>
-                <td>1.1V (أكثر كفاءة)</td>
-            </tr>
-            <tr>
-                <td><strong>السعة/شريحة</strong></td>
-                <td>حتى 32GB</td>
-                <td>حتى 64GB+</td>
-            </tr>
-            <tr>
-                <td><strong>السعر</strong></td>
-                <td>أرخص</td>
-                <td>أغلى، لكن النزول مستمر</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>✅ نصيحة:</strong> لو بتشتري جهاز جديد — خذ DDR5. لو بتحسّن جهاز قديم — DDR4 كافي.</p>
-
-    <div class="section-title">✅ SSD: SATA vs NVMe</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>النوع</th>
-                <th>السرعة</th>
-                <th>السعر</th>
-                <th>مناسب لـ</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>SATA SSD</strong></td>
-                <td>~550 ميجابايت/ث</td>
-                <td>رخيص</td>
-                <td>ترقية لجهاز قديم</td>
-            </tr>
-            <tr>
-                <td><strong>NVMe SSD</strong></td>
-                <td>3500–7300+ ميجابايت/ث</td>
-                <td>أغلى قليلاً</td>
-                <td>نظام التشغيل، ألعاب، برامج ثقيلة</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="lesson-card">
-    <h4>الفصل 10: الصيانة الوقائية والعلاجية</h4>
-
-    <div class="section-title">✅ الصيانة المادية (Hardware)</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>الإجراء</th>
-                <th>التكرار الموصى به</th>
-                <th>الأدوات المطلوبة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>تنظيف الغبار</strong></td>
-                <td>كل 6–12 شهر</td>
-                <td>هواء مضغوط، قطعة قماش ناعمة</td>
-            </tr>
-            <tr>
-                <td><strong>تغيير المعجون الحراري</strong></td>
-                <td>كل 2–3 سنوات</td>
-                <td>معجون حراري جديد، قطعة قماش كحولية</td>
-            </tr>
-            <tr>
-                <td><strong>تنظيف الأجهزة الطرفية</strong></td>
-                <td>شهريًا</td>
-                <td>قماش مايكروفايبر، منظف شاشات</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p><strong>🌟 نصيحة:</strong> نظّف الجهاز وأنت مفصول من الكهرباء، واربط نفسك بسوار ESD لتجنب تلف المكونات.</p>
-
-    <div class="section-title">✅ الصيانة البرمجية (Software)</div>
-    <ul class="lesson-list">
-        <li>حدّث نظام التشغيل والبرامج دوريًا.</li>
-        <li>شغّل برنامج مكافحة فيروسات موثوق (مثل: Windows Defender + Malwarebytes دوري).</li>
-        <li>استخدم "تنظيف القرص" (Disk Cleanup) لإزالة الملفات المؤقتة.</li>
-        <li>لا تجزّئ SSD — خاصية "TRIM" كافية.</li>
-        <li>خُذ نسخة احتياطية دورية (على قرص خارجي أو سحابة).</li>
-    </ul>
-
-    <div class="section-title">✅ احتياطات السلامة عند التركيب:</div>
-    <ul class="lesson-list">
-        <li>افصل الطاقة تمامًا قبل الفتح.</li>
-        <li>استخدم سوار ESD أو لمس جزء معدني من الصندوق قبل لمس المكونات.</li>
-        <li>امسك المكونات من الحواف — ما تلمسش الدوائر الذهبية.</li>
-        <li>ما تستخدمش القوة — لو المكون ما بيدخلش، تحقق من الاتجاه.</li>
-        <li>نظّم المسامير في علبة صغيرة عشان ما تفقدهاش.</li>
-    </ul>
-
-    <div class="section-title">✅ العوامل البيئية:</div>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th>العامل</th>
-                <th>التأثير</th>
-                <th>الحل</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>الحرارة</strong></td>
-                <td>تلف المكونات، تجمد النظام</td>
-                <td>تهوية جيدة، تجنب أشعة الشمس</td>
-            </tr>
-            <tr>
-                <td><strong>الغبار</strong></td>
-                <td>عزل حراري → ارتفاع حرارة</td>
-                <td>تنظيف دوري</td>
-            </tr>
-            <tr>
-                <td><strong>الرطوبة</strong></td>
-                <td>تآكل، دوائر قصيرة</td>
-                <td>تجنب الأماكن الرطبة (مثل: الحمام، القبو)</td>
-            </tr>
-            <tr>
-                <td><strong>تذبذب الكهرباء</strong></td>
-                <td>تلف PSU والمكونات</td>
-                <td>استخدام منظم جهد أو UPS</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-    <a href="../lectures.html" class="back-to-home-btn">
-        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
-    </a>
-
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const root = document.documentElement;
-
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                themeToggle.classList.add('day');
-            } else {
-                themeToggle.classList.add('night');
-            }
-
-            themeToggle.addEventListener('click', function() {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    themeToggle.classList.remove('day');
-                    themeToggle.classList.add('night');
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    themeToggle.classList.remove('night');
-                    themeToggle.classList.add('day');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
