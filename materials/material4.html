@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التدريس المصغر - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+    /* Essential reset for responsiveness */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .lesson-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: clamp(1rem, 4vw, 1.5rem);
+        margin-bottom: clamp(1rem, 3vw, 1.5rem);
+        transition: transform 0.3s;
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    .lesson-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+    }
+
+    .lesson-card h4 {
+        color: var(--text-light);
+        font-weight: 700;
+        margin-top: 0;
+        font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+    }
+
+    .lesson-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .lesson-list li {
+        padding: clamp(0.5rem, 2.8vw, 0.7rem) clamp(0.8rem, 3.2vw, 1rem);
+        margin: clamp(0.3rem, 1.5vw, 0.5rem) 0;
+        background: rgba(30, 30, 50, 0.6);
+        border-radius: 12px;
+        border-right: 3px solid var(--accent-orange);
+        font-size: clamp(0.875rem, 3.4vw, 1rem);
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .back-to-home-btn {
+        position: fixed;
+        bottom: clamp(12px, 2.5vw, 20px);
+        left: clamp(12px, 2.5vw, 20px);
+        z-index: 1000;
+        background: var(--accent-orange);
+        color: white;
+        border: none;
+        padding: clamp(10px, 2.2vw, 12px) clamp(16px, 3.5vw, 20px);
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: clamp(0.9rem, 2.7vw, 1rem);
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .back-to-home-btn:hover {
+        background: #e05a2a;
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+        transform: scale(1.05);
+    }
+
+    .theme-toggle-btn {
+        position: fixed;
+        top: clamp(12px, 2.5vw, 20px);
+        right: clamp(12px, 2.5vw, 20px);
+        z-index: 1000;
+        background: var(--accent-orange);
+        color: white;
+        border: none;
+        width: clamp(38px, 5.8vw, 45px);
+        height: clamp(38px, 5.8vw, 45px);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(1rem, 3.6vw, 1.2rem);
+        box-shadow: 0 4px 15px var(--shadow-orange);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+        background: var(--accent-orange-hover);
+        transform: translateY(-3px) rotate(15deg);
+    }
+
+    .text-content {
+        line-height: 1.8;
+        color: var(--text-light);
+        font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+        margin: 1rem 0;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    .section-title {
+        margin-top: clamp(1rem, 3.2vw, 1.5rem);
+        margin-bottom: clamp(0.5rem, 1.8vw, 0.75rem);
+        color: var(--accent-orange);
+        font-weight: bold;
+        font-size: clamp(1.15rem, 4.2vw, 1.4rem);
+    }
+
+    .sub-list {
+        padding-right: clamp(0.75rem, 3vw, 1.5rem);
+        margin: clamp(0.5rem, 1.8vw, 0.75rem) 0 0 0;
+    }
+
+    .sub-list li {
+        font-size: clamp(0.875rem, 3.4vw, 1rem);
+        line-height: 1.5;
+    }
+
+    /* Optional: iOS Safe Area (if deployed on mobile web apps) */
+    @supports (padding-top: env(safe-area-inset-top)) {
+        .theme-toggle-btn { top: calc(clamp(12px, 2.5vw, 20px) + env(safe-area-inset-top)); }
+        .back-to-home-btn { bottom: calc(clamp(12px, 2.5vw, 20px) + env(safe-area-inset-bottom)); }
+    }
+</style>
+</head>
+<body>
+    <div class="container py-4 py-md-5">
+        <h1 class="neon-title text-center mb-4 mb-md-5">التدريس المصغر</h1>
+
+       <div class="lesson-card">
+    <h4>الفصل الأول: مفاهيم أساسية</h4>
+
+    <div class="section-title">١. التدريس</div>
+    <p>عملية تربوية منظمة، تفاعلية، ديناميكية، هادفة، ومرنة.</p>
+    <p><strong>عناصرها:</strong></p>
+    <ul class="lesson-list">
+        <li><strong>المعلم:</strong> موجّه، مرشد، قدْوة.</li>
+        <li><strong>المتعلم:</strong> محور العملية، مشارك فعّال.</li>
+        <li><strong>المحتوى:</strong> مناسب، واقعي، متدرج.</li>
+        <li><strong>الأهداف:</strong> سلوكية (معرفي – مهاري – وجداني).</li>
+        <li><strong>الوسائل:</strong> تدعم المحتوى، مش تبديل التفاعل.</li>
+    </ul>
+    <p><strong>✅ تذكّر:</strong> التدريس = موقف تفاعلي، مش مجرد شرح.</p>
+
+    <div class="section-title">٢. الفرق بين: التعليم – التعلم – التدريس</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>المفهوم</th>
+                <th>الفاعل</th>
+                <th>التركيز</th>
+                <th>الطبيعة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>التعليم</strong></td>
+                <td>المعلم</td>
+                <td>على ما يُنقل (المحتوى)</td>
+                <td>توجيهي</td>
+            </tr>
+            <tr>
+                <td><strong>التعلم</strong></td>
+                <td>المتعلم</td>
+                <td>على التغيير اللي حصل (سلوك/معرفة)</td>
+                <td>ذاتي</td>
+            </tr>
+            <tr>
+                <td><strong>التدريس</strong></td>
+                <td>المعلم + المتعلم</td>
+                <td>على كيفية حدوث التعلم</td>
+                <td>تفاعلي</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>🔹 مثال:</strong></p>
+    <ul class="lesson-list">
+        <li><strong>التعليم:</strong> شرح قوانين النحو.</li>
+        <li><strong>التعلم:</strong> الطالب يُطبّق القاعدة في جملة جديدة.</li>
+        <li><strong>التدريس:</strong> المعلم يشرح، يسأل، يستخدم أمثلة، ويُصلح أخطاء فورًا.</li>
+    </ul>
+
+    <div class="section-title">٣. التعلم الفعّال (Active Learning)</div>
+    <p>مش بس "يسمع"، لكن يشارك، يحلّ، يناقش، يبتكر.</p>
+    <p><strong>خصائصه:</strong></p>
+    <ul class="lesson-list">
+        <li>المتعلم هو المركز.</li>
+        <li>أنشطة جماعية (بحث، عرض، مناقشة).</li>
+        <li>مرتبط بالحياة (مثل: تعلّم الكسور من تقسيم البيتزا).</li>
+        <li>يشجّع العمل الجماعي + التغذية الراجعة الفورية.</li>
+        <li>يشمل: تعلّم ذاتي، مشاريع صغيرة، حل مشكلات.</li>
+    </ul>
+
+    <div class="section-title">٤. الأهداف الإجرائية</div>
+    <p><strong>الصيغة المثالية:</strong><br>
+    <code>"أن + [فعل سلوكي] + المتعلم + [ناتج التعلم] + [معيار]"</code></p>
+    <ul class="lesson-list">
+        <li><strong>✅ صحيح:</strong> "أن يُحدّد الطالب أسماء الكواكب الثمانية بدقة تامة."</li>
+        <li><strong>❌ غلط:</strong> "أن يعرف الطالب الكواكب." (لأن "يعرف" مش قابل للملاحظة).</li>
+    </ul>
+
+    <div class="section-title">تصنيف بلوم للمجال المعرفي (الحديث – 2001)</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>المستوى</th>
+                <th>أفعال شائعة</th>
+                <th>مثال</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>التذكّر</strong></td><td>يذكر، يعدّد، يحدّد</td><td>"يذكر مكونات الخلية"</td></tr>
+            <tr><td><strong>الفهم</strong></td><td>يشرح، يلخّص، يترجم</td><td>"يوضح خطوات التمثيل الضوئي"</td></tr>
+            <tr><td><strong>التطبيق</strong></td><td>يُطبّق، يحلّ، يستخدم</td><td>"يستخدم قانون نيوتن في حل مسألة"</td></tr>
+            <tr><td><strong>التحليل</strong></td><td>يحلّل، يقارن، يصنّف</td><td>"يُقارن بين النبات والحيوان"</td></tr>
+            <tr><td><strong>التقييم</strong></td><td>يحكم، يبرر، ينقد</td><td>"ينتقد استخدام البلاستيك في التغليف"</td></tr>
+            <tr><td><strong>الإبداع</strong></td><td>يبتكر، يصمّم، يقترح</td><td>"يصمم تجربة لقياس سرعة التبخر"</td></tr>
+        </tbody>
+    </table>
+    <p><strong>💡 تلميح:</strong> ابدأ بأسئلة تذكّر، وارقى لأسئلة تحليل/إبداع في نفس الدرس.</p>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل الثاني: المهارات التدريسية (الـ7 الأساسية)</h4>
+
+    <div class="section-title">أ. قبل الدرس (المهارات التخطيطية)</div>
+    <ul class="lesson-list">
+        <li>تحديد الأهداف: سلوكية، واقعية، قابلة للقياس.</li>
+        <li>إعداد خطة الدرس:
+            <ul class="sub-list">
+                <li>ترتيب الشرح (من السهل للصعب).</li>
+                <li>اختيار وسائل مناسبة.</li>
+                <li>توزيع الوقت.</li>
+            </ul>
+        </li>
+        <li>معرفة خصائص الطلاب:
+            <ul class="sub-list">
+                <li>الفروق الفردية (متفوق – مُتعثّر).</li>
+                <li>العمر العقلي، الاهتمامات.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="section-title">ب. أثناء الدرس (المهارات الأدائية)</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>المهارة</th>
+                <th>كيف تطبّقها؟</th>
+                <th>أمثلة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>التهيئة</strong></td><td>جذب الانتباه في أول ٣٠ ثانية</td><td>سؤال مثير: "إيه اللي بيحصل لو اختفى الإنترنت؟"</td></tr>
+            <tr><td><strong>عرض المحتوى</strong></td><td>تسلسل منطقي + أمثلة حياتية</td><td>شرح "الكهرباء" من خلال تجربة بسيطة في الفصل</td></tr>
+            <tr><td><strong>استخدام الوسائل</strong></td><td>وسيلة واحدة فقط، مرتبطة بالهدف</td><td>فيديو قصير (٣٠ ثانية) عن دورة الماء</td></tr>
+            <tr><td><strong>نبرة الصوت</strong></td><td>تنغيم: ارتفاع عند النقاط المهمة، خفض عند الشرح الهادئ</td><td>"ده القانون" ← بصوت مرتفع وواضح</td></tr>
+            <tr><td><strong>الأسئلة</strong></td><td>تنويع + توزيع عادل + وقت تفكير</td><td>سؤال تذكّر → سؤال تطبيقي: "عايزين نطبّقوه إزاي؟"</td></tr>
+            <tr><td><strong>التعزيز</strong></td><td>لفظي (أحسنت) + غير لفظي (ابتسامة، تصفيق)</td><td>"شرحك كان منظم جدًّا!"</td></tr>
+            <tr><td><strong>إدارة الصف</strong></td><td>ضبط النظام بهدوء، توزيع الوقت</td><td>لو في طالب بيشتت: "عايز أسمع رأيك كمان!"</td></tr>
+            <tr><td><strong>لغة الجسد</strong></td><td>تواصل بصري مع الجميع، حركات طبيعية</td><td>مش توقّف في مكان واحد — تحرّك ببطء بين الصفوف</td></tr>
+            <tr><td><strong>مراعاة الفروق</strong></td><td>أنشطة متدرجة (بسّيطة للمُتعثّرين، مُعمّقة للمتفوقين)</td><td>واجب: ٣ أسئلة إجبارية + سؤال اختياري للتحدي</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">ج. بعد الدرس (المهارات الختامية)</div>
+    <ul class="lesson-list">
+        <li><strong>التلخيص:</strong> خريطة ذهنية بسيطة، أو سؤال: "إيه أهم ٣ حاجات اتعلمناها النهاردة؟"</li>
+        <li><strong>التقويم:</strong>
+            <ul class="sub-list">
+                <li>قبلي: "إيه اللي عارفينه عن الموضوع ده؟"</li>
+                <li>بنائي: ملاحظة الأداء، أسئلة سريعة.</li>
+                <li>ختامي: اختبار قصير أو نشاط تطبيقي.</li>
+            </ul>
+        </li>
+        <li><strong>التغذية الراجعة:</strong>
+            <ul class="sub-list">
+                <li>فورية، مُحدّدة، تركز على الأداء مش الشخص.</li>
+                <li>✅ "طريقة شرحك كانت واضحة، لكن جرّب تبطئ شوية."</li>
+                <li>❌ "أنت بتشتغل بسرعة دايماً."</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل الثالث: التدريس المصغر — مفهومه وخطواته</h4>
+
+    <p><strong>✅ شو؟</strong> موقف تدريسي مختصر (٥–١٠ دقائق)، قدام ٥–١٠ طلاب، يركّز على مهارة واحدة، وبعدها تغذية راجعة فورية + فرصة إعادة التدريس.</p>
+    <p><strong>✅ ليه؟</strong> بيئة آمنة، تعلّم من الأخطاء، ربط النظرية بالتطبيق.</p>
+
+    <div class="section-title">مراحل التدريس المصغر (٣ مراحل)</div>
+    <ol class="lesson-list">
+        <li><strong>الإعداد:</strong>
+            <ul class="sub-list">
+                <li>حدد المهارة اللي عايز تتدرب عليها.</li>
+                <li>اكتب هدفًا إجرائيًّا واضح.</li>
+                <li>أعد خطة مختصرة (زمن، وسائل، أنشطة).</li>
+                <li>جهّز المكان والوسائل.</li>
+            </ul>
+        </li>
+        <li><strong>التنفيذ:</strong>
+            <ul class="sub-list">
+                <li>سجّل الفيديو لو ممكن.</li>
+                <li>ركّز على المهارة المستهدفة فقط.</li>
+                <li>نفّذ: تمهيد → شرح → تفاعل → تلخيص.</li>
+            </ul>
+        </li>
+        <li><strong>التقويم والتغذية الراجعة:</strong>
+            <ul class="sub-list">
+                <li>شاهد الفيديو أو سجّل ملاحظات المشرف.</li>
+                <li>استخدم بطاقة ملاحظة (التهيئة، الوضوح، الأسئلة، الوقت، لغة الجسد).</li>
+                <li>ناقش مع المشرف والزملاء.</li>
+                <li>كرّر التدريس بعد التعديل.</li>
+            </ul>
+        </li>
+    </ol>
+
+    <div class="section-title">💡 نموذج بطاقة ملاحظة بسيطة</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>البند</th>
+                <th>نعم</th>
+                <th>لا</th>
+                <th>ملاحظات</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>وضّح الهدف في البداية؟</td>
+                <td>✓</td>
+                <td></td>
+                <td>واضح جدًّا</td>
+            </tr>
+            <tr>
+                <td>استخدم وسيلة مرتبطة بالهدف؟</td>
+                <td>✓</td>
+                <td></td>
+                <td>الوسيلة كانت كتير ومتشتتة</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل الرابع: الاستراتيجيات التدريسية (في ٥–١٠ دقائق)</h4>
+
+    <ol class="lesson-list">
+        <li><strong>المحاضرة المصغّرة:</strong>
+            <ul class="sub-list">
+                <li>تمهيد (سؤال/صورة) → عرض منظم → أمثلة → أسئلة قصيرة → تلخيص.</li>
+                <li>✅ خلّي الشرح ≤ ٦ دقائق، واترك ٤ للتفاعل.</li>
+            </ul>
+        </li>
+        <li><strong>المناقشة:</strong>
+            <ul class="sub-list">
+                <li>طرح قضية → تحديد هدف → تشجيع المشاركة → توثيق → ختام جماعي.</li>
+                <li>✅ لو انحرف النقاش: "بقى عندنا دقيقتين علشان نوصل لاستنتاج".</li>
+            </ul>
+        </li>
+        <li><strong>العصف الذهني:</strong>
+            <ul class="sub-list">
+                <li>مفيش نقد، الكمية أهم، بُنْيَة على أفكار الزملاء.</li>
+                <li>✅ المدة: ٣–٥ دقائق بس.</li>
+            </ul>
+        </li>
+        <li><strong>التعلم التعاوني:</strong>
+            <ul class="sub-list">
+                <li>مجموعات (٣–٥ طلاب)، أدور: قائد، مُسجّل، مُقدّم، موقّت.</li>
+                <li>مثال: "صمّموا خريطة ذهنية عن مكونات الحاسوب – ٥ دق – عرض ٣٠ ثانية".</li>
+            </ul>
+        </li>
+        <li><strong>التعلم القائم على المشكلات (PBL):</strong>
+            <ul class="sub-list">
+                <li>قدّم مشكلة واقعية: "الطلاب مبيشاركوش في الحصة. إيه الحل؟"</li>
+                <li>المهام: تحليل → اقتراح → مناقشة عيوب/مميزات.</li>
+            </ul>
+        </li>
+    </ol>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل الخامس: تطوير الأداء — من الأخطاء للتميز</h4>
+
+    <div class="section-title">✅ أخطاء شائعة + كيف تتحلّها؟</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>مجال الخطأ</th>
+                <th>الخطأ</th>
+                <th>الحل</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>التهيئة</td><td>ما بدأتش بالهدف</td><td>اكتب الهدف على السبورة أول ما تدخل</td></tr>
+            <tr><td></td><td>مفيش تمهيد</td><td>استخدم: سؤال – صورة – موقف قصير</td></tr>
+            <tr><td>العرض</td><td>نبرة صوت رتيبة</td><td>درّب نفسك: ارفع/وخّف حسب المحتوى</td></tr>
+            <tr><td></td><td>كتير وسائل</td><td>اختار وسيلة واحدة فقط</td></tr>
+            <tr><td>التفاعل</td><td>نفس الأسلوب مع كل الطلاب</td><td>خلي عندك: سؤال بسيط + سؤال تحليلي</td></tr>
+            <tr><td></td><td>تفوّت الوقت</td><td>ضبط تايمر: تمهيد ٢د، عرض ٥د، تقويم ٣د</td></tr>
+            <tr><td>الختام</td><td>ما خلّصتش بالتلخيص</td><td>"إيه أهم ٣ حاجات فهمتها النهاردة؟"</td></tr>
+            <tr><td></td><td>مفيش تقويم</td><td>اسأل سؤال واحد بسيط</td></tr>
+            <tr><td>الأداء الشخصي</td><td>قلق أو توتر</td><td>درّب قدام المرآة</td></tr>
+            <tr><td></td><td>مبيشوفش الطلاب</td><td>ركّز على ٣ نقاط: يمين، وسط، شمال</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ التقويم الثلاثي (مثلث القوة)</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النوع</th>
+                <th>كيف؟</th>
+                <th>فائدته</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>الذاتي</strong></td>
+                <td>شاهد الفيديو، دوّن: إيه نجاح؟ إيه تحسين؟</td>
+                <td>يزيد وعيك بذاتك</td>
+            </tr>
+            <tr>
+                <td><strong>الزملائي</strong></td>
+                <td>كل زميل: ٢ مجاملات + ٢ اقتراحات</td>
+                <td>تغذية متنوعة</td>
+            </tr>
+            <tr>
+                <td><strong>المشرف</strong></td>
+                <td>ملاحظة مباشرة + مقابلة فردية</td>
+                <td>توجيه احترافي</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>💡 خلي بالك:</strong> التغذية الراجعة مش "نقد"، ده فرصة تطوير.</p>
+
+    <div class="section-title">✅ ملف الإنجاز التدريسي (Portfolio)</div>
+    <p>مش أوراق مبعثرة — ده سيرة مهنية مصغّرة.</p>
+    <p><strong>✅ نصيحة:</strong> استخدم Google Drive أو Canva — سهّل، منسّق، وبيظهر احترافيتك.</p>
+
+    <div class="section-title">✅ الاتجاهات الحديثة (علشان تظهر مُطّلع)</div>
+    <ul class="lesson-list">
+        <li>الفيديو + التأمل: سجّل → شاهد → حلّل → عدّل.</li>
+        <li>2+2: تغذية من الزملاء (٢ + ٢).</li>
+        <li>التعليم المدمج: وجاهي + أونلاين.</li>
+        <li>التأمل الذاتي: "أنا تعلّمت إيه من التجربة دي؟"</li>
+        <li>التنمية المستدامة: التدريس المصغر = أسلوب حياة.</li>
+    </ul>
+
+    <hr>
+    <div class="text-content" style="text-align: center; font-weight: 600; font-size: 1.1rem; color: var(--accent-orange);">
+        🎯 <strong>خلاصة سريعة جدًّا (للمراجعة قبل التسجيل):</strong><br>
+        خلّي الدرس مختصر (٥–١٠ دقائق) — ركّز على مهارة واحدة — ابدأ بتمهيد جذّاب — ختم بتلخيص + سؤال تطبيقي — وسيلة واحدة — اسأل، متشرحش بس — بعد ما تخلص: شوف، دوّن، غيّر، عدّل.
+    </div>
+</div>
+
+
+    </div>
+
+    <a href="../lectures.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
+    </a>
+
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.classList.add('day');
+            } else {
+                themeToggle.classList.add('night');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.classList.remove('day');
+                    themeToggle.classList.add('night');
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.classList.remove('night');
+                    themeToggle.classList.add('day');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+            <link rel="icon" href="../Image_fx6.jpg" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التصوير الرقمي - ست الكل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+   <style>
+    /* Essential reset for layout stability */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .lesson-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: clamp(1rem, 4vw, 1.5rem);
+        margin-bottom: clamp(1rem, 3vw, 1.5rem);
+        transition: transform 0.3s;
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    .lesson-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+    }
+
+    .lesson-card h4 {
+        color: var(--text-light);
+        font-weight: 700;
+        margin-top: 0;
+        font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+    }
+
+    .lesson-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .lesson-list li {
+        padding: clamp(0.5rem, 2.8vw, 0.7rem) clamp(0.8rem, 3.2vw, 1rem);
+        margin: clamp(0.3rem, 1.5vw, 0.5rem) 0;
+        background: rgba(30, 30, 50, 0.6);
+        border-radius: 12px;
+        border-right: 3px solid var(--accent-orange);
+        font-size: clamp(0.875rem, 3.4vw, 1rem);
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .back-to-home-btn {
+        position: fixed;
+        bottom: clamp(12px, 2.5vw, 20px);
+        left: clamp(12px, 2.5vw, 20px);
+        z-index: 1000;
+        background: var(--accent-orange);
+        color: white;
+        border: none;
+        padding: clamp(10px, 2.2vw, 12px) clamp(16px, 3.5vw, 20px);
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: clamp(0.9rem, 2.7vw, 1rem);
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .back-to-home-btn:hover {
+        background: #e05a2a;
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.5);
+        transform: scale(1.05);
+    }
+
+    .theme-toggle-btn {
+        position: fixed;
+        top: clamp(12px, 2.5vw, 20px);
+        right: clamp(12px, 2.5vw, 20px);
+        z-index: 1000;
+        background: var(--accent-orange);
+        color: white;
+        border: none;
+        width: clamp(38px, 5.8vw, 45px);
+        height: clamp(38px, 5.8vw, 45px);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(1rem, 3.6vw, 1.2rem);
+        box-shadow: 0 4px 15px var(--shadow-orange);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+        background: var(--accent-orange-hover);
+        transform: translateY(-3px) rotate(15deg);
+    }
+</style>
+</head>
+<body>
+    <div class="container py-4 py-md-5">
+        <h1 class="neon-title text-center mb-4 mb-md-5">التصوير الرقمي</h1>
+
+      <div class="lesson-card">
+    <h4>الفصل 1: المقدمة — ما هو التصوير الرقمي؟</h4>
+
+    <div class="section-title">✅ المفهوم (من 4 زوايا):</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الزاوية</th>
+                <th>التعريف</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>اللغوي</strong></td>
+                <td>"فوتوغرافيا" = Photo (ضوء) + Graphy (رسم) → "الرسم بالضوء"</td>
+            </tr>
+            <tr>
+                <td><strong>العلمي</strong></td>
+                <td>عملية تسجيل الضوء على سطـح حسّاس (فيلم كيميائي أو مستشعر إلكتروني) لتكوين صورة دائمة</td>
+            </tr>
+            <tr>
+                <td><strong>الفنّي</strong></td>
+                <td>لغة بصرية — ليست توثيقًا فقط، بل تفسيرٌ للواقع عبر التكوين، الإضاءة، اللحظة</td>
+            </tr>
+            <tr>
+                <td><strong>التطبيقي (في تكنولوجيا التعليم)</strong></td>
+                <td>أداة لـ: توثيق الأنشطة، إنشاء وسائل تعليمية، التعبير البصري، دعم التعلّم المرئي</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>💡 خلاصة:</strong><br>
+    التصوير الرقمي = إبداع + علم + تقنية → لتحويل المفاهيم المجردة إلى صور ملموسة تُسهّل الفهم.</p>
+
+    <div class="section-title">✅ تطور التصوير — محطات رئيسية:</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>السنة</th>
+                <th>الحدث</th>
+                <th>المُحقّق</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1826</td><td>أول صورة دائمة (8 ساعات تعريض!)</td><td>جوزيف نيبس</td></tr>
+            <tr><td>1839</td><td>أول عملية تجارية (Daguerreotype)</td><td>لويس داجير</td></tr>
+            <tr><td>1841</td><td>أول "سالبة" → طباعة لا نهائية</td><td>ويليام تالبوت</td></tr>
+            <tr><td>1888</td><td>كاميرا كوداك: "أنت تضغط الزر، ونحن نفعل الباقي"</td><td>جورج إيستمان</td></tr>
+            <tr><td>1975</td><td>أول كاميرا رقمية (0.01 ميجابكسل!)</td><td>ستيفن ساسون (كوداك)</td></tr>
+            <tr><td>2007</td><td>ثورة الهواتف الذكية (iPhone) → التصوير في جيب الجميع</td><td>أبل</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ مقارنة: التناظري vs الرقمي</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>المعيار</th>
+                <th>التناظري (فيـلم)</th>
+                <th>الرقمي (مستشعر)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>التسجيل</strong></td><td>تفاعل كيميائي (هاليدات فضة)</td><td>تحويل الضوء → إشارة كهربائية (بكسلات)</td></tr>
+            <tr><td><strong>المعالجة</strong></td><td>كيميائية (غرفة مظلمة)</td><td>إلكترونية (داخل الكاميرا/الكمبيوتر)</td></tr>
+            <tr><td><strong>التكلفة</strong></td><td>متكررة (أفلام + كيماويات)</td><td>أولية (كاميرا + ذاكرة) → ثم مجّاني</td></tr>
+            <tr><td><strong>التغذية الراجعة</strong></td><td>بعد الانتهاء من الفيلم</td><td>فورية (شاشة LCD)</td></tr>
+            <tr><td><strong>التعديل</strong></td><td>صعب جدًّا</td><td>مرن (برامج مثل Lightroom)</td></tr>
+            <tr><td><strong>الحفظ</strong></td><td>فيزيائي (معرض للتلف)</td><td>رقمي (نسخ احتياطي في السحابة)</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>✅ لماذا الرقمي أفضل للتعليم؟</strong></p>
+    <ul class="lesson-list">
+        <li>تكلفة منخفضة على المدى الطويل.</li>
+        <li>مشاركة فورية (عبر منصات التعلم الإلكتروني).</li>
+        <li>دمج مع تقنيات حديثة (الواقع المعزز، الذكاء الاصطناعي).</li>
+    </ul>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل 2: مكونات الكاميرا الرقمية</h4>
+
+    <div class="section-title">✅ التشبيه الذهني: الكاميرا = العين البشرية</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الوظيفة</th>
+                <th>العين</th>
+                <th>الكاميرا</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>جمع الضوء</strong></td><td>العدسة البلورية</td><td>عدسة زجاجية/بلاستيك</td></tr>
+            <tr><td><strong>التحكم في الضوء</strong></td><td>القزحية + البؤبؤ</td><td>الحاجب القزحي (الفتحة)</td></tr>
+            <tr><td><strong>التركيز</strong></td><td>تغيير شكل العدسة</td><td>تحريك مجموعة العدسات</td></tr>
+            <tr><td><strong>التسجيل</strong></td><td>الشبكية (أعصاب بصرية)</td><td>مستشعر (CCD/CMOS) → معالج → ذاكرة</td></tr>
+            <tr><td><strong>الحماية</strong></td><td>الجفن</td><td>غطاء العدسة</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ المكونات الأساسية (الداخلية + الخارجية):</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>المكون</th>
+                <th>الوظيفة</th>
+                <th>الملاحظات المهمة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>العدسة</strong></td>
+                <td>تجمّع الضوء وتركّزه</td>
+                <td>البعد البؤري (mm) يحدد زاوية الرؤية:<br>
+                - قصير (18mm): واسعة (للمناظر)<br>
+                - طويل (200mm): تكبير (للرياضة/البرية)</td>
+            </tr>
+            <tr>
+                <td><strong>الفتحة (Aperture)</strong></td>
+                <td>تتحكم في كمية الضوء + عمق الميدان</td>
+                <td>تُقاس بـ f-stop:<br>
+                - f/1.8: فتحة واسعة → خلفية ضبابية (بورتريه)<br>
+                - f/16: فتحة ضيقة → كل المشهد واضح (مناظر)</td>
+            </tr>
+            <tr>
+                <td><strong>الغالق (Shutter)</strong></td>
+                <td>يحدد زمن تعريض المستشعر للضوء</td>
+                <td>تُقاس بجزء من الثانية:<br>
+                - 1/2000: تجميد حركة سريعة<br>
+                - 1/15: تطويق حركة (شلالات، أضواء سيارات)</td>
+            </tr>
+            <tr>
+                <td><strong>المستشعر</strong></td>
+                <td>يحوّل الضوء إلى بيانات رقمية</td>
+                <td>نوعان: CCD (جودة عالية)، CMOS (أقل استهلاك طاقة — الأكثر انتشارًا)<br>
+                الحجم مهم: Full Frame > APS-C > صغير (للمدمجة)</td>
+            </tr>
+            <tr>
+                <td><strong>معالج الصورة</strong></td>
+                <td>يحوّل البيانات الخام إلى صورة (JPEG/RAW)</td>
+                <td>يحدد سرعة الكاميرا وجودة المعالجة (مثل: Canon DIGIC، Nikon EXPEED)</td>
+            </tr>
+            <tr>
+                <td><strong>الفلاش</strong></td>
+                <td>مصدر ضوء اصطناعي</td>
+                <td>مدمج: منخفض القوة. خارجي: تحكم كامل (للاستوديو)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ مثلث التعريض (Exposure Triangle)</div>
+    <p>العلاقة بين 3 عناصر تتحكم في سطوع الصورة والتأثير الفني:</p>
+    <ol class="lesson-list">
+        <li><strong>الضوء</strong></li>
+        <li><strong>الزمن</strong></li>
+        <li><strong>الحساسية</strong></li>
+    </ol>
+    <p><strong>الهدف:</strong> تعريض متوازن (لا مظلمة جدًّا، ولا ساطعة جدًّا).<br>
+    <strong>التفاعل:</strong> إذا غيّرت عنصرًا، عدّل آخر لتعويضه.<br>
+    <strong>مثال:</strong> لتصوير بورتريه (f/1.8)، في يوم مشمس → استخدم سرعة غالق سريعة (1/2000) لتجنب الإفراط في الإضاءة.</p>
+
+    <div class="section-title">✅ الأيزو (ISO) — "مكبّر الصوت" للمستشعر</div>
+    <ul class="lesson-list">
+        <li><strong>ISO منخفض (100):</strong> جودة عالية، ضوضاء قليلة → للاستخدام في الضوء الجيد.</li>
+        <li><strong>ISO مرتفع (3200+):</strong> حساسية عالية، ضوضاء كثيرة → للاستخدام في الظلام أو لتجميد الحركة.</li>
+    </ul>
+    <p><strong>⚠️ قاعدة ذهبية:</strong></p>
+    <ul class="lesson-list">
+        <li>ابدأ دائمًا بأقل ISO ممكن.</li>
+        <li>رفع ISO = حل تكتيكي (ليس استراتيجي)، لتجنب الصورة المهزوزة أو المظلمة.</li>
+    </ul>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل 3: أساسيات التأطير والتكوين</h4>
+
+    <div class="section-title">✅ أحجام اللقطات (من البعيدة جدًّا إلى التفصيلية):</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الوصف</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>البعيدة جدًّا (VLS)</strong></td><td>الشخص صغير، البيئة هي البطل</td><td>إظهار المكان (ملاعب، مدن)</td></tr>
+            <tr><td><strong>البعيدة (LS)</strong></td><td>جسم كامل + بيئة</td><td>لقطات تأسيسية</td></tr>
+            <tr><td><strong>المتوسطة (MS)</strong></td><td>من الخصر لأعلى</td><td>حوار، تفاعل</td></tr>
+            <tr><td><strong>القريبة (CU)</strong></td><td>من الكتف لأعلى</td><td>تعبيرات الوجه، ردود الأفعال</td></tr>
+            <tr><td><strong>القريبة جدًّا (ECU)</strong></td><td>جزء من الوجه (عين، فم)</td><td>تفاصيل دقيقة، دراما</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ زوايا التصوير:</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الزاوية</th>
+                <th>التأثير</th>
+                <th>المثال</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>مستوى العين</strong></td><td>محايدة، واقعية</td><td>المقابلات، البورتريه</td></tr>
+            <tr><td><strong>عالية</strong></td><td>تقليل الأهمية، إحساس بالضعف</td><td>تصوير أطفال، تجمّعات</td></tr>
+            <tr><td><strong>منخفضة</strong></td><td>تعظيم، قوة، هيمنة</td><td>تصوير أبطال، مباني</td></tr>
+            <tr><td><strong>عين الطائر</strong></td><td>عرض مسطح، تخطيط (خرائط)</td><td>طائرات بدون طيار</td></tr>
+            <tr><td><strong>عين الدودة</strong></td><td>دراما، غرابة</td><td>إعلانات، أفلام رعب</td></tr>
+            <tr><td><strong>مائلة (Dutch)</strong></td><td>اضطراب، تشويش</td><td>مشاهد مخدرات، أحلام</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ قواعد التكوين الأساسية:</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>القاعدة</th>
+                <th>الوصف</th>
+                <th>مثال تطبيقي</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>قاعدة الثلث</strong></td><td>تقسيم الصورة لـ9 مربعات — وضع العناصر على الخطوط أو التقاطعات</td><td>وضع العين في تقاطع الخطوط</td></tr>
+            <tr><td><strong>الخطوط المُوجِّهة</strong></td><td>خطوط توجه النظر لمركز الاهتمام</td><td>طريق يؤدي لشخص في الأفق</td></tr>
+            <tr><td><strong>التماثل</strong></td><td>توازن مرآوي — جمالي، رسمي</td><td>تصوير مباني، انعكاسات</td></tr>
+            <tr><td><strong>العزل (Bokeh)</strong></td><td>خلفية ضبابية — التركيز على الموضوع</td><td>بورتريه بـ f/1.8</td></tr>
+            <tr><td><strong>التأطير (Framing)</strong></td><td>استخدام عناصر المشهد كإطار</td><td>تصوير شخص من خلال نافذة</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>⚠️ أخطاء شائعة:</strong></p>
+    <ul class="lesson-list">
+        <li>قطع الصورة عند المفاصل (الركبة، المرفق).</li>
+        <li>عدم ترك "مساحة تنفس" (Nose Room) في اتجاه نظر/حركة الشخص.</li>
+        <li>خلفية مشتتة (سلك، لوحة إعلانات).</li>
+    </ul>
+</div>
+
+<div class="lesson-card">
+    <h4>الفصل 4: الضوء والإضاءة</h4>
+
+    <div class="section-title">✅ أنواع الضوء:</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النوع</th>
+                <th>الوصف</th>
+                <th>المثال</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>القاسي (Hard Light)</strong></td><td>ضوء مباشر → ظلال حادة</td><td>شمس ظهيرة، فلاش بدون عاكس</td></tr>
+            <tr><td><strong>الناعم (Soft Light)</strong></td><td>ضوء موزّع → ظلال ناعمة</td><td>غيوم، فلاش مع عاكس/ستارة بيضاء</td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">✅ مبدأ الإضاءة الثلاثية (الأساس في الاستوديو):</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>النوع</th>
+                <th>الوظيفة</th>
+                <th>الموضع</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>الرئيسي (Key)</strong></td><td>يكشف شكل الموضوع</td><td>أمامي، جانب واحد</td></tr>
+            <tr><td><strong>ملء الظلال (Fill)</strong></td><td>يقلل قسوة الظلال</td><td>مقابل الرئيسي، أقل شدة</td></tr>
+            <tr><td><strong>الخلفي (Back)</strong></td><td>يفصل الموضوع عن الخلفية</td><td>خلف الموضوع، يوجّه للرأس/الكتف</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>💡 نصيحة للميدان (التصوير الخارجي):</strong></p>
+    <ul class="lesson-list">
+        <li>استخدم عاكس أبيض لملء الظلال بدل فلاش (يبدو طبيعيًّا).</li>
+        <li>في الليل: استخدم أضواء الشارع أو المحلات كـ ضوء مكمّل.</li>
+    </ul>
+
+    <div class="section-title">✅ أوقات التصوير المثالية:</div>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>الوقت</th>
+                <th>الميزة</th>
+                <th>الاستخدام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>الساعة الذهبية</strong></td><td>بعد الشروق / قبل الغروب — ضوء دافئ، ظلال طويلة</td><td>بورتريه، مناظر</td></tr>
+            <tr><td><strong>الساعة الزرقاء</strong></td><td>بعد الغروب / قبل الشروق — ضوء بارد، هادئ</td><td>مدن ليلية، سلويت</td></tr>
+            <tr><td><strong>يوم غائم</strong></td><td>ضوء ناعم طبيعي — لا ظلال قاسية</td><td>ماكرو، بورتريه بدون معدات</td></tr>
+        </tbody>
+    </table>
+</div>
+
+    <a href="../lectures.html" class="back-to-home-btn">
+        <i class="fas fa-arrow-left me-2"></i> العودة لقائمة المواد
+    </a>
+
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.classList.add('day');
+            } else {
+                themeToggle.classList.add('night');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.classList.remove('day');
+                    themeToggle.classList.add('night');
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.classList.remove('night');
+                    themeToggle.classList.add('day');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

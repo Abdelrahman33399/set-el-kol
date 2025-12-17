@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="icon" href="../../Image_fx6.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مواد المجموعة ج</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+    /* الألوان الأساسية */
+    --bg-color: #121212; /* رمادي غامق للخلفية */
+    --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-light: #e0e0e0; /* لون فاتح للنصوص */
+    --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
+    --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
+    --accent-orange-hover: #e05a2a;
+    --shadow-purple: rgba(164, 83, 255, 0.5);
+    --shadow-orange: rgba(255, 107, 53, 0.5);
+}
+
+/* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
+:root.day-mode {
+    --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
+    --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
+    --border-color: rgba(130, 130, 255, 0.2);
+    --text-light: #ec6211; /* ← النصوص العادية بالأسود — باينة وواضحة */
+    --primary-neon: linear-gradient(45deg, #ffffff, #ffffff); /* بنفسجي → أزرق — تدرج نهاري أنيق */
+    --accent-orange: #e65c00; /* برتقالي ترابي — مش حارق */
+    --accent-orange-hover: #cc5200;
+    --shadow-purple: rgb(255, 255, 255);
+    --shadow-orange: rgba(230, 92, 0, 0.592);
+}
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s;
+        }
+        .neon-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary-neon);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+        .subject-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            margin-bottom: 1.5rem;
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        .subject-card i {
+            font-size: 3rem;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+        .subject-card h3 {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .back-to-home-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .password-content {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            margin: 1rem 0;
+            text-align: right;
+        }
+        .password-error {
+            color: #ff6b6b;
+            margin: 0.5rem 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="themeToggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container py-5">
+        <h1 class="neon-title text-center mb-5">مواد المجموعة ج</h1>
+        <div id="subjectsList" class="row g-4 mb-5"></div>
+        <a href="../choose-batch.html" class="back-to-home-btn">
+            <i class="fas fa-arrow-left me-2"></i> العودة للمجموعات
+        </a>
+    </div>
+
+    <!-- Modal كلمة المرور -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-content">
+            <h3>🔐 أدخل كلمة المرور</h3>
+            <p class="text-muted">كل مادة محمية بكلمة مرور خاصة</p>
+            <input type="password" id="subjectPassword" class="password-input" placeholder="أدخل كلمة المرور...">
+            <div id="passwordError" class="password-error">❌ كلمة المرور غير صحيحة!</div>
+            <div class="d-flex gap-2 justify-content-center mt-3">
+                <button class="btn btn-secondary" onclick="closePasswordModal()">إلغاء</button>
+                <button class="btn btn-warning" onclick="verifyPassword()">دخول</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // مواد المجموعة ج — مع إضافة id
+        const subjects = [
+            { id: 1, name: "اللغة العربية", icon: "fas fa-book", password: "AR-C-123", file: "arabic.html" },
+            { id: 2, name: "علم نفس النمو", icon: "fas fa-child", password: "PSY-C-456", file: "psychology.html" },
+            { id: 3, name: "تاريخ التربية", icon: "fas fa-history", password: "HIS-C-789", file: "history.html" },
+            { id: 4, name: "التدريس المصغر", icon: "fas fa-chalkboard-teacher", password: "MIC-C-000", file: "micro.html" },
+            { id: 5, name: "التصميم التعليمي", icon: "fas fa-laptop-code", password: "DES-C-111", file: "design.html" },
+            { id: 6, name: "شبكات الحاسب", icon: "fas fa-network-wired", password: "NET-C-222", file: "networks.html" },
+            { id: 7, name: "منظومة الحاسب", icon: "fas fa-desktop", password: "SYS-C-333", file: "system.html" },
+            { id: 8, name: "التصوير الرقمي", icon: "fas fa-camera", password: "PHO-C-444", file: "photo.html" },
+            { id: 9, name: "تطبيقات الجداول الإلكترونية", icon: "fas fa-table", password: "EXL-C-555", file: "excel.html" },
+            { id: 10, name: "إنتاج اللوحات التعليمية", icon: "fas fa-chalkboard", password: "BRD-C-666", file: "boards.html" }
+        ];
+
+        let currentSubject = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const root = document.documentElement;
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+            renderSubjects();
+        });
+
+        function renderSubjects() {
+            const container = document.getElementById('subjectsList');
+            subjects.forEach(sub => {
+                const card = `
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="subject-card" onclick="openPasswordModal(${sub.id})">
+                            <i class="${sub.icon}"></i>
+                            <h3>${sub.name}</h3>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        function openPasswordModal(subjectId) {
+            currentSubject = subjects.find(s => s.id === subjectId);
+            if (!currentSubject) {
+                alert('لم يتم العثور على المادة!');
+                return;
+            }
+            document.getElementById('subjectPassword').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('passwordModal').style.display = 'flex';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function verifyPassword() {
+            const inputPassword = document.getElementById('subjectPassword').value;
+            if (!currentSubject) {
+                alert('حدث خطأ! لم يتم تحديد المادة.');
+                return;
+            }
+            if (inputPassword === currentSubject.password) {
+                closePasswordModal();
+                startQuiz();
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        }
+
+        function startQuiz() {
+            if (!currentSubject.file) {
+                alert('خطأ: ملف المادة غير محدد!');
+                return;
+            }
+            window.location.href = currentSubject.file;
+        }
+    </script>
+</body>
+</html>
