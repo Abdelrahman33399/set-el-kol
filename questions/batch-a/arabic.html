@@ -1,1481 +1,551 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="icon" href="../../Image_fx6.jpg" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاختبار - اللغة العربية</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-       :root {
-    /* الألوان الأساسية */
-    --bg-color: #121212; /* رمادي غامق للخلفية */
-    --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
-    --border-color: rgba(255, 255, 255, 0.1);
-    --text-light: #e0e0e0; /* لون فاتح للنصوص */
-    --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
-    --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
-    --accent-orange-hover: #e05a2a;
-    --shadow-purple: rgba(164, 83, 255, 0.5);
-    --shadow-orange: rgba(255, 107, 53, 0.5);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>بنرفع الأسئلة دلوقتي 🚀</title>
 
-/* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
-:root.day-mode {
-    --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
-    --card-bg: rgb(88, 93, 113); /* كروت بيضاء شبه شفافة */
-    --border-color: rgba(130, 130, 255, 0.2);
-    --text-light: #ec6211; /* ← النصوص العادية بالأسود — باينة وواضحة */
-    --primary-neon: linear-gradient(45deg, #ffffff, #ffffff); /* بنفسجي → أزرق — تدرج نهاري أنيق */
-    --accent-orange: #e65c00; /* برتقالي ترابي — مش حارق */
-    --accent-orange-hover: #cc5200;
-    --shadow-purple: rgb(255, 255, 255);
-    --shadow-orange: rgba(230, 92, 0, 0.592);
-}
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s;
-        }
-        .quiz-container, .final-form, .result-container {
-            display: none;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem auto;
-            max-width: 800px;
-            border: 1px solid var(--border-color);
-        }
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .question-counter {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-        }
-        .question-text {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        .options-container {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .option-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ddd;
-            padding: 1rem;
-            border-radius: 12px;
-            text-align: right;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-        }
-        .option-btn:hover {
-            background: rgba(255, 107, 53, 0.2);
-            color: var(--text-light);
-        }
-        .option-btn.selected {
-            background: var(--accent-orange);
-            color: white;
-            transform: scale(1.02);
-        }
-        .option-btn.correct {
-            background: #28a745;
-            color: white;
-        }
-        .option-btn.wrong {
-            background: #dc3545;
-            color: white;
-        }
-        .essay-input {
-            width: 100%;
-            min-height: 120px;
-            padding: 1rem;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 1.1rem;
-            resize: vertical;
-            margin-bottom: 1.5rem;
-        }
-        .quiz-btns {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        .quiz-btn {
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        .next-btn, .submit-btn {
-            background: var(--accent-orange);
-            color: white;
-        }
-        .next-btn:hover, .submit-btn:hover {
-            background: #e05a2a;
-        }
-        .restart-btn {
-            background: #6c757d;
-            color: white;
-        }
-        .back-btn {
-            background: #28a745;
-            color: white;
-        }
-        .result-score {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--primary-neon);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 1rem 0;
-        }
-        .result-text {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-        }
-        .explanation {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            text-align: right;
-            border-right: 4px solid var(--accent-orange);
-        }
-        .explanation h5 {
-            color: var(--accent-orange);
-            margin-bottom: 0.5rem;
-        }
-        .final-form input {
-            width: 100%;
-            padding: 12px;
-            margin: 0.5rem 0;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-        .theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1000;
-        }
-        .back-to-home-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
+  <!-- (اختياري) خط عربي لطيف -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Icons (اختياري) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* الوضع الليلي (الافتراضي) */
+    :root {
+      /* الألوان الأساسية */
+      --bg-color: #121212; /* رمادي غامق للخلفية */
+      --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-light: #e0e0e0; /* لون فاتح للنصوص */
+      --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
+      --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
+      --accent-orange-hover: #e05a2a;
+      --shadow-purple: rgba(164, 83, 255, 0.5);
+      --shadow-orange: rgba(255, 107, 53, 0.5);
+    }
+
+    /* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
+    :root.day-mode {
+      --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
+      --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
+      --border-color: rgba(130, 130, 255, 0.2);
+      --text-light: #ec6211; /* نص واضح */
+      --primary-neon: linear-gradient(45deg, #ffffff, #ffffff);
+      --accent-orange: #e65c00;
+      --accent-orange-hover: #cc5200;
+      --shadow-purple: rgb(255, 255, 255);
+      --shadow-orange: rgba(230, 92, 0, 0.592);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* خلفية Particles.js */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .wrap {
+      width: min(1050px, 92vw);
+      margin: 0 auto;
+      padding: 34px 0 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      box-shadow: 0 0 18px var(--shadow-orange);
+      object-fit: cover;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .neon-title {
+      background: var(--primary-neon);
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      font-weight: 800;
+      text-shadow: 0 0 10px var(--shadow-purple);
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      opacity: .9;
+      font-weight: 600;
+    }
+
+    /* زر تبديل الوضع */
+    .theme-toggle-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px; /* RTL لطيف */
+      z-index: 1000;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px var(--shadow-orange);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-3px) rotate(-10deg);
+    }
+    .theme-toggle-btn i { transition: transform .35s ease; }
+    .theme-toggle-btn.day i { transform: rotate(0deg); }
+    .theme-toggle-btn.night i { transform: rotate(360deg); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: right;
+      transition: transform 0.3s, box-shadow 0.3s, background .3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-section:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px var(--shadow-orange);
+      background: rgba(255, 107, 53, 0.08);
+    }
+
+    .hero {
+      padding: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin: 0 0 16px;
+      line-height: 1.8;
+      opacity: .95;
+      font-weight: 600;
+    }
+
+    /* Loader لطيف */
+    .dots {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      margin-inline-start: 8px;
+      transform: translateY(2px);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      box-shadow: 0 0 14px var(--shadow-orange);
+      animation: b 1.1s infinite ease-in-out;
+      opacity: .85;
+    }
+    .dot:nth-child(2) { animation-delay: .12s; }
+    .dot:nth-child(3) { animation-delay: .24s; }
+    @keyframes b {
+      0%, 100% { transform: translateY(0); opacity: .65; }
+      50% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Progress indeterminate */
+    .progress {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      margin-top: 14px;
+    }
+    .bar {
+      height: 100%;
+      width: 45%;
+      border-radius: 999px;
+      background: var(--primary-neon);
+      filter: drop-shadow(0 0 10px var(--shadow-purple));
+      animation: slide 1.5s infinite ease-in-out;
+    }
+    @keyframes slide {
+      0% { transform: translateX(120%); }
+      100% { transform: translateX(-120%); }
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .card-title i {
+      color: var(--accent-orange);
+      font-size: 1.1rem;
+    }
+
+    .list {
+      margin: 0;
+      padding: 0 18px 0 0;
+      line-height: 1.9;
+      font-weight: 600;
+      opacity: .95;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      text-decoration: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent-orange);
+      color: #fff;
+      box-shadow: 0 8px 18px var(--shadow-orange);
+    }
+    .btn-primary:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-light);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .note {
+      margin-top: 12px;
+      opacity: .9;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed var(--border-color);
+      background: rgba(255,255,255,0.04);
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    footer small { opacity: .9; font-weight: 700; }
+
+    .designer-btn {
+      display: inline-block;
+      background: var(--accent-orange);
+      color: white !important;
+      padding: 8px 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: all 0.3s;
+    }
+
+    .designer-btn:hover {
+      background: var(--accent-orange-hover);
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px var(--shadow-orange);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      header { justify-content: center; }
+      .brand { justify-content: center; }
+      .theme-toggle-btn { top: 14px; left: 14px; }
+    }
+  </style>
 </head>
+
 <body>
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
+  <!-- Background particles -->
+  <div id="particles-js" aria-hidden="true"></div>
 
-    <div class="container py-5">
-        <!-- حاوية الاختبار -->
-        <div id="quizContainer" class="quiz-container">
-            <div class="quiz-header">
-                <div class="question-counter" id="questionCounter">السؤال 1 من 2</div>
-                <button class="btn btn-outline-light" onclick="exitQuiz()">
-                    <i class="fas fa-times"></i> إنهاء
-                </button>
-            </div>
-            <div class="question-text" id="questionText">نص السؤال هنا...</div>
-            <div class="options-container" id="optionsContainer"></div>
-            <div class="quiz-btns">
-                <button class="quiz-btn next-btn d-none" id="nextBtn" onclick="nextQuestion()">التالي</button>
-                <button class="quiz-btn submit-btn d-none" id="submitEssayBtn" onclick="submitEssay()">تسليم</button>
-            </div>
+  <!-- Theme toggle -->
+  <button class="theme-toggle-btn night" id="themeBtn" aria-label="تبديل الوضع">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <!-- غير اللينك ده للّوجو بتاعك -->
+       
+        <div>
+          <h1 class="neon-title">استنى علينا شوية ✨</h1>
+          <div class="subtitle">الأسئلة بتترفع على السيرفر دلوقتي… متقلقش 😄</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Big status card -->
+      <section class="card-section hero">
+        <div class="hero-badge">
+          <i class="fa-solid fa-rocket"></i>
+          <span>وضع التحديث شغّال</span>
+          <span class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </span>
         </div>
 
-        <!-- نموذج إدخال الاسم والـID -->
-        <div id="finalFormContainer" class="final-form">
-            <h3 class="text-center mb-4">أدخل بياناتك</h3>
-            <input type="text" id="studentName" placeholder="الاسم الكامل" required>
-            <input type="text" id="studentId" placeholder="الرقم الجامعي (ID)" required>
-            <div class="quiz-btns mt-3">
-                <button class="quiz-btn next-btn" onclick="saveStudentData()">حفظ</button>
-            </div>
+        <h2>بنجهّز الأسئلة وبنرفعها… علشان تجربتك تبقى تمام 💪🔥</h2>
+        <p>
+          الصفحة دي بديلة مؤقتًا بدل صفحة الأسئلة… أول ما التحميل يخلص هتلاقي كل حاجة رجعت طبيعي 😎
+          <br/>لو أنت داخل تحل/تراجع: خدلك نفس كده وارجع كمان شوية 🚶‍♂️☕
+        </p>
+
+        <div class="progress" role="progressbar" aria-label="تحميل" aria-valuetext="جاري الرفع">
+          <div class="bar"></div>
         </div>
 
-        <!-- صفحة النتائج النهائية -->
-        <div id="resultContainer" class="result-container">
-            <h2>🎉 انتهيت من الاختبار!</h2>
-            <div class="result-score" id="finalScore">0/2</div>
-            <div class="result-text" id="resultText">أحسنت! واصل التميز 🌟</div>
-            <div id="explanationsContainer"></div>
-            <div class="mt-4">
-                <h4>شارك نتيجتك أو احفظها</h4>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">+<input type="text" id="countryCode" placeholder="رمز الدولة" style="max-width:80px; text-align:center;" value="20"></span>
-                    <input type="text" id="phoneNumber" class="form-control" placeholder="رقم الهاتف (بدون صفر)">
-                </div>
-                <div class="quiz-btns">
-                    <button class="quiz-btn back-btn" onclick="shareToWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> إرسال عبر واتساب
-                    </button>
-                    <button class="quiz-btn next-btn" onclick="downloadPDF()">
-                        <i class="fas fa-file-pdf"></i> تحميل كـ PDF
-                    </button>
-                    <button class="quiz-btn restart-btn" onclick="restartQuiz()">
-                        <i class="fas fa-redo"></i> إعادة الاختبار
-                    </button>
-                    <button class="quiz-btn back-btn" onclick="backToMaterials()">
-                        <i class="fas fa-list"></i> العودة للمواد
-                    </button>
-                </div>
-            </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="retryBtn" type="button">
+            <i class="fa-solid fa-rotate-right"></i>
+            جرّب تاني
+          </button>
+          <!-- غير لينك الصفحة الرئيسية هنا -->
+         <a class="btn btn-ghost" href="../../index.html" rel="nofollow">
+  <i class="fa-solid fa-house"></i>
+  الصفحة الرئيسية
+</a>
+
         </div>
 
-        <a href="materials.html" class="back-to-home-btn">
-            <i class="fas fa-arrow-left me-2"></i> العودة للمواد
-        </a>
-    </div>
+        <div class="note">
+          <i class="fa-solid fa-circle-info"></i>
+          <span></span>
+        </div>
+      </section>
 
-    <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      <!-- Side cards -->
+      <aside class="mini-grid">
+        <section class="card-section">
+          <div class="card-title">
+            <span>إيه اللي بيحصل؟ 🤔</span>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <ul class="list">
+            <li>بنرفع/نحدّث بنك الأسئلة على السيرفر 🚀</li>
+            <li>بنراجع الترتيب علشان مفيش سؤال يطير 😅</li>
+            <li>بنظبط الأداء علشان الموقع يفتح أسرع ⚡</li>
+          </ul>
+        </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
-            authDomain: "sit-el-kol.firebaseapp.com",
-            projectId: "sit-el-kol",
-            storageBucket: "sit-el-kol.firebasestorage.app",
-            messagingSenderId: "573924344198",
-            appId: "1:573924344198:web:fec2e9a54c1c152cd16c07"
-        };
+        <section class="card-section">
+          <div class="card-title">
+            <span>هترجع إمتى؟ ⏳</span>
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <ul class="list">
+            <li>أول ما الرفع يخلص… الصفحة هترجع لوحدها 🙌</li>
+            <li>لو اتأخرت: دوس “جرّب تاني” بعد شوية 🔁</li>
+            <li>ولو لسه: كلم الدعم وهنحلها سوا ❤️</li>
+          </ul>
+        </section>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        <section class="card-section">
+          <div class="card-title">
+            <span>ممكن تعمل إيه دلوقتي؟ 😎</span>
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <ul class="list">
+            <li>حدّث الصفحة بعد دقيقة ولا اتنين 🔄</li>
+            <li>ارجع للرئيسية وشوف الأقسام التانية 🧭</li>
+            <li>سيبها مفتوحة—هتشتغل أول ما تخلص 🟢</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
 
-        window.saveToFirebase = async function(data) {
-            try {
-                await addDoc(collection(db, "quiz_submissions"), data);
-            } catch (e) {
-                console.error("فشل حفظ البيانات:", e);
-            }
-        };
-    </script>
+    <footer>
+      <small>© <span id="year"></span> — الصفحة دي معمولة علشان تحافظ على تجربة لطيفة وقت الرفع 😄✨</small>
+      <!-- عدّل اسمك/براندك -->
+      <a class="designer-btn" href="#" onclick="return false;">
+        معمول بحُب 🤍
+      </a>
+    </footer>
+  </div>
 
-    <script>
-const questions = 
- [
-  {
-    "type": "mcq",
-    "question": "أدقّ فهم تربوي لعبارة: «اللغة هي العقل المتحدث» هو أن اللغة:",
-    "options": [
-      "تُستخدم للتعبير فقط دون تفكير",
-      "تُنظم التفكير وتُحسن الوعي والتحليل",
-      "تُستبدل بالإشارة دون أثر معرفي",
-      "تُقاس بالحفظ وحده"
-    ],
-    "correct": 1,
-    "explanation": "المحتوى يقرر أن اللغة أداة تفكير وتنظيم أفكار لا مجرد تعبير."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ موقف يُجسِّد “الوظيفي أولًا ثم التصحيحي” في تعليم اللغة؟",
-    "options": [
-      "يطلب قواعد الإعراب قبل أيّ كلام",
-      "يترك الطالب يعبّر ثم يضبطه تدريجيًا",
-      "يمنع الطالب من المحاولة حتى يتقن القاعدة",
-      "يقيّم الطالب بالحفظ فقط"
-    ],
-    "correct": 1,
-    "explanation": "الطفل يستخدم اللغة للحاجة ثم يُقوَّم؛ وهذا نموذج الدرس."
-  },
-  {
-    "type": "mcq",
-    "question": "أدقّ سبب لكون “التدوين” شرطًا للمعرفة هو أنه:",
-    "options": [
-      "يُغني عن الفهم",
-      "يسمح بتراكم الخبرة ونقلها عبر الزمن",
-      "يمنع تعدد الآراء",
-      "يحوّل العلم إلى حفظ"
-    ],
-    "correct": 1,
-    "explanation": "لا علم دون تدوين لأن التراكم والنقل مرتبطان بالكتابة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي يُعدّ اتصالًا غير لفظي بالمعنى الذي ركز عليه الدرس؟",
-    "options": [
-      "مخارج الحروف",
-      "المنطوق المباشر",
-      "تعابير الوجه",
-      "الحنجرة والتنفس"
-    ],
-    "correct": 2,
-    "explanation": "التعابير الوجهية من وسائل الاتصال غير اللفظي المذكورة."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «اجتهد ___ فنجح.»",
-    "options": [
-      ":",
-      "،",
-      "؛",
-      "…"
-    ],
-    "correct": 2,
-    "explanation": "الفاصلة المنقوطة تربط سببًا بنتيجة بين جملتين."
-  },
-  {
-    "type": "mcq",
-    "question": "الفرق الدلالي الصحيح وفق المحتوى: “نفِد” مقابل “نفَذ” هو:",
-    "options": [
-      "نفِد = اخترق، نفَذ = انتهى",
-      "نفِد = انتهى، نفَذ = اخترق/عبر",
-      "كلاهما بمعنى انتهى",
-      "كلاهما بمعنى عبر"
-    ],
-    "correct": 1,
-    "explanation": "ورد التصويب صريحًا: نفِد انتهى، نفَذ اخترق."
-  },
-  {
-    "type": "mcq",
-    "question": "أي عبارة أدق لمفهوم “البيان” في الآية «علّمه البيان» كما شرح الدرس؟",
-    "options": [
-      "القدرة على النطق فقط",
-      "حسن الإفهام مع وضوح ودقة وإقناع",
-      "كثرة الكلام دون تنظيم",
-      "استعمال الصمت بدل اللغة"
-    ],
-    "correct": 1,
-    "explanation": "البيان في الدرس = وضوح ودقة وقدرة على الإقناع."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ زوج يُمثل مهارات التلقي بدقة؟",
-    "options": [
-      "التحدث والكتابة",
-      "القراءة والاستماع",
-      "الإلقاء والكتابة",
-      "التحدث والاستماع"
-    ],
-    "correct": 1,
-    "explanation": "المستقبلة = الاستماع والقراءة."
-  },
-  {
-    "type": "mcq",
-    "question": "أدقّ تعريف للمَهارة اللغوية كما ورد:",
-    "options": [
-      "معرفة القاعدة دون تطبيق",
-      "أداء لغوي بسرعة ودقة وسلاسة",
-      "الحفظ مع ترديد الأمثلة",
-      "القراءة الجهرية فقط"
-    ],
-    "correct": 1,
-    "explanation": "التعريف في المحتوى: سرعة + دقة + سلاسة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيُّ مثال يُعدّ “إنشاء غير طلبي”؟",
-    "options": [
-      "اقرأ الدرس",
-      "لا تكذب",
-      "هل فهمت؟",
-      "واللهِ سأجتهد"
-    ],
-    "correct": 3,
-    "explanation": "القسم من الإنشاء غير الطلبي."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «قال تعالى ___ «اقرأ باسم ربك»»",
-    "options": [
-      ":",
-      "؛",
-      "،",
-      "."
-    ],
-    "correct": 0,
-    "explanation": "النقطتان قبل الاقتباس/التفسير."
-  },
-  {
-    "type": "mcq",
-    "question": "أدق تصويب لما يُكتب خطأ “إنشاء الله” هو:",
-    "options": [
-      "إنشاءَ الله",
-      "إن شاءَ الله",
-      "انشاءُ الله",
-      "إنشأَ الله"
-    ],
-    "correct": 1,
-    "explanation": "فصل “إن” عن “شاء” لأن الدمج يغيّر المعنى."
-  },
-  {
-    "type": "mcq",
-    "question": "من خصائص العربية التي تتيح تغيير ترتيب الجملة دون اختلال الوظائف:",
-    "options": [
-      "الاشتقاق",
-      "البلاغة",
-      "الإعراب",
-      "جمالية الخط"
-    ],
-    "correct": 2,
-    "explanation": "الإعراب يحدد الوظائف بالحركات."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تمثل “الأسلوب الصحفي” كما وصفه الدرس؟",
-    "options": [
-      "عاطفة وصور ممتدة",
-      "إيجاز ووضوح وعناوين",
-      "مصطلحات وأدلة وتجارب",
-      "تكرار وأسئلة للتأثير"
-    ],
-    "correct": 1,
-    "explanation": "الصحفي = إيجاز + وضوح + جاذبية."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “لاكن” هو:",
-    "options": [
-      "لكن",
-      "لاكن",
-      "لاكِن",
-      "لٰكن"
-    ],
-    "correct": 0,
-    "explanation": "الصحيح “لكن” دون ألف."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة هي “حجة” ضمن تدريس العلوم بالعربية؟",
-    "options": [
-      "المصطلحات تُلغى دائمًا",
-      "الفهم يبدأ بالمفهوم بلغتك ثم المصطلح",
-      "لا تُقرأ أبحاث بعد التخرج",
-      "اللغة الأجنبية بلا فائدة مطلقًا"
-    ],
-    "correct": 1,
-    "explanation": "هذه الحجة نصّ عليها المحتوى."
-  },
-  {
-    "type": "mcq",
-    "question": "مرحلة “التركيب الثنائي” (18–24 شهرًا) تتمثل في:",
-    "options": [
-      "أصوات غير مفهومة",
-      "جمل طويلة بأدوات ربط",
-      "جمل من كلمتين",
-      "ضبط علامات الترقيم"
-    ],
-    "correct": 2,
-    "explanation": "مثالها “أريد حليب”."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «قرأتُ الفصل الأول… ثم توقفت.» تشير إلى:",
-    "options": [
-      "تنصيص",
-      "سبب ونتيجة",
-      "اعتراض",
-      "حذف/توقف"
-    ],
-    "correct": 3,
-    "explanation": "(…) علامة الحذف أو التوقف."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لكلمة “شاطىء” هو:",
-    "options": [
-      "شاطئ",
-      "شاطؤ",
-      "شاطي",
-      "شاطىء"
-    ],
-    "correct": 0,
-    "explanation": "“شاطئ” همزتها على نبرة لأن ما قبلها مكسور."
-  },
-  {
-    "type": "mcq",
-    "question": "مثال “العلم نور.” يُعد من حيث البنية:",
-    "options": [
-      "إنشائي طلبي",
-      "خبري",
-      "استفهامي",
-      "تعجبي"
-    ],
-    "correct": 1,
-    "explanation": "خبر يُحكم عليه بالصدق/الكذب."
-  },
-  {
-    "type": "mcq",
-    "question": "أيُّ ممارسة تُعد قياسًا حقيقيًا للمهارات اللغوية وفق الدرس؟",
-    "options": [
-      "اختبار قصير في حفظ القواعد",
-      "كتابة رسالة رسمية أو تحليل نص",
-      "حفظ جدول الترقيم دون تطبيق",
-      "تلوين الكلمات في الكتاب"
-    ],
-    "correct": 1,
-    "explanation": "الدرس أكد أن الإتقان يظهر في أداء واقعي."
-  },
-  {
-    "type": "mcq",
-    "question": "“الاستمرارية اليومية” في تعلم اللغة تعني أن:",
-    "options": [
-      "ساعة أسبوعيًا أفضل دائمًا",
-      "دقائق يومية أفضل من انقطاع طويل",
-      "التوقف يسرّع الإتقان",
-      "الحفظ يكفي دون ممارسة"
-    ],
-    "correct": 1,
-    "explanation": "ورد: 10 دقائق يوميًا أفضل من ساعة مرة أسبوعيًا."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي يوضح “الغنى المعجمي” بوصفه ميزة؟",
-    "options": [
-      "تقليل الفروق الدلالية",
-      "توسيع التعبير بدلالات دقيقة",
-      "منع الترادف",
-      "تثبيت لفظ واحد لكل معنى"
-    ],
-    "correct": 1,
-    "explanation": "المحتوى ذكر كثرة المترادفات الدقيقة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ تصويب ورد ضمن الأخطاء الشائعة؟",
-    "options": [
-      "مبروك → مبارك",
-      "لاكن → لاكان",
-      "هاذا → هاذا",
-      "إختبار → إختبار"
-    ],
-    "correct": 0,
-    "explanation": "وردت “مبروك” وتصويبها “مبارك”."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «النجاح — بمشيئة الله — ثمرة الاجتهاد» تدل على:",
-    "options": [
-      "تنصيص",
-      "اعتراض",
-      "حذف",
-      "استفهام"
-    ],
-    "correct": 1,
-    "explanation": "الشرطة للاعتراض أو التفسير داخل الجملة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يوضح سبب تَهديد 40% من لغات العالم بالانقراض كما ورد؟",
-    "options": [
-      "زيادة المتحدثين",
-      "هيمنة لغات قوية وغياب الدعم",
-      "قلة القواميس فقط",
-      "كثرة المدارس بها"
-    ],
-    "correct": 1,
-    "explanation": "الأسباب المذكورة: تقلص المتحدثين وهيمنة لغات قوية وغياب دعم."
-  },
-  {
-    "type": "mcq",
-    "question": "الأدق في تمييز “الإنشاء” أنه:",
-    "options": [
-      "يُحكم عليه بالصدق والكذب",
-      "لا يُحكم عليه بالصدق والكذب غالبًا",
-      "يقتصر على الأخبار",
-      "لا يحمل أي وظيفة"
-    ],
-    "correct": 1,
-    "explanation": "الإنشاء (طلب/انفعال) لا يُقاس بالصدق والكذب كخبر."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لكلمة “شيق” وفق المحتوى هو:",
-    "options": [
-      "شيق",
-      "شائق",
-      "مشيق",
-      "شوق"
-    ],
-    "correct": 1,
-    "explanation": "ورد أن الصواب “شائق”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة أدق في معنى “اللغة جزء من الهوية”؟",
-    "options": [
-      "مجرد وسيلة عابرة",
-      "ترتبط بالتراث والانتماء والتاريخ",
-      "لا علاقة لها بالمجتمع",
-      "تُضعف الانتماء دائمًا"
-    ],
-    "correct": 1,
-    "explanation": "المحتوى ربط اللغة بالهوية والفخر."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “إختبار” هو:",
-    "options": [
-      "اختبار",
-      "إختبار",
-      "أختبار",
-      "إأختبار"
-    ],
-    "correct": 0,
-    "explanation": "همزة وصل في “اختبار”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ موقف يمثل “الخروج من منطقة الراحة” في تعلم لغة؟",
-    "options": [
-      "تجنب الكلام دائمًا",
-      "طرح سؤال علني أو محادثة حقيقية",
-      "الاكتفاء بالترجمة الصامتة",
-      "تأجيل الممارسة إلى ما بعد الإتقان"
-    ],
-    "correct": 1,
-    "explanation": "الدرس ذكر التحدث/السؤال/التعليق العلني."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ خيار يمثل “مهارة صوتية”؟",
-    "options": [
-      "الاستماع الفعّال",
-      "القراءة الصامتة",
-      "الإلقاء",
-      "الكتابة الأكاديمية"
-    ],
-    "correct": 2,
-    "explanation": "الإلقاء أداء صوتي."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ علامة تُستخدم للاستطراد أو التوضيح الجانبي؟",
-    "options": [
-      "( )",
-      "« »",
-      "…",
-      "؛"
-    ],
-    "correct": 0,
-    "explanation": "القوسان للاستطراد أو التوضيح."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة أدق في “اللغة أداة تفكير” كما ورد؟",
-    "options": [
-      "التفكير الداخلي يتم غالبًا عبر كلمات",
-      "التفكير لا يحتاج مفردات",
-      "اللغة تعيق التفكير دائمًا",
-      "التفكير صوت فقط"
-    ],
-    "correct": 0,
-    "explanation": "صرّح المحتوى بأن التفكير الداخلي يتم عبر كلمات."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «النجاح مبنيّ على: العلم والعمل.» هي:",
-    "options": [
-      "النقطة",
-      "الفاصلة",
-      "التعجب",
-      "الاستفهام"
-    ],
-    "correct": 0,
-    "explanation": "نهاية جملة خبرية تامة تكون بالنقطة."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “اللذين” هو:",
-    "options": [
-      "اللذان",
-      "الذين",
-      "اللذين",
-      "اللذينة"
-    ],
-    "correct": 1,
-    "explanation": "الصحيح “الذين”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يوضح “اللغة القرآنية” وأثرها وفق المحتوى؟",
-    "options": [
-      "أدت لتحول جذري في العربية",
-      "حفظت العربية ومنحتها ثباتًا",
-      "ألغت النحو والصرف",
-      "قطعت صلة العربية بالتراث"
-    ],
-    "correct": 1,
-    "explanation": "ذُكر أنها حفظت العربية من التحول الجذري."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ علامة تُستخدم للفصل بين جملتين الثانية نتيجة للأولى؟",
-    "options": [
-      ":",
-      "؛",
-      "؟",
-      "…"
-    ],
-    "correct": 1,
-    "explanation": "الفاصلة المنقوطة للسببية/النتيجة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يطابق “الأسلوب العلمي”؟",
-    "options": [
-      "دقة وموضوعية ومصطلحات",
-      "عاطفة وصور فنية",
-      "عناوين وإيجاز",
-      "تكرار وأسئلة مؤثرة"
-    ],
-    "correct": 0,
-    "explanation": "هذه سمات الأسلوب العلمي في المحتوى."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “هاذا” هو:",
-    "options": [
-      "هذا",
-      "هاذا",
-      "هاذه",
-      "هذآ"
-    ],
-    "correct": 0,
-    "explanation": "الصحيح “هذا”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تصف وظيفة اللغة في “تفسير سلوك الآخرين”؟",
-    "options": [
-      "تسهيل فهم الآخرين وتحليل تصرفاتهم",
-      "منع التواصل مع الآخر",
-      "إلغاء التفكير النقدي",
-      "تعطيل التعاون"
-    ],
-    "correct": 0,
-    "explanation": "من وظائف اللغة: فهم الآخرين وتفسير سلوكهم."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي يحقق توصية تعليمية في الترقيم كما ورد؟",
-    "options": [
-      "تدريب على إدخال العلامات الناقصة في نص",
-      "حفظ أسماء العلامات فقط",
-      "تجاهل الترقيم لتسهيل الكتابة",
-      "منع الطالب من التصحيح"
-    ],
-    "correct": 0,
-    "explanation": "التوصية ركزت على التدريب العملي."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ خيار يُعد مثالًا لأسلوب “إقناعي”؟",
-    "options": [
-      "تعريف محايد",
-      "خبر موجز",
-      "حجة + سؤال + تأثير عاطفي",
-      "وصف خيالي خالص"
-    ],
-    "correct": 2,
-    "explanation": "الإقناعي يوظف المنطق والعاطفة والأسئلة للتأثير."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة أدق في تفسير “المرونة في التراكيب”؟",
-    "options": [
-      "منع التقديم والتأخير",
-      "تقديم المفعول أو الحذف لأغراض بلاغية",
-      "تثبيت ترتيب واحد",
-      "إلغاء أدوات الربط"
-    ],
-    "correct": 1,
-    "explanation": "ورد أنها تستخدم للتأكيد والاختصاص والتشويق."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “أنتي” هو:",
-    "options": [
-      "أنتِ",
-      "أنتي",
-      "أنتِي",
-      "أنتى"
-    ],
-    "correct": 0,
-    "explanation": "الصحيح “أنتِ” بكسر التاء."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تصف “الاستماع” بدقة في الدرس؟",
-    "options": [
-      "أول مهارة تُكتسب وأساس الفهم",
-      "مهارة إنتاجية أساسية",
-      "لا علاقة لها بالتحدث",
-      "تأتي بعد الكتابة دائمًا"
-    ],
-    "correct": 0,
-    "explanation": "الاستماع أول مهارة وأهمها في التعلم المبكر."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي مثال على “مهارة غير صوتية”؟",
-    "options": [
-      "التذوق البلاغي الصوتي",
-      "القراءة الجهرية",
-      "الكتابة الأكاديمية",
-      "الإلقاء"
-    ],
-    "correct": 2,
-    "explanation": "الكتابة غير صوتية ضمن التقسيم."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة أدق حول “اللغة الرسمية” في الدول؟",
-    "options": [
-      "تُختار بناءً على الهوية والتاريخ والوظيفة الإدارية",
-      "تُختار حسب عدد الحروف",
-      "تُفرض بلا علاقة بالمجتمع",
-      "تُحدد بالمناخ"
-    ],
-    "correct": 0,
-    "explanation": "هذه المعايير وردت صراحة."
-  },
-  {
-    "type": "mcq",
-    "question": "تصويب “مديرون” وفق القائمة يكون إلى:",
-    "options": [
-      "مديرين",
-      "مدراء",
-      "مديرون",
-      "مُدراء"
-    ],
-    "correct": 1,
-    "explanation": "ورد التصويب إلى “مدراء”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يمثل “تطبيقًا” لمبدأ “دمج اللغة في اليوميات”؟",
-    "options": [
-      "تغيير لغة الهاتف أو كتابة ملاحظات",
-      "الحفظ دون ممارسة",
-      "التوقف الطويل ثم مراجعة سريعة",
-      "تجنب الاستماع"
-    ],
-    "correct": 0,
-    "explanation": "هذه أمثلة وردت في المحتوى."
-  },
-  {
-    "type": "mcq",
-    "question": "“الاشتقاق” ميزة تربوية لأنه:",
-    "options": [
-      "يسمح بتوليد مفردات كثيرة من جذر واحد",
-      "يمنع توليد مفردات جديدة",
-      "يقلل الدلالة",
-      "يلغي الفروق بين الكلمات"
-    ],
-    "correct": 0,
-    "explanation": "من ع-ل-م تُشتق كلمات كثيرة بدلالات دقيقة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يوافق عدد اللغات عالميًا في الدرس؟",
-    "options": [
-      "700",
-      "7000",
-      "70000",
-      "70"
-    ],
-    "correct": 1,
-    "explanation": "المحتوى قدرها بحوالي 7000 لغة."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «ماذا تفعل ___»",
-    "options": [
-      "!",
-      ".",
-      "؟",
-      "؛"
-    ],
-    "correct": 2,
-    "explanation": "سؤال = علامة استفهام."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تُعد “استنتاجًا تربويًا” من محور الاتصال؟",
-    "options": [
-      "التواصل شرط لقيام الجماعة وتماسكها",
-      "العزلة تُنتج الحضارة",
-      "الاختلاف اللغوي لا يؤثر",
-      "الصمت يغني دائمًا"
-    ],
-    "correct": 0,
-    "explanation": "الدرس أكد أن الاتصال شرط وجودي لأي جماعة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي يُعد مثالًا لإنشاء طلبي (نهي)؟",
-    "options": [
-      "لا تُهمل واجبك",
-      "ما أجمل العلم",
-      "والله سأجتهد",
-      "العلم نور"
-    ],
-    "correct": 0,
-    "explanation": "النهي من الإنشاء الطلبي."
-  },
-  {
-    "type": "mcq",
-    "question": "“اللغة الأم” وفق الدرس هي:",
-    "options": [
-      "لغة الطفولة الأولى وقناة القيم والهوية",
-      "لغة التخصص العلمي فقط",
-      "لغة الإعلام فقط",
-      "لغة تُكتسب متأخرًا"
-    ],
-    "correct": 0,
-    "explanation": "هذا تعريفها في المحتوى."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مما يلي أدق في فهم “العدالة التعليمية” في تدريس العلوم بالعربية؟",
-    "options": [
-      "دعم الباحثين ببرامج تخصصية بدل تعميم العبء",
-      "منع أي مصطلح أجنبي",
-      "منع قراءة الأبحاث",
-      "إلغاء الترجمة"
-    ],
-    "correct": 0,
-    "explanation": "الدرس فرّق بين غالبية الأطباء والباحثين."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «اجتهد ___ تنجح.»",
-    "options": [
-      "،",
-      ":",
-      "؟",
-      "…"
-    ],
-    "correct": 0,
-    "explanation": "فاصلة تربط شقين قصيرين مترابطين."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يوضح “الأثر العالمي” للعربية كما ورد؟",
-    "options": [
-      "دخول ألفاظ عربية في لغات أخرى",
-      "قلة الحروف",
-      "غياب الاشتقاق",
-      "انعدام الخط"
-    ],
-    "correct": 0,
-    "explanation": "ذُكرت ألفاظ عربية في الإسبانية وغيرها."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تُعد مثالًا على أسلوب “أدبي”؟",
-    "options": [
-      "صور فنية وعاطفة",
-      "موضوعية ومصطلحات",
-      "عناوين وإيجاز",
-      "أرقام وتجارب فقط"
-    ],
-    "correct": 0,
-    "explanation": "الأدبي = عاطفة + بلاغة + صورة."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “شيء” هو:",
-    "options": [
-      "ش ئ",
-      "شيء",
-      "شَيئ",
-      "شيئ"
-    ],
-    "correct": 1,
-    "explanation": "الصحيح “شيء” كما ورد."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ مرحلة تتضمن “أدوات ربط مثل لأن/إذا/ثم”؟",
-    "options": [
-      "المناغاة",
-      "الانفجار اللغوي",
-      "النضج التعبيري",
-      "التركيب الثنائي"
-    ],
-    "correct": 2,
-    "explanation": "النضج التعبيري يتضمن الربط والسرد وتعديل الأسلوب."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ علامة تُستخدم للفصل بين عناصر متتابعة داخل الجملة؟",
-    "options": [
-      "،",
-      "؛",
-      ":",
-      "…"
-    ],
-    "correct": 0,
-    "explanation": "الفاصلة للفصل بين أجزاء الجملة أو عناصر تعداد."
-  },
-  {
-    "type": "mcq",
-    "question": "أدقّ سبب لضعف مهارات اللغة عند من يعتمد على العامية فقط (وفق الفكرة المعروضة) هو:",
-    "options": [
-      "فقر المدخلات اللغوية وتقلص المخزون",
-      "زيادة التعرض للنصوص",
-      "كثرة القراءة الجهرية",
-      "التدريب على الخطابة"
-    ],
-    "correct": 0,
-    "explanation": "ذُكر فرق المخزون نتيجة المدخلات (قراءة/حديث/تعليم…)."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ عبارة تحقق معنى “اللغة جسر بين الماضي والحاضر”؟",
-    "options": [
-      "حفظ التراث وفهم التاريخ عبر اللغة",
-      "قطع الصلة بالتراث",
-      "تجاهل التدوين",
-      "إلغاء القراءة"
-    ],
-    "correct": 0,
-    "explanation": "اللغة تحفظ التراث وتربط الأجيال."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «اجتهدتُ ___ فارتفع مستواي.»",
-    "options": [
-      "؛",
-      ":",
-      "!",
-      "؟"
-    ],
-    "correct": 0,
-    "explanation": "سبب/نتيجة بين جملتين → (؛)."
-  },
-  {
-    "type": "mcq",
-    "question": "التصويب الأدق لـ “أخصائي” وفق المحتوى:",
-    "options": [
-      "أخصائي",
-      "اختصاصي/مختص",
-      "أخصائِيّ",
-      "أخْصائيّ"
-    ],
-    "correct": 1,
-    "explanation": "ورد أن “أخصائي” غير واردة، والأدق “اختصاصي/مختص”."
-  },
-  {
-    "type": "mcq",
-    "question": "أيّ اختيار يمثل وظيفة اللغة في “إشباع الحاجات”؟",
-    "options": [
-      "طلب وشكوى وشكر",
-      "تقليل التعاون",
-      "منع التعبير",
-      "إلغاء التفاعل"
-    ],
-    "correct": 0,
-    "explanation": "هذه أمثلة نصية في المحتوى."
-  },
-  {
-    "type": "mcq",
-    "question": "علامة الترقيم الأنسب: «النجاح يعتمد على: العلم والعمل ___»",
-    "options": [
-      ".",
-      "؟",
-      "!",
-      "؛"
-    ],
-    "correct": 0,
-    "explanation": "نهاية جملة خبرية تامة بنقطة."
-  },
-  {
-    "type": "mcq",
-    "question": "أيُّ عبارة أدق في تلخيص المشكلة التربوية لتدريس العلوم بلغة غير مألوفة؟",
-    "options": [
-      "نقل عبء لغوي يثقل الاستيعاب ويضعف الفهم",
-      "زيادة الفهم بالضرورة",
-      "منع المصطلحات نهائيًا",
-      "إلغاء التفكير العلمي"
-    ],
-    "correct": 0,
-    "explanation": "الدرس يصرح أن العبء اللغوي يثقل الاستيعاب ويفرغ التعليم من الفهم والتحليل."
-  },
-];
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-      let currentQuestionIndex = 0;
-let userAnswers = [];
-let score = 0;
-const mcqCount = questions.filter(q => q.type === 'mcq').length;
-const totalQuestions = questions.length; // ✅ جديد: العدد الكلي
+  <script>
+    // سنة الفوتر
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-// === LocalStorage ===
-function saveProgress() {
-    const progress = {
-        currentQuestionIndex,
-        userAnswers,
-        score
-        // ❌ mcqCount لم نعد نخزّنه — نحسبه ديناميكيًا دائمًا لتجنب التعارض
-    };
-    localStorage.setItem('quizProgress-arabic-a', JSON.stringify(progress));
-}
+    // زر "جرّب تاني"
+    document.getElementById("retryBtn").addEventListener("click", () => {
+      // لو عندك لينك صفحة الأسئلة الحقيقي حطه هنا بدل reload
+      location.reload();
+    });
 
-function loadProgress() {
-    const saved = localStorage.getItem('quizProgress-arabic-a');
-    if (saved) {
-        const progress = JSON.parse(saved);
-        currentQuestionIndex = progress.currentQuestionIndex;
-        userAnswers = progress.userAnswers || [];
-        score = progress.score || 0;
-        // ✅ mcqCount و totalQuestions يُحسبان ديناميكيًا دائمًا عند التشغيل
-        document.getElementById('quizContainer').style.display = 'block';
-        loadQuestion();
-        return true;
-    }
-    return false;
-}
-
-// === DOMContentLoaded ===
-document.addEventListener('DOMContentLoaded', function() {
+    // Theme toggle (ليل/نهار) + حفظ في localStorage
     const root = document.documentElement;
-    if (localStorage.getItem('theme') === 'day') {
-        root.classList.add('day-mode');
-        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+    const btn = document.getElementById("themeBtn");
+    const savedTheme = localStorage.getItem("themeMode");
+
+    function setTheme(mode) {
+      const isDay = mode === "day";
+      root.classList.toggle("day-mode", isDay);
+
+      btn.classList.toggle("day", isDay);
+      btn.classList.toggle("night", !isDay);
+      btn.innerHTML = isDay ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+
+      localStorage.setItem("themeMode", isDay ? "day" : "night");
     }
-    document.getElementById('themeToggle').addEventListener('click', () => {
-        if (root.classList.contains('day-mode')) {
-            root.classList.remove('day-mode');
-            localStorage.setItem('theme', 'night');
-            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-        } else {
-            root.classList.add('day-mode');
-            localStorage.setItem('theme', 'day');
-            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-        }
+
+    // Init
+    if (savedTheme === "day") setTheme("day");
+    else setTheme("night");
+
+    btn.addEventListener("click", () => {
+      const isCurrentlyDay = root.classList.contains("day-mode");
+      setTheme(isCurrentlyDay ? "night" : "day");
     });
 
-    // محاولة استئناف التقدم
-    if (!loadProgress()) {
-        document.getElementById('quizContainer').style.display = 'block';
-        loadQuestion();
+    // Particles config
+    // (لو مش عايز particles خالص، احذف السطرين بتوع particles.js + الكود ده)
+    if (window.particlesJS) {
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 70, density: { enable: true, value_area: 900 } },
+          color: { value: ["#a453ff", "#54aaff", "#ff6b35"] },
+          shape: { type: "circle" },
+          opacity: { value: 0.35, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 140,
+            color: "#ffffff",
+            opacity: 0.08,
+            width: 1
+          },
+          move: { enable: true, speed: 1.2 }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            repulse: { distance: 120, duration: 0.4 },
+            push: { particles_nb: 2 }
+          }
+        },
+        retina_detect: true
+      });
     }
-});
-
-// === تحميل السؤال ===
-function loadQuestion() {
-    saveProgress();
-    const q = questions[currentQuestionIndex];
-    // ✅ استخدام totalQuestions بدل questions.length لتكون متسقة مع باقي الكود
-    document.getElementById('questionCounter').textContent = `السؤال ${currentQuestionIndex + 1} من ${totalQuestions}`;
-    document.getElementById('questionText').textContent = q.question;
-
-    const container = document.getElementById('optionsContainer');
-    container.innerHTML = '';
-    document.getElementById('nextBtn').classList.add('d-none');
-    document.getElementById('submitEssayBtn').classList.add('d-none');
-
-    if (q.type === 'mcq') {
-        q.options.forEach((option, index) => {
-            const button = document.createElement('button');
-            button.className = 'option-btn w-100 text-end';
-            button.textContent = option;
-            button.onclick = () => selectMCQOption(button, index);
-            container.appendChild(button);
-        });
-        if (userAnswers[currentQuestionIndex] !== undefined) {
-            const btns = container.querySelectorAll('.option-btn');
-            const ans = userAnswers[currentQuestionIndex];
-            if (btns[ans]) {
-                btns[ans].classList.add('selected');
-                showMCQExplanation();
-                document.getElementById('nextBtn').classList.remove('d-none');
-            }
-        }
-    } else if (q.type === 'essay') {
-        const textarea = document.createElement('textarea');
-        textarea.className = 'essay-input';
-        textarea.placeholder = 'اكتب إجابتك هنا...';
-        if (userAnswers[currentQuestionIndex]) {
-            textarea.value = userAnswers[currentQuestionIndex];
-        }
-        container.appendChild(textarea);
-        document.getElementById('submitEssayBtn').classList.remove('d-none');
-    }
-}
-
-// === اختيار MCQ ===
-function selectMCQOption(button, answerIndex) {
-    document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected', 'correct', 'wrong'));
-    button.classList.add('selected');
-    userAnswers[currentQuestionIndex] = answerIndex;
-    saveProgress();
-
-    const q = questions[currentQuestionIndex];
-    if (answerIndex === q.correct) {
-        button.classList.add('correct');
-        score += 1;
-    } else {
-        button.classList.add('wrong');
-        const correctBtn = document.querySelectorAll('.option-btn')[q.correct];
-        if (correctBtn) correctBtn.classList.add('correct');
-    }
-    showMCQExplanation();
-    document.getElementById('nextBtn').classList.remove('d-none');
-}
-
-function showMCQExplanation() {
-    const q = questions[currentQuestionIndex];
-    const existing = document.querySelector('.explanation-temp');
-    if (existing) return;
-    const div = document.createElement('div');
-    div.className = 'explanation explanation-temp';
-    div.innerHTML = `<h5>الشرح:</h5><p>${q.explanation}</p>`;
-    document.getElementById('optionsContainer').appendChild(div);
-}
-
-// === تسليم السؤال المقالي ===
-function submitEssay() {
-    const textarea = document.querySelector('.essay-input');
-    const answer = textarea.value.trim();
-    if (!answer) {
-        alert('يرجى كتابة إجابة قبل التسليم.');
-        return;
-    }
-    userAnswers[currentQuestionIndex] = answer;
-    saveProgress();
-
-    document.getElementById('submitEssayBtn').classList.add('d-none');
-
-    const q = questions[currentQuestionIndex];
-    const div = document.createElement('div');
-    div.className = 'explanation';
-    div.innerHTML = `<h5>الإجابة النموذجية:</h5><p>${q.modelAnswer}</p>`;
-    document.getElementById('optionsContainer').appendChild(div);
-
-    document.getElementById('nextBtn').classList.remove('d-none');
-}
-
-// === السؤال التالي ===
-function nextQuestion() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < totalQuestions) {
-        loadQuestion();
-    } else {
-        document.getElementById('quizContainer').style.display = 'none';
-        document.getElementById('finalFormContainer').style.display = 'block';
-    }
-}
-
-// === حفظ بيانات الطالب ===
-function saveStudentData() {
-    const name = document.getElementById('studentName').value.trim();
-    const id = document.getElementById('studentId').value.trim();
-    if (!name || !id) {
-        alert('يرجى إدخال الاسم والرقم الجامعي.');
-        return;
-    }
-
-    const percentage = mcqCount ? Math.round((score / mcqCount) * 100) : 0;
-
-    const submissionData = {
-        studentName: name,
-        studentId: id,
-        subjectName: "اللغة العربية",
-        section: "أ",
-        score: score,
-        totalMCQ: mcqCount,
-        totalQuestions: totalQuestions, // ✅ أُضيفت إلى بيانات الفايربيز
-        percentage: percentage,
-        timestamp: new Date().toISOString(),
-        answers: userAnswers.map((ans, i) => ({
-            question: questions[i].question,
-            type: questions[i].type,
-            userAnswer: ans,
-            correctAnswer: questions[i].type === 'mcq' ? questions[i].options[questions[i].correct] : null,
-            explanation: questions[i].type === 'mcq' ? questions[i].explanation : questions[i].modelAnswer
-        }))
-    };
-
-    if (window.saveToFirebase) {
-        window.saveToFirebase(submissionData);
-    }
-
-    localStorage.removeItem('quizProgress-arabic-a');
-    showFinalResults(name, id, percentage);
-}
-
-// === عرض النتائج النهائية ===
-function showFinalResults(name, id, percentage) {
-    document.getElementById('finalFormContainer').style.display = 'none';
-    document.getElementById('resultContainer').style.display = 'block';
-
-    // ✅ عرض الدرجة + توضيح إن وُجد فرق بين MCQ وعدد الأسئلة الكلي
-    let scoreDisplay = `${score}/${mcqCount}`;
-    let extraInfo = '';
-    if (mcqCount !== totalQuestions) {
-        extraInfo = ` •(${mcqCount} من أصل ${totalQuestions} سؤالًا محتسبة في الدرجة)`;
-    }
-
-    document.getElementById('finalScore').textContent = scoreDisplay;
-
-    let resultText = "";
-    if (percentage >= 80) resultText = "ممتاز! 🌟 أنت متميز!";
-    else if (percentage >= 60) resultText = "جيد جدًا! 👍 واصل التقدم!";
-    else if (percentage >= 40) resultText = "لابأس! 📚 تحتاج مراجعة بسيطة.";
-    else resultText = "حاول مرة أخرى! 💪 المذاكرة هتساعدك!";
-    
-    document.getElementById('resultText').textContent = resultText + extraInfo;
-
-    const explanationsContainer = document.getElementById('explanationsContainer');
-    explanationsContainer.innerHTML = '<h3 class="text-light mb-4">جميع إجاباتك:</h3>';
-    questions.forEach((q, i) => {
-        const userAnswer = userAnswers[i] || "لم تجب";
-        const div = document.createElement('div');
-        div.className = 'explanation';
-        if (q.type === 'mcq') {
-            div.innerHTML = `
-                <h5>السؤال ${i + 1}: ${q.question}</h5>
-                <p><strong>إجابتك:</strong> ${q.options[userAnswer] || 'لم تجب'}</p>
-                <p><strong>الإجابة الصحيحة:</strong> ${q.options[q.correct]}</p>
-                <p><strong>الشرح:</strong> ${q.explanation}</p>
-            `;
-        } else {
-            div.innerHTML = `
-                <h5>السؤال ${i + 1} (مقالي): ${q.question}</h5>
-                <p><strong>إجابتك:</strong> ${userAnswer}</p>
-                <p><strong>الإجابة النموذجية:</strong> ${q.modelAnswer}</p>
-            `;
-        }
-        explanationsContainer.appendChild(div);
-    });
-}
-
-// === وظائف المشاركة ===
-function shareToWhatsApp() {
-    const countryCode = document.getElementById('countryCode').value.trim();
-    const phone = document.getElementById('phoneNumber').value.trim();
-    if (!countryCode || !phone) {
-        alert('يرجى إدخال رمز الدولة ورقم الهاتف.');
-        return;
-    }
-    const fullPhone = countryCode + phone.replace(/^0+/, '');
-    
-    // ✅ رسالة واتساب مُعدّلة (بدون مسافات في الرابط + تضمين info الإضافية)
-    let message = `لقد انتهيت من اختبار "اللغة العربية - المجموعة أ" وحصلت على ${score}/${mcqCount}! 🎓`;
-    if (mcqCount !== totalQuestions) {
-        message += `\n(${mcqCount} من أصل ${totalQuestions} سؤالًا محتسبة في الدرجة)`;
-    }
-    // ✅ استخدم الرابط الصحيح من knowledge base: wa.me/...
-    window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`, '_blank');
-}
-
-function downloadPDF() {
-    if (typeof window.jspdf === 'undefined') {
-        alert('مكتبة jsPDF غير متاحة حاليًا.');
-        return;
-    }
-    const { jsPDF } = window.jspdf;
-    try {
-        const doc = new jsPDF('p', 'mm', 'a4');
-        doc.setFont('times', 'normal'); // لضمان التوافق مع الخطوط
-
-        doc.text('نتائج الاختبار', 105, 20, { align: 'center' });
-        doc.text('اللغة العربية - المجموعة أ', 20, 35);
-        
-        let scoreLine = `النتيجة: ${score}/${mcqCount}`;
-        if (mcqCount !== totalQuestions) {
-            scoreLine += ` (${mcqCount}/${totalQuestions} مقيّمة)`;
-        }
-        doc.text(scoreLine, 20, 45);
-        doc.text(`التقييم: ${document.getElementById('resultText').textContent.split('•')[0].trim()}`, 20, 55);
-
-        let y = 70;
-        questions.forEach((q, i) => {
-            if (y > 270) { doc.addPage(); y = 20; }
-            doc.text(`السؤال ${i+1}: ${q.question}`, 20, y, { maxWidth: 170 });
-            y += 10;
-            const ans = userAnswers[i] || '';
-            if (q.type === 'mcq') {
-                const yourAns = q.options[ans] || 'لم تجب';
-                doc.text(`إجابتك: ${yourAns}`, 25, y);
-                y += 8;
-                doc.text(`الصحيحة: ${q.options[q.correct]}`, 25, y);
-            } else {
-                doc.text(`إجابتك (مقالي): ${ans.substring(0, 100)}${ans.length > 100 ? '...' : ''}`, 25, y);
-            }
-            y += 12;
-        });
-        doc.save(`نتيجة_${name || 'طالب'}_العربية_أ.pdf`);
-    } catch (e) {
-        console.error('خطأ في إنشاء PDF:', e);
-        alert('لم نتمكن من توليد الملف. جرب متصفح Chrome.');
-    }
-}
-
-// === وظائف أخرى ===
-function restartQuiz() {
-    if (confirm('هل أنت متأكد من إعادة الاختبار من البداية؟')) {
-        currentQuestionIndex = 0;
-        userAnswers = [];
-        score = 0;
-        localStorage.removeItem('quizProgress-arabic-a');
-        document.getElementById('resultContainer').style.display = 'none';
-        document.getElementById('quizContainer').style.display = 'block';
-        loadQuestion();
-    }
-}
-
-function backToMaterials() {
-    if (confirm('هل تريد العودة للمواد؟ أي تقدم غير محفوظ سيُفقد.')) {
-        localStorage.removeItem('quizProgress-arabic-a');
-        window.location.href = 'materials.html';
-    }
-}
-
-function exitQuiz() {
-    if (confirm('هل أنت متأكد أنك تريد إنهاء الاختبار؟')) {
-        localStorage.removeItem('quizProgress-arabic-a');
-        window.location.href = 'materials.html';
-    }
-}
-    </script>
+  </script>
 </body>
 </html>
-
