@@ -1,181 +1,313 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="icon" href="Image_fx6.jpg" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختر المجموعة | اسئلتي | ست الكل</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-       :root {
-    /* الألوان الأساسية */
-    --bg-color: #121212; /* رمادي غامق للخلفية */
-    --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
-    --border-color: rgba(255, 255, 255, 0.1);
-    --text-light: #e0e0e0; /* لون فاتح للنصوص */
-    --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
-    --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
-    --accent-orange-hover: #e05a2a;
-    --shadow-purple: rgba(164, 83, 255, 0.5);
-    --shadow-orange: rgba(255, 107, 53, 0.5);
-}
+  <link rel="icon" href="Image_fx6.jpg" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بنك الأسئلة | اسئلتي | ست الكل</title>
 
-/* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
-:root.day-mode {
-    --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
-    --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
-    --border-color: rgba(130, 130, 255, 0.2);
-    --text-light: #ec6211; /* ← النصوص العادية بالأسود — باينة وواضحة */
-    --primary-neon: linear-gradient(45deg, #ffffff, #ffffff); /* بنفسجي → أزرق — تدرج نهاري أنيق */
-    --accent-orange: #e65c00; /* برتقالي ترابي — مش حارق */
-    --accent-orange-hover: #cc5200;
-    --shadow-purple: rgb(255, 255, 255);
-    --shadow-orange: rgba(230, 92, 0, 0.592);
-}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s;
-        }
-        .neon-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--primary-neon);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-        }
-        .subject-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            margin-bottom: 1.5rem;
-        }
-        .subject-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-            background: rgba(255, 107, 53, 0.1);
-        }
-        .subject-card i {
-            font-size: 3rem;
-            color: var(--accent-orange);
-            margin-bottom: 1rem;
-        }
-        .subject-card h3 {
-            color: var(--text-light);
-            font-weight: 700;
-        }
-        .theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1000;
-        }
-        .back-to-home-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-         .home-btn{
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-light: #e0e0e0;
+      --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
+      --accent-orange: #ff6b35;
+      --accent-orange-hover: #e05a2a;
+      --shadow-purple: rgba(164, 83, 255, 0.5);
+      --shadow-orange: rgba(255, 107, 53, 0.5);
+    }
+
+    :root.day-mode {
+      --bg-color: #1b405f;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border-color: rgba(130, 130, 255, 0.2);
+      --text-light: #ec6211;
+      --primary-neon: linear-gradient(45deg, #ffffff, #ffffff);
+      --accent-orange: #e65c00;
+      --accent-orange-hover: #cc5200;
+      --shadow-purple: rgb(255, 255, 255);
+      --shadow-orange: rgba(230, 92, 0, 0.592);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: background-color 0.3s;
+    }
+
+    .neon-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      background: var(--primary-neon);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    /* ====== HERO BANNER (A TAG) ====== */
+    .hero-banner{
+      position: relative;
+      display: block;              /* عشان الـ <a> تبقى مساحة كبيرة */
+      border-radius: 28px;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 3vw, 2.5rem);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 107, 53, 0.35), transparent 55%),
+        radial-gradient(circle at 85% 30%, rgba(164, 83, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 55% 100%, rgba(84, 170, 255, 0.22), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    .hero-banner:hover{
+      transform: translateY(-2px);
+      transition: transform 0.2s ease;
+    }
+
+    .hero-banner:focus-visible{
+      outline: 3px solid rgba(255,107,53,0.8);
+      outline-offset: 4px;
+    }
+
+    .hero-banner::before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,0.10) 0px,
+          rgba(255,255,255,0.10) 1px,
+          transparent 1px,
+          transparent 22px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.08) 0px,
+          rgba(255,255,255,0.08) 1px,
+          transparent 1px,
+          transparent 22px
+        );
+      opacity: 0.10;
+      transform: rotate(-6deg);
+      pointer-events:none;
+    }
+
+    .hero-banner::after{
+      content:"";
+      position:absolute;
+      width: 420px;
+      height: 420px;
+      left: -160px;
+      bottom: -220px;
+      background: radial-gradient(circle, rgba(255,107,53,0.45), transparent 60%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+
+    .hero-content{
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero-badge{
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .45rem .9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: rgba(0,0,0,0.18);
+      color: var(--text-light);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    :root.day-mode .hero-badge{
+      background: rgba(255,255,255,0.35);
+    }
+
+    .hero-subtitle{
+      margin-top: 1rem;
+      font-size: 1.15rem;
+      line-height: 1.9;
+      opacity: 0.95;
+    }
+
+    .hero-quote{
+      font-size: clamp(1.35rem, 3.2vw, 2.1rem);
+      font-weight: 900;
+      margin: 0.5rem 0 0.6rem;
+    }
+
+    .hero-icons{
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .float-icon{
+      position:absolute;
+      font-size: 1.35rem;
+      opacity: 0.35;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+      animation: floaty 6s ease-in-out infinite;
+    }
+
+    .float-icon.i1{ top: 18%; right: 10%; color: #54aaff; animation-delay: 0s; }
+    .float-icon.i2{ top: 38%; left: 12%; color: #a453ff; animation-delay: .8s; }
+    .float-icon.i3{ bottom: 18%; right: 18%; color: #ff6b35; animation-delay: 1.4s; }
+    .float-icon.i4{ bottom: 28%; left: 20%; color: #ffffff; animation-delay: 2.0s; opacity: .18; }
+
+    @keyframes floaty{
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+    }
+
+    /* “زر” شكله زر لكنه مش عنصر تفاعلي مستقل */
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1.2rem;
+      border-radius: 999px;
+      background: var(--accent-orange);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(255, 107, 53, 0.25);
+    }
+
+    .hero-hint {
+      margin-top: .9rem;
+      opacity: .85;
+      font-size: .95rem;
+    }
+
+    .theme-toggle-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .back-to-home-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .home-btn{
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
 </head>
+
 <body>
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
+  <button id="themeToggle" class="theme-toggle-btn">
+    <i class="fas fa-moon"></i>
+  </button>
 
-    <div class="container py-5">
-        <h1 class="neon-title text-center mb-5">اختار مجموعتك</h1>
-        <div class="row g-4 mb-5">
-            <div class="col-6 col-md-3">
-                <div class="subject-card" onclick="location.href='batch-a/materials.html'">
-                    <i class="fas fa-font"></i>
-                    <h3>مجموعة أ</h3>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="subject-card" onclick="location.href='batch-b/materials.html'">
-                    <i class="fas fa-font"></i>
-                    <h3>مجموعة ب</h3>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="subject-card" onclick="location.href='batch-c/materials.html'">
-                    <i class="fas fa-font"></i>
-                    <h3>مجموعة ج</h3>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="subject-card" onclick="location.href='batch-d/materials.html'">
-                    <i class="fas fa-font"></i>
-                    <h3>مجموعة د</h3>
-                </div>
-            </div>
+  <div class="container py-5">
+
+    <!-- البنر كله لينك: أي ضغطة (حتى على "الزر") تفتح نفس الرابط -->
+    <a class="hero-banner mb-5" href="batch-a/materials.html" aria-label="الدخول إلى بنك الأسئلة">
+      <div class="hero-icons">
+        <i class="fa-solid fa-gamepad float-icon i1"></i>
+        <i class="fa-solid fa-circle-question float-icon i2"></i>
+        <i class="fa-solid fa-bolt float-icon i3"></i>
+        <i class="fa-solid fa-star float-icon i4"></i>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-database"></i>
+          بنك الأسئلة
         </div>
-       <a href="../index.html" class="back-to-home-btn">
-            <i class="fas fa-arrow-left me-2"></i> العودة للرئيسية
-        </a>
-          <a href="../Quiz/index2.html" class="home-btn">
-            <i class="fas fa-arrow-left me-2"></i> تحديات اسئلتي
-        </a>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const root = document.documentElement;
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-            }
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-                }
-            });
-        });
-    </script>
+        <h1 class="neon-title mb-3">بنك الأسئلة</h1>
+
+        <div class="hero-quote">"مين هيقفل اللعبة النهاردة؟"</div>
+
+        <div class="hero-subtitle mb-4">
+          الملعب واسع والمواد كتير.. وريني نَفَسَك طويل ولا لأ؟
+        </div>
+
+        <span class="hero-cta">
+          اضغط هنا للدخول
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </span>
+
+        <div class="hero-hint">اضغط في أي مكان داخل البنر للدخول.</div>
+      </div>
+    </a>
+
+    <a href="../index.html" class="back-to-home-btn">
+      <i class="fas fa-arrow-left me-2"></i> العودة للرئيسية
+    </a>
+
+    <a href="../Quiz/index.html" class="home-btn">
+      <i class="fas fa-arrow-left me-2"></i> تحديات اسئلتي
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.documentElement;
+
+      if (localStorage.getItem('theme') === 'day') {
+        root.classList.add('day-mode');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+      }
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        if (root.classList.contains('day-mode')) {
+          root.classList.remove('day-mode');
+          localStorage.setItem('theme', 'night');
+          document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+          root.classList.add('day-mode');
+          localStorage.setItem('theme', 'day');
+          document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>
-
-
