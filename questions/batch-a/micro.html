@@ -1,1047 +1,552 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="icon" href="../../Image_fx6.jpg" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاختبار - التدريس المصغر</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        :root {
-            --bg-color: #121212;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-light: #e0e0e0;
-            --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
-            --accent-orange: #ff6b35;
-        }
-        .day-mode {
-            --bg-color: #1b405f;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --text-light: #ec6211;
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s;
-        }
-        .quiz-container, .final-form, .result-container {
-            display: none;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem auto;
-            max-width: 800px;
-            border: 1px solid var(--border-color);
-        }
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .question-counter {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-        }
-        .question-text {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        .options-container {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .option-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ddd;
-            padding: 1rem;
-            border-radius: 12px;
-            text-align: right;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-        }
-        .option-btn:hover {
-            background: rgba(255, 107, 53, 0.2);
-            color: var(--text-light);
-        }
-        .option-btn.selected {
-            background: var(--accent-orange);
-            color: white;
-            transform: scale(1.02);
-        }
-        .option-btn.correct {
-            background: #28a745;
-            color: white;
-        }
-        .option-btn.wrong {
-            background: #dc3545;
-            color: white;
-        }
-        .essay-input {
-            width: 100%;
-            min-height: 120px;
-            padding: 1rem;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 1.1rem;
-            resize: vertical;
-            margin-bottom: 1.5rem;
-        }
-        .quiz-btns {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        .quiz-btn {
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        .next-btn, .submit-btn {
-            background: var(--accent-orange);
-            color: white;
-        }
-        .next-btn:hover, .submit-btn:hover {
-            background: #e05a2a;
-        }
-        .restart-btn {
-            background: #6c757d;
-            color: white;
-        }
-        .back-btn {
-            background: #28a745;
-            color: white;
-        }
-        .result-score {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--primary-neon);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 1rem 0;
-        }
-        .result-text {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-        }
-        .explanation {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            text-align: right;
-            border-right: 4px solid var(--accent-orange);
-        }
-        .explanation h5 {
-            color: var(--accent-orange);
-            margin-bottom: 0.5rem;
-        }
-        .final-form input {
-            width: 100%;
-            padding: 12px;
-            margin: 0.5rem 0;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-        .theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1000;
-        }
-        .back-to-home-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>بنرفع الأسئلة دلوقتي 🚀</title>
+
+  <!-- (اختياري) خط عربي لطيف -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Icons (اختياري) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* الوضع الليلي (الافتراضي) */
+    :root {
+      /* الألوان الأساسية */
+      --bg-color: #121212; /* رمادي غامق للخلفية */
+      --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-light: #e0e0e0; /* لون فاتح للنصوص */
+      --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
+      --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
+      --accent-orange-hover: #e05a2a;
+      --shadow-purple: rgba(164, 83, 255, 0.5);
+      --shadow-orange: rgba(255, 107, 53, 0.5);
+    }
+
+    /* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
+    :root.day-mode {
+      --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
+      --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
+      --border-color: rgba(130, 130, 255, 0.2);
+      --text-light: #ec6211; /* نص واضح */
+      --primary-neon: linear-gradient(45deg, #ffffff, #ffffff);
+      --accent-orange: #e65c00;
+      --accent-orange-hover: #cc5200;
+      --shadow-purple: rgb(255, 255, 255);
+      --shadow-orange: rgba(230, 92, 0, 0.592);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* خلفية Particles.js */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .wrap {
+      width: min(1050px, 92vw);
+      margin: 0 auto;
+      padding: 34px 0 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      box-shadow: 0 0 18px var(--shadow-orange);
+      object-fit: cover;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .neon-title {
+      background: var(--primary-neon);
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      font-weight: 800;
+      text-shadow: 0 0 10px var(--shadow-purple);
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      opacity: .9;
+      font-weight: 600;
+    }
+
+    /* زر تبديل الوضع */
+    .theme-toggle-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px; /* RTL لطيف */
+      z-index: 1000;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px var(--shadow-orange);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-3px) rotate(-10deg);
+    }
+    .theme-toggle-btn i { transition: transform .35s ease; }
+    .theme-toggle-btn.day i { transform: rotate(0deg); }
+    .theme-toggle-btn.night i { transform: rotate(360deg); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: right;
+      transition: transform 0.3s, box-shadow 0.3s, background .3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-section:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px var(--shadow-orange);
+      background: rgba(255, 107, 53, 0.08);
+    }
+
+    .hero {
+      padding: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin: 0 0 16px;
+      line-height: 1.8;
+      opacity: .95;
+      font-weight: 600;
+    }
+
+    /* Loader لطيف */
+    .dots {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      margin-inline-start: 8px;
+      transform: translateY(2px);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      box-shadow: 0 0 14px var(--shadow-orange);
+      animation: b 1.1s infinite ease-in-out;
+      opacity: .85;
+    }
+    .dot:nth-child(2) { animation-delay: .12s; }
+    .dot:nth-child(3) { animation-delay: .24s; }
+    @keyframes b {
+      0%, 100% { transform: translateY(0); opacity: .65; }
+      50% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Progress indeterminate */
+    .progress {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      margin-top: 14px;
+    }
+    .bar {
+      height: 100%;
+      width: 45%;
+      border-radius: 999px;
+      background: var(--primary-neon);
+      filter: drop-shadow(0 0 10px var(--shadow-purple));
+      animation: slide 1.5s infinite ease-in-out;
+    }
+    @keyframes slide {
+      0% { transform: translateX(120%); }
+      100% { transform: translateX(-120%); }
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .card-title i {
+      color: var(--accent-orange);
+      font-size: 1.1rem;
+    }
+
+    .list {
+      margin: 0;
+      padding: 0 18px 0 0;
+      line-height: 1.9;
+      font-weight: 600;
+      opacity: .95;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      text-decoration: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent-orange);
+      color: #fff;
+      box-shadow: 0 8px 18px var(--shadow-orange);
+    }
+    .btn-primary:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-light);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .note {
+      margin-top: 12px;
+      opacity: .9;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed var(--border-color);
+      background: rgba(255,255,255,0.04);
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    footer small { opacity: .9; font-weight: 700; }
+
+    .designer-btn {
+      display: inline-block;
+      background: var(--accent-orange);
+      color: white !important;
+      padding: 8px 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: all 0.3s;
+    }
+
+    .designer-btn:hover {
+      background: var(--accent-orange-hover);
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px var(--shadow-orange);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      header { justify-content: center; }
+      .brand { justify-content: center; }
+      .theme-toggle-btn { top: 14px; left: 14px; }
+    }
+  </style>
 </head>
+
 <body>
-    <button id="themeToggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-    </button>
+  <!-- Background particles -->
+  <div id="particles-js" aria-hidden="true"></div>
 
-    <div class="container py-5">
-        <div id="quizContainer" class="quiz-container">
-            <div class="quiz-header">
-                <div class="question-counter" id="questionCounter">السؤال 1 من 2</div>
-                <button class="btn btn-outline-light" onclick="exitQuiz()">
-                    <i class="fas fa-times"></i> إنهاء
-                </button>
-            </div>
-            <div class="question-text" id="questionText">نص السؤال هنا...</div>
-            <div class="options-container" id="optionsContainer"></div>
-            <div class="quiz-btns">
-                <button class="quiz-btn next-btn d-none" id="nextBtn" onclick="nextQuestion()">التالي</button>
-                <button class="quiz-btn submit-btn d-none" id="submitEssayBtn" onclick="submitEssay()">تسليم</button>
-            </div>
+  <!-- Theme toggle -->
+  <button class="theme-toggle-btn night" id="themeBtn" aria-label="تبديل الوضع">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <!-- غير اللينك ده للّوجو بتاعك -->
+       
+        <div>
+          <h1 class="neon-title">استنى علينا شوية ✨</h1>
+          <div class="subtitle">الأسئلة بتترفع على السيرفر دلوقتي… متقلقش 😄</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Big status card -->
+      <section class="card-section hero">
+        <div class="hero-badge">
+          <i class="fa-solid fa-rocket"></i>
+          <span>وضع التحديث شغّال</span>
+          <span class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </span>
         </div>
 
-        <div id="finalFormContainer" class="final-form">
-            <h3 class="text-center mb-4">أدخل بياناتك</h3>
-            <input type="text" id="studentName" placeholder="الاسم الكامل" required>
-            <input type="text" id="studentId" placeholder=" (ID)" required>
-            <div class="quiz-btns mt-3">
-                <button class="quiz-btn next-btn" onclick="saveStudentData()">حفظ</button>
-            </div>
+        <h2>بنجهّز الأسئلة وبنرفعها… علشان تجربتك تبقى تمام 💪🔥</h2>
+        <p>
+          الصفحة دي بديلة مؤقتًا بدل صفحة الأسئلة… أول ما التحميل يخلص هتلاقي كل حاجة رجعت طبيعي 😎
+          <br/>لو أنت داخل تحل/تراجع: خدلك نفس كده وارجع كمان شوية 🚶‍♂️☕
+        </p>
+
+        <div class="progress" role="progressbar" aria-label="تحميل" aria-valuetext="جاري الرفع">
+          <div class="bar"></div>
         </div>
 
-        <div id="resultContainer" class="result-container">
-            <h2>🎉 انتهيت من الاختبار!</h2>
-            <div class="result-score" id="finalScore">0/2</div>
-            <div class="result-text" id="resultText">أحسنت! واصل التميز 🌟</div>
-            <div id="explanationsContainer"></div>
-            <div class="mt-4">
-                <h4>شارك نتيجتك أو احفظها</h4>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">+<input type="text" id="countryCode" placeholder="رمز الدولة" style="max-width:80px; text-align:center;" value="20"></span>
-                    <input type="text" id="phoneNumber" class="form-control" placeholder="رقم الهاتف (بدون صفر)">
-                </div>
-                <div class="quiz-btns">
-                    <button class="quiz-btn back-btn" onclick="shareToWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> إرسال عبر واتساب
-                    </button>
-                    <button class="quiz-btn next-btn" onclick="downloadPDF()">
-                        <i class="fas fa-file-pdf"></i> تحميل كـ PDF
-                    </button>
-                    <button class="quiz-btn restart-btn" onclick="restartQuiz()">
-                        <i class="fas fa-redo"></i> إعادة الاختبار
-                    </button>
-                    <button class="quiz-btn back-btn" onclick="backToMaterials()">
-                        <i class="fas fa-list"></i> العودة للمواد
-                    </button>
-                </div>
-            </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="retryBtn" type="button">
+            <i class="fa-solid fa-rotate-right"></i>
+            جرّب تاني
+          </button>
+          <!-- غير لينك الصفحة الرئيسية هنا -->
+         <a class="btn btn-ghost" href="../../index.html" rel="nofollow">
+  <i class="fa-solid fa-house"></i>
+  الصفحة الرئيسية
+</a>
+
         </div>
 
-        <a href="materials.html" class="back-to-home-btn">
-            <i class="fas fa-arrow-left me-2"></i> العودة للمواد
-        </a>
-    </div>
+        <div class="note">
+          <i class="fa-solid fa-circle-info"></i>
+          <span></span>
+        </div>
+      </section>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      <!-- Side cards -->
+      <aside class="mini-grid">
+        <section class="card-section">
+          <div class="card-title">
+            <span>إيه اللي بيحصل؟ 🤔</span>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <ul class="list">
+            <li>بنرفع/نحدّث بنك الأسئلة على السيرفر 🚀</li>
+            <li>بنراجع الترتيب علشان مفيش سؤال يطير 😅</li>
+            <li>بنظبط الأداء علشان الموقع يفتح أسرع ⚡</li>
+          </ul>
+        </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
-            authDomain: "sit-el-kol.firebaseapp.com",
-            projectId: "sit-el-kol",
-            storageBucket: "sit-el-kol.firebasestorage.app",
-            messagingSenderId: "573924344198",
-            appId: "1:573924344198:web:fec2e9a54c1c152cd16c07"
-        };
+        <section class="card-section">
+          <div class="card-title">
+            <span>هترجع إمتى؟ ⏳</span>
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <ul class="list">
+            <li>أول ما الرفع يخلص… الصفحة هترجع لوحدها 🙌</li>
+            <li>لو اتأخرت: دوس “جرّب تاني” بعد شوية 🔁</li>
+            <li>ولو لسه: كلم الدعم وهنحلها سوا ❤️</li>
+          </ul>
+        </section>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        <section class="card-section">
+          <div class="card-title">
+            <span>ممكن تعمل إيه دلوقتي؟ 😎</span>
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <ul class="list">
+            <li>حدّث الصفحة بعد دقيقة ولا اتنين 🔄</li>
+            <li>ارجع للرئيسية وشوف الأقسام التانية 🧭</li>
+            <li>سيبها مفتوحة—هتشتغل أول ما تخلص 🟢</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
 
-        window.saveToFirebase = async function(data) {
-            try {
-                await addDoc(collection(db, "quiz_submissions"), data);
-            } catch (e) {
-                console.error("فشل حفظ البيانات:", e);
-            }
-        };
-    </script>
+    <footer>
+      <small>© <span id="year"></span> — الصفحة دي معمولة علشان تحافظ على تجربة لطيفة وقت الرفع 😄✨</small>
+      <!-- عدّل اسمك/براندك -->
+      <a class="designer-btn" href="#" onclick="return false;">
+        معمول بحُب 🤍
+      </a>
+    </footer>
+  </div>
 
-    <script>
-       const questions = [
-    // الأسئلة الموضوعية (191–210)
-{
-  type: "mcq",
-  question: "ما المقصود بـ\"التدريس\" في المفهوم الحديث؟",
-  options: [
-    "شرح المحتوى فقط",
-    "عملية تفاعلية منظمة بين معلم ومتعلم لتحقيق أهداف سلوكية",
-    "حفظ المعلومات من الكتاب",
-    "استخدام أحدث الوسائل"
-  ],
-  correct: 1,
-  explanation: "التدريس = موقف تفاعلي (معلم + متعلم)، وليس نقل معلومات أحادي."
-},
-{
-  type: "mcq",
-  question: "الفرق بين \"التعليم\" و\"التعلم\" هو:",
-  options: [
-    "التعليم يركّز على المعلم، والتعلم على التغيّر في سلوك المتعلم",
-    "لا فرق بينهما",
-    "التعليم حديث، والتعلم تقليدي",
-    "التعليم للكبار، والتعلم للأطفال"
-  ],
-  correct: 0,
-  explanation: "التعليم = ما يُقدّمه المعلم، التعلم = ما يكتسبه المتعلم فعليًّا."
-},
-{
-  type: "mcq",
-  question: "أي مثال يُطبّق \"التعلم الفعّال\"؟",
-  options: [
-    "الطالب ينسخ المحاضرة",
-    "الطالب يشارك في مناقشة، ويُصمّم مشروعًا قصيرًا",
-    "الطالب يحفظ القواعد النحوية",
-    "الطالب يشاهد فيديو دون توقف"
-  ],
-  correct: 1,
-  explanation: "التعلّم الفعّال = مشاركة، تطبيق، تفكير — لا تلقين."
-},
-{
-  type: "mcq",
-  question: "ما صيغة الهدف الإجرائي الصحيحة؟",
-  options: [
-    "أن يفهم الطالب قانون الجذب",
-    "أن يشرح الطالب قانون الجذب شرحًا دقيقًا في 2 دقائق",
-    "أن تكون المادة مفهومة",
-    "أن يحب الطالب الفيزياء"
-  ],
-  correct: 1,
-  explanation: "الهدف الجيد: \"أن + فعل سلوكي قابل للملاحظة + المتعلم + ناتج + معيار\"."
-},
-{
-  type: "mcq",
-  question: "أي فعل ينتمي لمستوى \"التقييم\" في تصنيف بلوم (2001)؟",
-  options: [
-    "يذكـر",
-    "يشرح",
-    "ينقد",
-    "يصمم"
-  ],
-  correct: 2,
-  explanation: "\"ينقد\"، \"يبرر\"، \"يحكم\" → مستوى تقويمي."
-},
-{
-  type: "mcq",
-  question: "ما الهدف من \"التهيئة\" في أول الدرس؟",
-  options: [
-    "شرح الهدف الرئيسي",
-    "جذب الانتباه وتهيئة الذهن (مثل: سؤال مثير في 30 ثانية)",
-    "توزيع الامتحانات",
-    "حفظ المفاهيم"
-  ],
-  correct: 1,
-  explanation: "التهيئة = تمهيد سريع يُهيّئ للدخول في الجو التعلّمي."
-},
-{
-  type: "mcq",
-  question: "أي وسيلة تُحقّق \"الاقتصاد في الاستخدام\"؟",
-  options: [
-    "استخدام 5 فيديوهات في درس واحد",
-    "استخدام وسيلة واحدة فقط، مرتبطة مباشرة بالهدف",
-    "شراء وسائل باهظة",
-    "الاعتماد على الشرح فقط"
-  ],
-  correct: 1,
-  explanation: "الوسيلة أداة، لا غاية — كثرة الوسائل تشتّت، لا تُثري."
-},
-{
-  type: "mcq",
-  question: "ما أفضل وقت لأسئلة \"التحليل\" في الدرس؟",
-  options: [
-    "في البداية فقط",
-    "بعد أسئلة التذكّر والفهم — لبناء التفكير تدريجيًّا",
-    "في النهاية فقط",
-    "في أي وقت عشوائي"
-  ],
-  correct: 1,
-  explanation: "التفكير يُبنى تدرّجيًّا: تذكّر → فهم → تطبيق → تحليل."
-},
-{
-  type: "mcq",
-  question: "ما دور \"التغذية الراجعة الفورية\"؟",
-  options: [
-    "تأجيل التصحيح لليوم التالي",
-    "تعديل الأداء أثناء التعلّم، وتثبيت الصحيح",
-    "إعطاء درجات فقط",
-    "تقليل مشاركة الطالب"
-  ],
-  correct: 1,
-  explanation: "التغذية الفورية تمنع تراكم الأخطاء وتدعم التعلّم."
-},
-{
-  type: "mcq",
-  question: "ما المقصود بـ\"المتعلم محور العملية\"؟",
-  options: [
-    "الجلوس في وسط الفصل",
-    "مشاركته في التفكير، النقاش، التطبيق، القرار",
-    "حصوله على أعلى الدرجات",
-    "كثرة أسئلته فقط"
-  ],
-  correct: 1,
-  explanation: "المحورية = فاعلية، لا مكانية."
-},
-{
-  type: "mcq",
-  question: "أي نشاط يُحقّق \"التعلّم البنائي\"؟",
-  options: [
-    "حفظ تعريف التمثيل الضوئي",
-    "تصميم تجربة بسيطة لقياس سرعة التبخر",
-    "قراءة النص بصوت عالٍ",
-    "تكرار القاعدة النحوية"
-  ],
-  correct: 1,
-  explanation: "البنائي = بناء المفهوم عبر التجربة والتفكير."
-},
-{
-  type: "mcq",
-  question: "ما عيب \"الهدف: أن يعرف الطالب قوانين الإملاء\"؟",
-  options: [
-    "طويل جدًّا",
-    "\"يعرف\" غير قابل للملاحظة أو القياس",
-    "لا يحتوي على معيار",
-    "لا علاقة له باللغة"
-  ],
-  correct: 1,
-  explanation: "الأهداف السلوكية يجب أن تُستخدم أفعالًا قابلة للملاحظة (يُحدّد، يُطبّق، يُقيّم)."
-},
-{
-  type: "mcq",
-  question: "ما أبرز سمة في \"التدريس المصغر\"؟",
-  options: [
-    "45 دقيقة أمام 40 طالبًا",
-    "5–10 دقائق أمام 5–10 طلاب، مع تركيز على مهارة واحدة وتغذية راجعة فورية",
-    "استخدام التكنولوجيا المعقدة",
-    "اختبار شامل في النهاية"
-  ],
-  correct: 1,
-  explanation: "المصغّر = تدريب مكثّف على مهارة محددة، لا عرض كامل."
-},
-{
-  type: "mcq",
-  question: "ما الغرض من \"مشاهدة الفيديو\" بعد التدريس المصغر؟",
-  options: [
-    "توثيق الأداء فقط",
-    "التأمّل الذاتي، وتحديد نقاط القوة والتحسين",
-    "مشاركته على السوشيال ميديا",
-    "تقييم المُشرِف فقط"
-  ],
-  correct: 1,
-  explanation: "الفيديو أداة تحليل ذاتي قوية — يُظهر ما لا تراه عينك أثناء الأداء."
-},
-{
-  type: "mcq",
-  question: "أي مهارة تُصنّف ضمن \"المهارات التخطيطية\"؟",
-  options: [
-    "نبرة الصوت",
-    "تحديد أهداف سلوكية واقعية",
-    "إدارة الصف",
-    "التلخيص"
-  ],
-  correct: 1,
-  explanation: "التخطيط = قبل التدريس (أهداف، خطة، توقعات)."
-},
-{
-  type: "mcq",
-  question: "ما أفضل طريقة لـ\"مراعاة الفروق الفردية\" في التدريس المصغر؟",
-  options: [
-    "نفس النشاط لجميع الطلاب",
-    "أنشطة متدرجة (بسّيطة للمُتعثّرين، مُعمّقة للمتفوقين)",
-    "إهمال الطلاب الضعاف",
-    "الاعتماد على الحفظ"
-  ],
-  correct: 1,
-  explanation: "التكيّف مع المستويات يضمن مشاركة الجميع."
-},
-{
-  type: "mcq",
-  question: "ما الهدف من \"تقييم 2+2\"؟",
-  options: [
-    "انتقاد الأداء",
-    "تقديم نقطتين إيجابيتين ونقطتين للتحسين — لبناء الثقة وتحفيز التطوير",
-    "إعطاء درجات متساوية",
-    "تقليل وقت التغذية الراجعة"
-  ],
-  correct: 1,
-  explanation: "التركيز على الإيجابيات أولًا يخلق بيئة داعمة، لا معاقبة."
-},
-{
-  type: "mcq",
-  question: "ما الخطأ في: \"مفيش تمهيد للدرس\"؟",
-  options: [
-    "يوفّر الوقت",
-    "يُهمل تهيئة الذهن، فيقلّ الانتباه والمشاركة",
-    "يناسب الطلاب الكبار",
-    "لا يؤثر على التعلّم"
-  ],
-  correct: 1,
-  explanation: "التمهيد يُفعّل المعرفة السابقة ويخلق دافعية."
-},
-{
-  type: "mcq",
-  question: "ما المقصود بـ\"الخطة الزمنية الدقيقة\" في التدريس المصغر؟",
-  options: [
-    "شرح كل شيء في 10 دقائق",
-    "تقسيم الوقت: تمهيد (2د)، عرض (5د)، تقويم (3د)",
-    "البدء مباشرة بالشرح",
-    "ترك الوقت مفتوحًا"
-  ],
-  correct: 1,
-  explanation: "الدقة الزمنية تضمن تغطية جميع مراحل التعلّم دون ازدحام."
-},
-{
-  type: "mcq",
-  question: "أي مبدأ يحقّقه \"السؤال المفتوح: إيه اللي بيحصل لو انطفأ النور؟\"؟",
-  options: [
-    "التلقين",
-    "جذب الانتباه وربط الدرس بالواقع",
-    "الحفظ",
-    "التقييم النهائي"
-  ],
-  correct: 1,
-  explanation: "التمهيد الناجح يبدأ بسؤال استفزازي مرتبط بحياة الطالب."
-},
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-// الأسئلة المقالية (211–230)
-{
-  type: "essay",
-  question: "ما دور \"لغة الجسد\" في فعالية التدريس؟",
-  modelAnswer: "تدعم الرسالة، وبناء الثقة، وتشجيع المشاركة"
-},
-{
-  type: "essay",
-  question: "ما عيب \"الشرح دون توقف\"؟",
-  modelAnswer: "يُفقِد التفاعل، ويقلل الفهم، ولا يسمح بالتغذية الراجعة"
-},
-{
-  type: "essay",
-  question: "ما الهدف من \"خريطة ذهنية بسيطة\" في التلخيص؟",
-  modelAnswer: "ربط الأفكار الرئيسية بصريًّا، وتسهيل الاسترجاع"
-},
-{
-  type: "essay",
-  question: "أي نشاط يُطبّق \"التعلّم التعاوني\" في 5 دقائق؟",
-  modelAnswer: "مجموعات (3–5 طلاب) تُصمّم خريطة ذهنية وتعرضها في 30 ثانية"
-},
-{
-  type: "essay",
-  question: "ما المقصود بـ\"بطاقة الملاحظة\" في التدريس المصغر؟",
-  modelAnswer: "أداة لرصد أداء المُعلّم في مهارات محددة (تهيئة، وضوح، أسئلة…)"
-},
-{
-  type: "essay",
-  question: "ما أفضل طريقة لـ\"إدارة الصف\" في موقف مصغّر؟",
-  modelAnswer: "التدخّل الهادئ (\"عايز أسمع رأيك كمان\")، مع توزيع الوقت بعدل"
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"التعزيز\" و\"الدافعية\"؟",
-  modelAnswer: "التعزيز (لفظي/غير لفظي) يُثبّت السلوك الصحيح ويُحفّز الاستمرار"
-},
-{
-  type: "essay",
-  question: "ما الخطأ في: \"تكرار نفس الأسلوب مع كل الطلاب\"؟",
-  modelAnswer: "يُهمل الفروق الفردية، فيُشعر البعض بالإحباط أو الملل"
-},
-{
-  type: "essay",
-  question: "ما الغرض من \"الملف الإنجازي التدريسي\"؟",
-  modelAnswer: "توثيق التطور المهني، والتأمّل، وعرض الكفاءات"
-},
-{
-  type: "essay",
-  question: "أي مبدأ يُحقّقه \"استخدام مثال من الحياة (تقسيم البيتزا لشرح الكسور)\"؟",
-  modelAnswer: "ربط التعلّم بالواقع — من شروط التعلّم الفعّال"
-},
-{
-  type: "essay",
-  question: "ما الفرق بين \"التقويم القبلي\" و\"البنائي\"؟",
-  modelAnswer: "القبلي يحدّد المستوى الأولي، والبنائي يوجّه التعلّم أثناءه"
-},
-{
-  type: "essay",
-  question: "ما أبرز سمة في \"الاستراتيجية التدريسية الناجحة\"؟",
-  modelAnswer: "مرونة تطبيق الاستراتيجية حسب الموقف والهدف"
-},
-{
-  type: "essay",
-  question: "ما الخطأ في: \"الخاتمة دون تلخيص\"؟",
-  modelAnswer: "يُفقد الطالب الفرصة لربط الأفكار وترسيخ التعلّم"
-},
-{
-  type: "essay",
-  question: "ما المقصود بـ\"التعلّم القائم على المشكلات\" (PBL) في 5 دقائق؟",
-  modelAnswer: "عرض مشكلة واقعية → تحليل سريع → اقتراح حل → مناقشة موجزة"
-},
-{
-  type: "essay",
-  question: "أي فعل ينتمي لمستوى \"الإبداع\" في بلوم؟",
-  modelAnswer: "يقترح"
-},
-{
-  type: "essay",
-  question: "ما دور \"الوقت المخصص للتفكير\" بعد السؤال؟",
-  modelAnswer: "إعطاء الفرصة لمعالجة المعلومة، خاصة للطلاب المتأنيين"
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"القلق\" و\"أداء التدريس\"؟",
-  modelAnswer: "القلق يُضعف التركيز والتفاعل، لكن التدريب يُقلّله"
-},
-{
-  type: "essay",
-  question: "ما أفضل طريقة لـ\"توزيع الأسئلة\" بين الطلاب؟",
-  modelAnswer: "عشوائي + تأمّل (تأكد من مشاركة الصامتين)"
-},
-{
-  type: "essay",
-  question: "ما المقصود بـ\"الاستراتيجية التدريسية المناسبة\"؟",
-  modelAnswer: "الأنسب للمحتوى، والطلاب، والوقت، والهدف"
-},
-{
-  type: "essay",
-  question: "ما عيب \"الاعتماد على الحفظ في التقويم\"؟",
-  modelAnswer: "لا يقيس الفهم أو التفكير، فقط الذاكرة قصيرة المدى"
-},
-{
-  type: "essay",
-  question: "ما الهدف من \"التأمّل الذاتي\" بعد التدريس؟",
-  modelAnswer: "تحليل الأداء بموضوعية، ووضع خطة تحسين"
-},
-{
-  type: "essay",
-  question: "أي مبدأ يُحقّقه \"التقويم الثلاثي\" (ذاتي + زملاء + مشرف)؟",
-  modelAnswer: "تنوّع مصادر التغذية الراجعة لصورة أكمل عن الأداء"
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"التدريس المصغر\" و\"التنمية المهنية المستدامة\"؟",
-  modelAnswer: "أداة تطوير ذاتي مستمر — جزء من ممارسة مهنية واعية"
-},
-{
-  type: "essay",
-  question: "ما الخطأ في: \"كتابة الهدف بعد الانتهاء من الشرح\"؟",
-  modelAnswer: "يُفقد الدرس التوجيه، فيصبح غير منظم"
-},
-{
-  type: "essay",
-  question: "ما المقصود بـ\"التغذية الراجعة المحدّدة\"؟",
-  modelAnswer: "\"شرحك كان منظم، لكن جرّب تبطّئ شوية\" — تركّز على السلوك، لا الشخصية"
-},
-{
-  type: "essay",
-  question: "أي مبدأ يُحقّقه \"اختيار وسيلة واحدة فقط\"؟",
-  modelAnswer: "الاقتصاد والتركيز — تجنّب التشويش"
-},
-{
-  type: "essay",
-  question: "ما دور \"التمهيد\" في تحقيق \"الاستعداد المعرفي\"؟",
-  modelAnswer: "يربط المعلوم الجديد بما سبق، فيقلّل الحمل المعرفي"
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"التفاعل\" و\"ثبات التعلّم\"؟",
-  modelAnswer: "التفاعل (سؤال، تطبيق، مناقشة) يزيد من فرص التثبيت في الذاكرة طويلة المدى"
-},
-{
-  type: "essay",
-  question: "ما أفضل طريقة لـ\"تقييم الفهم في 30 ثانية\"؟",
-  modelAnswer: "سؤال واحد: \"إيه أهم فكرة فهمتها النهاردة؟\""
-},
-{
-  type: "essay",
-  question: "ما الدرس المستفاد من \"التدريس المصغر\" كمنهجية؟",
-  modelAnswer: "التعلّم من الأخطاء في بيئة آمنة، والتحسين التدريجي"
-},
-{
-  type: "essay",
-  question: "ما الفرق بين \"التعليم\" و\"التدريس\" من منظور تفاعلي؟",
-  modelAnswer: "التعليم: فعل المعلم (نقل محتوى). التدريس: تفاعل بين المعلم (يوجّه) والمتعلم (يشارك)، بهدف إحداث تغيّر سلوكي. التعليم أحادي، التدريس دينامي."
-},
-{
-  type: "essay",
-  question: "صمّم هدفًا إجرائيًّا لدرس عن \"الاحترام\" يجمع بين المجالات الثلاثة.",
-  modelAnswer: "\"أن يُعبّر طالب عن رأيه باحترام (وجداني)، باستخدام لغة مهذبة (معرفي)، في حوار جماعي مدته دقيقتان (مهاري)\"."
-},
-{
-  type: "essay",
-  question: "كيف تُطبّق \"التعلّم البنائي\" في تدريس قانون \"أوم\" في 7 دقائق؟",
-  modelAnswer: "(1) تمهيد: \"ليه المصباح بيضوي أضعف لما البطارية تِقِل؟\" (2) تجربة بسيطة (مصدر، أسلاك، مصباح). (3) مناقشة: \"شو العلاقة بين الجهد والتيار؟\". (4) استنتاج قانون أوم من الملاحظة."
-},
-{
-  type: "essay",
-  question: "ما معايير اختيار \"الوسيلة التعليمية\" في درس مصغّر؟",
-  modelAnswer: "(1) ارتباطها المباشر بالهدف. (2) بساطتها (واحدة كافية). (3) وضوحها (تُرى من آخر الفصل). (4) أمانها. (5) إمكانية التفاعل معها (متحركة، قابلة للتعديل)."
-},
-{
-  type: "essay",
-  question: "صمّم خطة زمنية دقيقة لدرس مصغّر (8 دقائق) عن \"الفرق بين النبات والحيوان\".",
-  modelAnswer: "(0–2د) تمهيد: عرض صورتين (شجرة، أسد) — سؤال: \"إيه الفرق في طريقة عيشهم؟\". (2–5د) مناقشة موجزة → جدول مقارنة (تنفّس، غذاء، حركة). (5–7د) نشاط: تصنيف كائنات. (7–8د) تلخيص: \"أهم شوية: النبات بيصنع غذاؤه، والحيوان بيأكله\"."
-},
-{
-  type: "essay",
-  question: "كيف تُحقّق \"التغذية الراجعة الفورية\" دون إحباط الطالب؟",
-  modelAnswer: "(1) ابدأ بالإيجاب (\"شرحك كان واضح\"). (2) ركّز على السلوك، لا الشخصية (\"جرّب تبطئ في الكلام\"). (3) اقترح حلاً (\"ممكن تستخدم مؤقّت 30 ثانية لكل فكرة\"). (4) شجّع على المحاولة (\"عايز أشوفك تطبّقه في المرة الجاية\")."
-},
-{
-  type: "essay",
-  question: "ما دور \"التأمّل الذاتي\" في تطوير الأداء التدريسي؟",
-  modelAnswer: "يحوّل المعلم من منفّذ إلى باحث في صفه: يحلّل أخطاءه، يكتشف نقاط قوته، ويضع خطة تحسين واقعية — فيصبح التدريس ممارسة واعية، لا روتينية."
-},
-{
-  type: "essay",
-  question: "كيف تُقيّم فعالية \"التمهيد\" في درسك؟",
-  modelAnswer: "(1) انتباه الطلاب (هل رفعوا اليد؟ هل نظروا للسبورة؟). (2) جودة الإجابات (هل ربطت بما سبق؟). (3) مشاركة الصامتين. (4) ملاحظة المشرف: \"هل أنشأ دافعية حقيقية؟\"."
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"الفروق الفردية\" و\"العدالة التربوية\" في التدريس المصغر؟",
-  modelAnswer: "العدالة ليست المساواة، بل إعطاء كل طالب ما يحتاج. مثال: نفس المفهوم، لكن نشاط بسيط للمُتعثّر (توصيل)، ومعقّد للمتفوق (تحليل). هذا يضمن مشاركة الجميع دون إقصاء."
-},
-{
-  type: "essay",
-  question: "كيف تُطبّق \"التعلّم التعاوني\" في مجموعة مختلطة المستويات؟",
-  modelAnswer: "(1) توزيع أدوار: قائد (من متوسط)، مُدوّن (ضعيف)، مُقدّم (متفوّق)، مُوقّت (آخر). (2) مهمة محددة (مثل: رسم دورة الكربون). (3) تقييم المجموعة ككل، لا الأفراد. هذا يُعزّز الدعم المتبادل."
-},
-{
-  type: "essay",
-  question: "ما أبرز أخطاء في \"إدارة الوقت\" أثناء التدريس المصغر، وكيف تتجنبها؟",
-  modelAnswer: "(1) تجاوز وقت التمهيد → ضع مؤقّت مرئي. (2) الإطالة في الشرح → خطّط بدقّة (5 دقائق كحد أقصى). (3) إهمال التلخيص → خصّص دقيقتين له في الخطة. التدريب المسبق يقلل التسرّب."
-},
-{
-  type: "essay",
-  question: "كيف تُصمّم \"سؤال تحليل\" لطلاب المرحلة الابتدائية؟",
-  modelAnswer: "لا تطلب \"حلّل\"، بل استخدم سياق بسيط: \"لو زرعنا الوردة في مكان مظلم، إيه اللي هيحصل؟ ليه؟\". السؤال يدفع للتفكير في العلاقة بين الضوء والنمو — تحليل مُقنّع."
-},
-{
-  type: "essay",
-  question: "ما معايير \"الخطة المثالية\" لدرس مصغّر؟",
-  modelAnswer: "(1) هدف سلوكي واضح. (2) تمهيد جذّاب. (3) أنشطة تفاعلية ≤ 5 دقائق. (4) وسيلة واحدة مرتبطة. (5) تقويم سريع. (6) تلخيص. (7) مرونة (بديل لو فشل النشاط)."
-},
-{
-  type: "essay",
-  question: "كيف تُحقّق \"التعلّم الفعّال\" في بيئة محدودة الموارد؟",
-  modelAnswer: "(1) استخدم خامات بيئية (أكياس، علب). (2) اعتمد على الحوار واللعب. (3) استخدم جسد الطالب (تمثيل، حركة). (4) ركّز على الموقف، لا الوسيلة. الفعالية في التفاعل، لا التكنولوجيا."
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"التقويم البنائي\" و\"تعديل الخطة أثناء الدرس\"؟",
-  modelAnswer: "ملاحظة أن الطلاب لا يفهمون \"المتطابقات\" → توقّف، واسأل: \"عايزين نجرب مثال بسيط؟\"، ثم عدّل السرعة أو الطريقة. التقويم البنائي يُغذّي التدريس الحي، لا يقيّمه فقط."
-},
-{
-  type: "essay",
-  question: "كيف تُطبّق \"2+2\" في تغذية زملائك بعد عرض مصغّر؟",
-  modelAnswer: "\"نقطتان إيجابيتين: (1) تمهيدك جذّاب، (2) وضوحك ممتاز. نقطتان للتحسين: (1) جرّب تبطئ في الشرح، (2) خصّص وقتًا للتغذية الراجعة من الطلاب\". هذا يبني الثقة ويوجّه التطوير."
-},
-{
-  type: "essay",
-  question: "ما دور \"الفيديو\" في التدريب على التدريس المصغر؟",
-  modelAnswer: "(1) كشف سلوكيات لا تُدرك أثناء الأداء (نبرة صوت، لغة جسد). (2) مقارنة الأداء قبل وبعد التعديل. (3) توثيق التطور. (4) تحليل ذاتي دقيق — أداة لا تُعوّض."
-},
-{
-  type: "essay",
-  question: "كيف تُصمّم \"نشاط تطبيقي\" في 3 دقائق؟",
-  modelAnswer: "(1) مطلوب محدّد (مثل: اكتب جملة فيها فعل ماضٍ). (2) وقت محدّد (90 ثانية). (3) مشاركة سريعة (3 طلاب يقرؤون). (4) تغذية فورية (\"جملة أحمد دقيقة، وحدّد الفعل الصحيح\"). البساطة + الوضوح + السرعة."
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"القلق\" و\"جودة الأداء\" في التدريس المصغر؟",
-  modelAnswer: "القلق المعتدل يحفّز، لكن الزائد يُضعف التركيز والتفاعل. التدريب (مرآة، زملاء، فيديو) يبني الثقة بالتدرّج. الأهم: تقبّل الخطأ كجزء من التعلّم — لا كعار."
-},
-{
-  type: "essay",
-  question: "ما العلاقة بين \"التدريس المصغر\" و\"الهوية المهنية\" للمُعلّم؟",
-  modelAnswer: "التدريس المصغر يحوّل المعلم من \"ناقل معلومات\" إلى \"مهني واعٍ\": يخطّط، ينفّذ، يقيّم، يُحدّث — فيبني فلسفته التربوية، ويكتسب ثقة في قدراته، ويصبح جزءًا من مجتمع ممارسة مهنية ناضج."
-}
-];
+  <script>
+    // سنة الفوتر
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let score = 0;
-        let mcqCount = questions.filter(q => q.type === 'mcq').length;
+    // زر "جرّب تاني"
+    document.getElementById("retryBtn").addEventListener("click", () => {
+      // لو عندك لينك صفحة الأسئلة الحقيقي حطه هنا بدل reload
+      location.reload();
+    });
 
-        function saveProgress() {
-            localStorage.setItem('quiz-micro-a', JSON.stringify({
-                currentQuestionIndex, userAnswers, score, mcqCount
-            }));
-        }
+    // Theme toggle (ليل/نهار) + حفظ في localStorage
+    const root = document.documentElement;
+    const btn = document.getElementById("themeBtn");
+    const savedTheme = localStorage.getItem("themeMode");
 
-        function loadProgress() {
-            const saved = localStorage.getItem('quiz-micro-a');
-            if (saved) {
-                const p = JSON.parse(saved);
-                currentQuestionIndex = p.currentQuestionIndex;
-                userAnswers = p.userAnswers || [];
-                score = p.score || 0;
-                mcqCount = p.mcqCount || 0;
-                document.getElementById('quizContainer').style.display = 'block';
-                loadQuestion();
-                return true;
-            }
-            return false;
-        }
+    function setTheme(mode) {
+      const isDay = mode === "day";
+      root.classList.toggle("day-mode", isDay);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const root = document.documentElement;
-            if (localStorage.getItem('theme') === 'day') {
-                root.classList.add('day-mode');
-                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-            }
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                if (root.classList.contains('day-mode')) {
-                    root.classList.remove('day-mode');
-                    localStorage.setItem('theme', 'night');
-                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-                } else {
-                    root.classList.add('day-mode');
-                    localStorage.setItem('theme', 'day');
-                    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-                }
-            });
+      btn.classList.toggle("day", isDay);
+      btn.classList.toggle("night", !isDay);
+      btn.innerHTML = isDay ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
 
-            if (!loadProgress()) {
-                document.getElementById('quizContainer').style.display = 'block';
-                loadQuestion();
-            }
-        });
+      localStorage.setItem("themeMode", isDay ? "day" : "night");
+    }
 
-        function loadQuestion() {
-            saveProgress();
-            const q = questions[currentQuestionIndex];
-            document.getElementById('questionCounter').textContent = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
-            document.getElementById('questionText').textContent = q.question;
+    // Init
+    if (savedTheme === "day") setTheme("day");
+    else setTheme("night");
 
-            const container = document.getElementById('optionsContainer');
-            container.innerHTML = '';
-            document.getElementById('nextBtn').classList.add('d-none');
-            document.getElementById('submitEssayBtn').classList.add('d-none');
+    btn.addEventListener("click", () => {
+      const isCurrentlyDay = root.classList.contains("day-mode");
+      setTheme(isCurrentlyDay ? "night" : "day");
+    });
 
-            if (q.type === 'mcq') {
-                q.options.forEach((opt, idx) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn w-100 text-end';
-                    btn.textContent = opt;
-                    btn.onclick = () => selectMCQ(btn, idx);
-                    container.appendChild(btn);
-                });
-                if (userAnswers[currentQuestionIndex] !== undefined) {
-                    const btns = container.querySelectorAll('.option-btn');
-                    const ans = userAnswers[currentQuestionIndex];
-                    if (btns[ans]) {
-                        btns[ans].classList.add('selected');
-                        showMCQExplanation();
-                        document.getElementById('nextBtn').classList.remove('d-none');
-                    }
-                }
-            } else if (q.type === 'essay') {
-                const ta = document.createElement('textarea');
-                ta.className = 'essay-input';
-                ta.placeholder = 'اكتب إجابتك هنا...';
-                if (userAnswers[currentQuestionIndex]) {
-                    ta.value = userAnswers[currentQuestionIndex];
-                }
-                container.appendChild(ta);
-                document.getElementById('submitEssayBtn').classList.remove('d-none');
-            }
-        }
-
-        function selectMCQ(btn, idx) {
-            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected', 'correct', 'wrong'));
-            btn.classList.add('selected');
-            userAnswers[currentQuestionIndex] = idx;
-            saveProgress();
-
-            const q = questions[currentQuestionIndex];
-            if (idx === q.correct) {
-                btn.classList.add('correct');
-                score++;
-            } else {
-                btn.classList.add('wrong');
-                const correctBtn = container.querySelectorAll('.option-btn')[q.correct];
-                if (correctBtn) correctBtn.classList.add('correct');
-            }
-            showMCQExplanation();
-            document.getElementById('nextBtn').classList.remove('d-none');
-        }
-
-        function showMCQExplanation() {
-            const q = questions[currentQuestionIndex];
-            let exp = document.querySelector('.explanation-temp');
-            if (!exp) {
-                exp = document.createElement('div');
-                exp.className = 'explanation explanation-temp';
-                exp.innerHTML = `<h5>الشرح:</h5><p>${q.explanation}</p>`;
-                document.getElementById('optionsContainer').appendChild(exp);
-            }
-        }
-
-        function submitEssay() {
-            const ta = document.querySelector('.essay-input');
-            const ans = ta.value.trim();
-            if (!ans) { alert('يرجى كتابة إجابة.'); return; }
-            userAnswers[currentQuestionIndex] = ans;
-            saveProgress();
-
-            document.getElementById('submitEssayBtn').classList.add('d-none');
-
-            const q = questions[currentQuestionIndex];
-            const exp = document.createElement('div');
-            exp.className = 'explanation';
-            exp.innerHTML = `<h5>الإجابة النموذجية:</h5><p>${q.modelAnswer}</p>`;
-            document.getElementById('optionsContainer').appendChild(exp);
-
-            document.getElementById('nextBtn').classList.remove('d-none');
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                document.getElementById('quizContainer').style.display = 'none';
-                document.getElementById('finalFormContainer').style.display = 'block';
-            }
-        }
-
-        function saveStudentData() {
-            const name = document.getElementById('studentName').value.trim();
-            const id = document.getElementById('studentId').value.trim();
-            if (!name || !id) { alert('أدخل الاسم وال ID.'); return; }
-
-            const data = {
-                studentName: name,
-                studentId: id,
-                subjectName: "مايكرو",
-                section: "أ",
-                score: score,
-                totalMCQ: mcqCount,
-                percentage: mcqCount ? Math.round((score / mcqCount) * 100) : 0,
-                timestamp: new Date().toISOString(),
-                answers: userAnswers.map((a, i) => ({
-                    question: questions[i].question,
-                    type: questions[i].type,
-                    userAnswer: a,
-                    correctAnswer: questions[i].type === 'mcq' ? questions[i].options[questions[i].correct] : null,
-                    explanation: questions[i].type === 'mcq' ? questions[i].explanation : questions[i].modelAnswer
-                }))
-            };
-
-            if (window.saveToFirebase) window.saveToFirebase(data);
-
-            localStorage.removeItem('quiz-micro-a');
-            showFinalResults(name, id, data.percentage);
-        }
-
-        function showFinalResults(name, id, pct) {
-            document.getElementById('finalFormContainer').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-
-            document.getElementById('finalScore').textContent = `${score}/${mcqCount}`;
-            let txt = "حاول مرة أخرى! 💪";
-            if (pct >= 80) txt = "ممتاز! 🌟";
-            else if (pct >= 60) txt = "جيد جدًا! 👍";
-            else if (pct >= 40) txt = "لابأس! 📚";
-            document.getElementById('resultText').textContent = txt;
-
-            const expCont = document.getElementById('explanationsContainer');
-            expCont.innerHTML = '<h3 class="text-light mb-4">جميع إجاباتك:</h3>';
-            questions.forEach((q, i) => {
-                const div = document.createElement('div');
-                div.className = 'explanation';
-                const userAns = userAnswers[i] || "لم تجب";
-                if (q.type === 'mcq') {
-                    div.innerHTML = `
-                        <h5>السؤال ${i+1}: ${q.question}</h5>
-                        <p><strong>إجابتك:</strong> ${q.options[userAns] || 'لم تجب'}</p>
-                        <p><strong>الإجابة الصحيحة:</strong> ${q.options[q.correct]}</p>
-                        <p><strong>الشرح:</strong> ${q.explanation}</p>
-                    `;
-                } else {
-                    div.innerHTML = `
-                        <h5>السؤال ${i+1} (مقالي): ${q.question}</h5>
-                        <p><strong>إجابتك:</strong> ${userAns}</p>
-                        <p><strong>الإجابة النموذجية:</strong> ${q.modelAnswer}</p>
-                    `;
-                }
-                expCont.appendChild(div);
-            });
-        }
-
-        function shareToWhatsApp() {
-            const cc = document.getElementById('countryCode').value.trim();
-            const phone = document.getElementById('phoneNumber').value.trim();
-            if (!cc || !phone) { alert('أدخل رمز الدولة ورقم الهاتف.'); return; }
-            const full = cc + phone.replace(/^0+/, '');
-            const msg = `لقد انتهيت من اختبار "التدريس المصغر - المجموعة أ" وحصلت على ${score}/${mcqCount}!`;
-            window.open(`https://wa.me/${full}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            // Note: jsPDF has limited Arabic support by default. This might need a custom font.
-            doc.setFont('Amiri'); 
-            doc.text('نتائج الاختبار', 105, 20, null, null, 'center');
-            doc.text('التدريس المصغر - المجموعة أ', 20, 40);
-            doc.text(`النتيجة: ${score}/${mcqCount}`, 20, 50);
-            let y = 70;
-            questions.forEach((q, i) => {
-                if (y > 250) { doc.addPage(); y = 20; }
-                doc.text(`السؤال ${i+1}: ${q.question}`, 20, y, { maxWidth: 170 });
-                y += 10;
-                const ans = userAnswers[i] || 'لم تجب';
-                if (q.type === 'mcq') {
-                    doc.text(`إجابتك: ${q.options[ans] || 'لم تجب'}`, 25, y, { maxWidth: 165 });
-                    y += 10;
-                    doc.text(`الصحيحة: ${q.options[q.correct]}`, 25, y, { maxWidth: 165 });
-                } else {
-                    doc.text(`إجابتك: ${ans}`, 25, y, { maxWidth: 165 });
-                }
-                y += 15;
-            });
-            doc.save('نتيجة_التدريس المصغر_أ.pdf');
-        }
-
-        function restartQuiz() {
-            localStorage.removeItem('quiz-micro-a');
-            currentQuestionIndex = 0; userAnswers = []; score = 0;
-            document.getElementById('resultContainer').style.display = 'none';
-            document.getElementById('quizContainer').style.display = 'block';
-            loadQuestion();
-        }
-
-        function backToMaterials() {
-            localStorage.removeItem('quiz-micro-a');
-            window.location.href = 'materials.html';
-        }
-
-        function exitQuiz() {
-            if (confirm('هل تريد إنهاء الاختبار؟')) {
-                localStorage.removeItem('quiz-micro-a');
-                window.location.href = 'materials.html';
-            }
-        }
-    </script>
+    // Particles config
+    // (لو مش عايز particles خالص، احذف السطرين بتوع particles.js + الكود ده)
+    if (window.particlesJS) {
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 70, density: { enable: true, value_area: 900 } },
+          color: { value: ["#a453ff", "#54aaff", "#ff6b35"] },
+          shape: { type: "circle" },
+          opacity: { value: 0.35, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 140,
+            color: "#ffffff",
+            opacity: 0.08,
+            width: 1
+          },
+          move: { enable: true, speed: 1.2 }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            repulse: { distance: 120, duration: 0.4 },
+            push: { particles_nb: 2 }
+          }
+        },
+        retina_detect: true
+      });
+    }
+  </script>
 </body>
 </html>
+
