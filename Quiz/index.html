@@ -1,39 +1,30 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>بنرفع الأسئلة دلوقتي 🚀</title>
-
-  <!-- (اختياري) خط عربي لطيف -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <!-- Icons (اختياري) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
+  <title>ست الكل — اختبارات تفاعلية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
-    /* الوضع الليلي (الافتراضي) */
+    /* ================ المتغيرات والألوان ================ */
     :root {
-      /* الألوان الأساسية */
-      --bg-color: #121212; /* رمادي غامق للخلفية */
-      --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
+      --bg-color: #121212;
+      --card-bg: rgba(255, 255, 255, 0.05);
       --border-color: rgba(255, 255, 255, 0.1);
-      --text-light: #e0e0e0; /* لون فاتح للنصوص */
-      --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
-      --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
+      --text-light: #e0e0e0;
+      --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
+      --accent-orange: #ff6b35;
       --accent-orange-hover: #e05a2a;
       --shadow-purple: rgba(164, 83, 255, 0.5);
       --shadow-orange: rgba(255, 107, 53, 0.5);
     }
 
-    /* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
     :root.day-mode {
-      --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
-      --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
+      --bg-color: #1b405f;
+      --card-bg: rgba(255, 255, 255, 0.7);
       --border-color: rgba(130, 130, 255, 0.2);
-      --text-light: #ec6211; /* نص واضح */
+      --text-light: #ec6211;
       --primary-neon: linear-gradient(45deg, #ffffff, #ffffff);
       --accent-orange: #e65c00;
       --accent-orange-hover: #cc5200;
@@ -41,506 +32,2683 @@
       --shadow-orange: rgba(230, 92, 0, 0.592);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      margin: 0;
       background-color: var(--bg-color);
       color: var(--text-light);
-      font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 80px;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    /* ================ الهيدر ================ */
+    .site-header {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-bottom: 2rem;
       position: relative;
-      min-height: 100vh;
-    }
-
-    /* خلفية Particles.js */
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .wrap {
-      width: min(1050px, 92vw);
-      margin: 0 auto;
-      padding: 34px 0 24px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      box-shadow: 0 0 18px var(--shadow-orange);
-      object-fit: cover;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border-color);
     }
 
     .neon-title {
       background: var(--primary-neon);
       -webkit-background-clip: text;
-      background-clip: text;
-      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      color: transparent;
+      font-size: 3rem;
       font-weight: 800;
-      text-shadow: 0 0 10px var(--shadow-purple);
+      text-shadow: 0 0 15px var(--shadow-purple);
       margin: 0;
-      line-height: 1.15;
+      letter-spacing: 1.5px;
     }
 
-    .subtitle {
-      margin: 6px 0 0;
-      opacity: .9;
-      font-weight: 600;
+    .slogan {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      opacity: 0.85;
+      margin-top: 6px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+      display: inline-block;
     }
 
-    /* زر تبديل الوضع */
+    /* ================ زر تبديل الوضع ================ */
     .theme-toggle-btn {
       position: fixed;
-      top: 18px;
-      left: 18px; /* RTL لطيف */
+      top: 20px;
+      left: 20px;
       z-index: 1000;
       background: var(--accent-orange);
       color: white;
       border: none;
-      width: 46px;
-      height: 46px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       cursor: pointer;
-      display: grid;
-      place-items: center;
-      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
       box-shadow: 0 4px 15px var(--shadow-orange);
       transition: all 0.3s ease;
     }
+
     .theme-toggle-btn:hover {
       background: var(--accent-orange-hover);
-      transform: translateY(-3px) rotate(-10deg);
+      transform: translateY(-3px) rotate(15deg);
     }
-    .theme-toggle-btn i { transition: transform .35s ease; }
-    .theme-toggle-btn.day i { transform: rotate(0deg); }
-    .theme-toggle-btn.night i { transform: rotate(360deg); }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 16px;
-      align-items: start;
+    /* ================ الكروت ================ */
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0 1rem;
     }
 
     .card-section {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 20px;
-      text-align: right;
-      transition: transform 0.3s, box-shadow 0.3s, background .3s;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
       backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 350px;
+      cursor: pointer;
     }
 
     .card-section:hover {
-      transform: translateY(-6px);
+      transform: translateY(-10px);
       box-shadow: 0 10px 30px var(--shadow-orange);
-      background: rgba(255, 107, 53, 0.08);
+      background: rgba(255, 107, 53, 0.1);
     }
 
-    .hero {
-      padding: 22px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color);
-      background: rgba(255,255,255,0.04);
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .hero h2 {
-      margin: 0 0 6px;
-      font-size: clamp(1.2rem, 2vw, 1.5rem);
-      font-weight: 800;
-    }
-
-    .hero p {
-      margin: 0 0 16px;
-      line-height: 1.8;
-      opacity: .95;
-      font-weight: 600;
-    }
-
-    /* Loader لطيف */
-    .dots {
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-      margin-inline-start: 8px;
-      transform: translateY(2px);
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent-orange);
-      box-shadow: 0 0 14px var(--shadow-orange);
-      animation: b 1.1s infinite ease-in-out;
-      opacity: .85;
-    }
-    .dot:nth-child(2) { animation-delay: .12s; }
-    .dot:nth-child(3) { animation-delay: .24s; }
-    @keyframes b {
-      0%, 100% { transform: translateY(0); opacity: .65; }
-      50% { transform: translateY(-6px); opacity: 1; }
-    }
-
-    /* Progress indeterminate */
-    .progress {
-      width: 100%;
-      height: 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-      background: rgba(255,255,255,0.06);
-      margin-top: 14px;
-    }
-    .bar {
-      height: 100%;
-      width: 45%;
-      border-radius: 999px;
-      background: var(--primary-neon);
-      filter: drop-shadow(0 0 10px var(--shadow-purple));
-      animation: slide 1.5s infinite ease-in-out;
-    }
-    @keyframes slide {
-      0% { transform: translateX(120%); }
-      100% { transform: translateX(-120%); }
-    }
-
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .card-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 0 0 10px;
-      font-size: 1.05rem;
-      font-weight: 800;
-    }
-
-    .card-title i {
+    .card-section i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
       color: var(--accent-orange);
-      font-size: 1.1rem;
     }
 
-    .list {
-      margin: 0;
-      padding: 0 18px 0 0;
-      line-height: 1.9;
-      font-weight: 600;
-      opacity: .95;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      text-decoration: none;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--accent-orange);
-      color: #fff;
-      box-shadow: 0 8px 18px var(--shadow-orange);
-    }
-    .btn-primary:hover {
-      background: var(--accent-orange-hover);
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border-color);
+    .card-section h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
       color: var(--text-light);
     }
-    .btn-ghost:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+
+    .card-section p {
+      opacity: 0.8;
+      font-size: 0.95rem;
     }
 
-    .note {
-      margin-top: 12px;
-      opacity: .9;
+    /* ================ صفحة الأسئلة ================ */
+    .quiz-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: none;
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ✅ عداد السؤال المُحسّن */
+    .question-counter {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 1.1rem;
       font-weight: 700;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px dashed var(--border-color);
-      background: rgba(255,255,255,0.04);
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      color: var(--text-light);
     }
 
+    :root.day-mode .question-counter {
+      background: rgba(255, 255, 255, 0.4);
+      color: #e65c00;
+      border-color: rgba(130, 130, 255, 0.3);
+    }
+
+    .question-text {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ✅ أزرار الخيارات المُحسّنة */
+    .option-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 14px;
+      padding: 14px 20px;
+      text-align: right;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      color: var(--text-light);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .option-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateX(4px);
+    }
+
+    .option-btn:active {
+      transform: scale(0.98) translateX(2px);
+      background: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .option-btn.correct {
+      background: rgba(46, 125, 50, 0.35);
+      color: #c8e6c9;
+      border-left: 4px solid #4caf50;
+      box-shadow: inset 0 0 12px rgba(76, 175, 80, 0.2);
+    }
+
+    .option-btn.incorrect {
+      background: rgba(183, 28, 28, 0.35);
+      color: #ffcdd2;
+      border-left: 4px solid #f44336;
+      box-shadow: inset 0 0 12px rgba(244, 67, 54, 0.2);
+    }
+
+    :root.day-mode .option-btn {
+      background: rgba(255, 255, 255, 0.5);
+      color: #1b405f;
+    }
+
+    :root.day-mode .option-btn:hover {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    :root.day-mode .option-btn.correct {
+      background: rgba(76, 175, 80, 0.25);
+      color: #2e7d32;
+    }
+
+    :root.day-mode .option-btn.incorrect {
+      background: rgba(244, 67, 54, 0.2);
+      color: #c62828;
+    }
+
+    .explanation {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      font-size: 1rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .btn-next {
+      display: none;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-next:hover {
+      background: var(--accent-orange-hover);
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px var(--shadow-orange);
+    }
+
+    /* ================ صفحة النتائج ================ */
+    .results-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: none;
+    }
+
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .result-summary h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .result-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .result-question {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-answer {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .answer-correct {
+      background: rgba(76, 175, 80, 0.2);
+      color: #a5d6a7;
+    }
+
+    .answer-incorrect {
+      background: rgba(244, 67, 54, 0.2);
+      color: #ef9a9a;
+    }
+
+    .result-explanation {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .btn-download,
+    .btn-action {
+      display: block;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem auto 0;
+      cursor: pointer;
+      transition: all 0.3s;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .btn-download:hover,
+    .btn-action:hover {
+      background: var(--accent-orange-hover);
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px var(--shadow-orange);
+    }
+
+    /* زرين في صفحة النتائج */
+    .btn-restart {
+      background: #4caf50 !important;
+      max-width: 200px;
+    }
+
+    .btn-home {
+      background: #2196f3 !important;
+      max-width: 200px;
+    }
+
+    /* ================ الفوتر ================ */
     footer {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 18px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
       background: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      text-align: center;
+      padding: 12px;
+      font-size: 0.95rem;
+      z-index: 900;
+      border-top: 1px solid var(--border-color);
     }
-
-    footer small { opacity: .9; font-weight: 700; }
 
     .designer-btn {
       display: inline-block;
       background: var(--accent-orange);
       color: white !important;
-      padding: 8px 16px;
+      padding: 8px 20px;
       border-radius: 30px;
       text-decoration: none;
-      font-weight: 800;
+      font-weight: 600;
       transition: all 0.3s;
+      margin-top: 5px;
     }
 
     .designer-btn:hover {
       background: var(--accent-orange-hover);
-      transform: scale(1.03);
+      transform: scale(1.05);
       box-shadow: 0 5px 15px var(--shadow-orange);
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
-      header { justify-content: center; }
-      .brand { justify-content: center; }
-      .theme-toggle-btn { top: 14px; left: 14px; }
+    /* ================ Responsive ================ */
+    @media (max-width: 768px) {
+      .neon-title { font-size: 2.2rem; }
+      .card-section { padding: 1.5rem; }
+      .question-text { font-size: 1.2rem; }
+      .option-btn { padding: 12px 16px; font-size: 1rem; }
+      .btn-next, .btn-download { width: 100%; max-width: none; }
     }
+
+    .card-container {
+      position: relative;
+    }
+
+    .back-to-home-btn {
+      position: absolute;
+      top: 20px;        
+      left: 20px;        
+      z-index: 10;
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;  
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+      transition: all 0.3s ease;
+      display: flex;    
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-to-home-btn:hover {
+      background: #e05a2a;
+      box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 480px) {
+      .back-to-home-btn {
+        top: 10px;
+        left: 10px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+      }
+    }
+    .section-title{
+  text-align:center;
+  margin: 0.5rem auto 1rem;
+  font-size: 1.2rem;
+  opacity: 0.9;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: rgba(0,0,0,0.15);
+}
+
+.cards-wrapper{
+  padding: 0 1rem;
+}
+
+.card-content{
+  position: relative;
+  z-index: 1;
+}
+
+/* قفل + بلور للبطاقات الخاصة */
+.card-section.locked{
+  position: relative;
+  overflow: hidden;
+}
+
+.card-section.locked .card-content{
+  filter: blur(2.2px);
+  opacity: 0.9;
+}
+
+.locked-badge{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
   </style>
 </head>
-
 <body>
-  <!-- Background particles -->
-  <div id="particles-js" aria-hidden="true"></div>
 
-  <!-- Theme toggle -->
-  <button class="theme-toggle-btn night" id="themeBtn" aria-label="تبديل الوضع">
-    <i class="fa-solid fa-moon"></i>
-  </button>
-
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <!-- غير اللينك ده للّوجو بتاعك -->
-       
-        <div>
-          <h1 class="neon-title">استنى علينا شوية ✨</h1>
-          <div class="subtitle">الأسئلة بتترفع على السيرفر دلوقتي… متقلقش 😄</div>
-        </div>
-      </div>
+  <!-- الصفحة الرئيسية -->
+  <div id="homePage">
+    <header class="site-header">
+      <h1 class="neon-title">ست الكل</h1>
+      <div class="slogan">برعاية منصة ست الكل</div>
     </header>
 
-    <main class="grid">
-      <!-- Big status card -->
-      <section class="card-section hero">
-        <div class="hero-badge">
-          <i class="fa-solid fa-rocket"></i>
-          <span>وضع التحديث شغّال</span>
-          <span class="dots" aria-hidden="true">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          </span>
+    <div class="cards-wrapper">
+      <h2 class="section-title"> خاص ب تيم مذاكرة</h2>
+      <div class="cards-container">
+        <div class="card-section locked" onclick="startQuiz('quiz1')">
+          <div class="card-content">
+            <i class="fas fa-brain"></i>
+            <h3>🟢 المستوى: مبتدئ</h3>
+            <p>"يا هادي.. بنسخن بس"<br><small>اطمئنان تام – مفيش أي ضغط، مجرد دردشة بنعرف بيها إنت واقف فين.</small></p>
+          </div>
+          <div class="locked-badge"><i class="fas fa-lock"></i> خاص</div>
         </div>
 
-        <h2>بنجهّز الأسئلة وبنرفعها… علشان تجربتك تبقى تمام 💪🔥</h2>
-        <p>
-          الصفحة دي بديلة مؤقتًا بدل صفحة الأسئلة… أول ما التحميل يخلص هتلاقي كل حاجة رجعت طبيعي 😎
-          <br/>لو أنت داخل تحل/تراجع: خدلك نفس كده وارجع كمان شوية 🚶‍♂️☕
-        </p>
-
-        <div class="progress" role="progressbar" aria-label="تحميل" aria-valuetext="جاري الرفع">
-          <div class="bar"></div>
+        <div class="card-section locked" onclick="startQuiz('quiz2')">
+          <div class="card-content">
+            <i class="fas fa-fire"></i>
+            <h3>🟠 المستوى: متوسط</h3>
+            <p>"شد حيلك.. دخلنا في الجد"<br><small>تحدي لطيف – إنت خلاص عديت الأساسيات، وريني بقى شطارتك في التفكير.</small></p>
+          </div>
+          <div class="locked-badge"><i class="fas fa-lock"></i> خاص</div>
         </div>
 
-        <div class="actions">
-          <button class="btn btn-primary" id="retryBtn" type="button">
-            <i class="fa-solid fa-rotate-right"></i>
-            جرّب تاني
-          </button>
-          <!-- غير لينك الصفحة الرئيسية هنا -->
-         <a class="btn btn-ghost" href="../index.html" rel="nofollow">
-  <i class="fa-solid fa-house"></i>
-  الصفحة الرئيسية
-</a>
-      </section>
-
-      <!-- Side cards -->
-      <aside class="mini-grid">
-        <section class="card-section">
-          <div class="card-title">
-            <span>إيه اللي بيحصل؟ 🤔</span>
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <div class="card-section locked" onclick="startQuiz('quiz3')">
+          <div class="card-content">
+            <i class="fas fa-dragon"></i>
+            <h3>🔴 المستوى: متقدم</h3>
+            <p>"اربط الحزام.. دي للوحوش بس!"<br><small>تحدي تقيل – الأسئلة هنا محتاجة تركيز عالي وفهم من وراء السطور.</small></p>
           </div>
-          <ul class="list">
-            <li>بنرفع/نحدّث بنك الأسئلة على السيرفر 🚀</li>
-            <li>بنراجع الترتيب علشان مفيش سؤال يطير 😅</li>
-            <li>بنظبط الأداء علشان الموقع يفتح أسرع ⚡</li>
-          </ul>
-        </section>
+          <div class="locked-badge"><i class="fas fa-lock"></i> خاص</div>
+        </div>
+      </div>
 
-        <section class="card-section">
-          <div class="card-title">
-            <span>هترجع إمتى؟ ⏳</span>
-            <i class="fa-solid fa-clock"></i>
+      <h2 class="section-title">قسم الاختبار المفتوح</h2>
+      <div class="cards-container">
+        <div class="card-section" onclick="startQuiz('quiz4')">
+          <div class="card-content">
+            <i class="fas fa-list-check"></i>
+            <h3>🟣 بنك الأسئلة المفتوح (150 سؤال)</h3>
+            <p>مفتوح للجميع .</p>
           </div>
-          <ul class="list">
-            <li>أول ما الرفع يخلص… الصفحة هترجع لوحدها 🙌</li>
-            <li>لو اتأخرت: دوس “جرّب تاني” بعد شوية 🔁</li>
-            <li>ولو لسه: كلم الدعم وهنحلها سوا ❤️</li>
-          </ul>
-        </section>
+        </div>
+      </div>
+    </div>
+  </div> <!-- ✅ ده كان ناقص: إغلاق homePage -->
 
-        <section class="card-section">
-          <div class="card-title">
-            <span>ممكن تعمل إيه دلوقتي؟ 😎</span>
-            <i class="fa-solid fa-lightbulb"></i>
-          </div>
-          <ul class="list">
-            <li>حدّث الصفحة بعد دقيقة ولا اتنين 🔄</li>
-            <li>ارجع للرئيسية وشوف الأقسام التانية 🧭</li>
-            <li>سيبها مفتوحة—هتشتغل أول ما تخلص 🟢</li>
-          </ul>
-        </section>
-      </aside>
-    </main>
-
-    <footer>
-      <small>© <span id="year"></span> — الصفحة دي معمولة علشان تحافظ على تجربة لطيفة وقت الرفع 😄✨</small>
-      <!-- عدّل اسمك/براندك -->
-      <a class="designer-btn" href="#" onclick="return false;">
-        معمول بحُب 🤍
+  <!-- صفحة الأسئلة -->
+  <div id="quizContainer" class="quiz-container">
+    <div class="question-card">
+      <a href="#" class="back-to-home-btn" onclick="goHome(); return false;">
+        <i class="fas fa-arrow-right"></i> العودة للرئيسية
       </a>
-    </footer>
+
+      <div class="question-counter">
+        📝 السؤال <span id="qNumber">1</span> من <span id="qTotal">5</span>
+      </div>
+
+      <div id="qText" class="question-text">جارٍ التحميل...</div>
+      <div id="optionsContainer" class="options"></div>
+      <div id="explanation" class="explanation"></div>
+
+      <button id="btnNext" class="btn-next" onclick="nextQuestion()">التالي</button>
+    </div>
   </div>
 
-  <!-- Particles.js -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- صفحة النتائج -->
+  <div id="resultsContainer" class="results-container">
+    <div class="result-card">
+      <h2 id="resultQuizTitle">نتائجك في اختبار ...</h2>
+      <div id="resultsList"></div>
+    </div>
+  </div>
 
-  <script>
-    // سنة الفوتر
-    document.getElementById("year").textContent = new Date().getFullYear();
+  <footer>
+    <div></div>
+    <a href="../index.html" target="_blank" class="designer-btn">
+      <i class="fas fa-code"></i> منصة ست الكل
+    </a>
+  </footer>
+<script>
+  // ================ البيانات (اختبارات) ================
+  const quizzes = {
+    quiz1: {
+      title: "علم النفس التربوي",
+      locked: true,
+      questions: [
+        {
+          q: "تُعتبر البذرة الأولى لعلم نفس النمو موجودة في:",
+          options: ["الفلسفة والتعاليم الدينية القديمة", "التجارب المعملية في القرن العشرين", "الدراسات السلوكية عند واطسون", "المناهج الوضعية فقط"],
+          correct: 0,
+          explanation: "ورد في المحتوى أن البذرة الأولى كانت في التعاليم الدينية والتأملات الفلسفية القديمة."
+        },
+        {
+          q: "في المرحلة الجنينية، تُشكّل طبقة الميزوديرم:",
+          options: ["الجلد والجهاز العصبي", "العضلات والعظام والقلب", "الجهاز الهضمي والرئتين", "المشيمة والحبل السري"],
+          correct: 1,
+          explanation: "المحتوى يوضح أن الميزوديرم: عضلات، عظام، قلب."
+        }
+        // كمّل باقي أسئلة quiz1...
+      ]
+    },
 
-    // زر "جرّب تاني"
-    document.getElementById("retryBtn").addEventListener("click", () => {
-      // لو عندك لينك صفحة الأسئلة الحقيقي حطه هنا بدل reload
-      location.reload();
-    });
+    quiz2: {
+      title: "علم نفس النمو",
+      locked: true,
+      questions: [
+        {
+          q: "أيٌّ من العبارات التالية يُعبّر بدقة عن مفهوم النمو المتكامل؟",
+          options: ["النمو يسير بسرعة ثابتة في جميع الجوانب", "التغير في جانب واحد يؤثر في الجوانب الأخرى", "كل مرحلة عمرية مستقلة تمامًا", "النمو الجسدي لا علاقة له بالانفعالي"],
+          correct: 1,
+          explanation: "النمو متكامل: التغيّر في جانب بيأثّر في الجوانب التانية."
+        }
+        // كمّل باقي أسئلة quiz2...
+      ]
+    },
 
-    // Theme toggle (ليل/نهار) + حفظ في localStorage
-    const root = document.documentElement;
-    const btn = document.getElementById("themeBtn");
-    const savedTheme = localStorage.getItem("themeMode");
+    quiz3: {
+      title: "علم نفس النمو",
+      locked: true,
+      questions: [
+        {
+          q: "في دراسة طولية على تدخل مبكر... أي تفسير الأكثر دعمًا؟",
+          options: ["تأثير التعويض المؤقت فقط", "فشل في تطبيق المنهج التجريبي", "تأثير الاستعداد الوراثي تغلّب مع النضج", "خطأ في اختيار أدوات القياس"],
+          correct: 2,
+          explanation: "النمط يتوافق مع تفاعل الوراثة والبيئة وأن تأثير الوراثة قد يظهر بقوة مع النضج."
+        }
+        // كمّل باقي أسئلة quiz3...
+      ]
+    },
 
-    function setTheme(mode) {
-      const isDay = mode === "day";
-      root.classList.toggle("day-mode", isDay);
+    // ✅ الاختبار المفتوح للجميع
+    quiz4: {
+      title: "بنك الأسئلة المفتوح (150 سؤال)",
+      locked: false,
+    questions: [
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"التعليم\" وفق المحتوى؟",
+        options: [
+          "تغيّر دائم في السلوك",
+          "ما يُقدّمه النظام أو المؤسسة",
+          "ما يُمارسه المعلم داخل الفصل",
+          "عملية بناء المعرفة"
+        ],
+        correct: 1,
+        explanation: "التعليم = ما يُقدّمه النظام/المؤسسة، بينما التدريس = ما يُمارسه المعلم — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي من التالي يُصنّف كـ\"تغذية راجعة فورية\"؟",
+        options: [
+          "تصحيح بعد أسبوع",
+          "تعليق أثناء الأداء مباشرة",
+          "تقرير نهائي",
+          "رسالة بريد إلكتروني"
+        ],
+        correct: 1,
+        explanation: "التغذية الراجعة في التدريس المصغر فورية لتمكين التعديل الفوري — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما عدد المتعلّمين الموصى بهم في التدريس المصغر؟",
+        options: [
+          "1–2",
+          "5–10",
+          "20–30",
+          "40+"
+        ],
+        correct: 1,
+        explanation: "5–10 أشخاص لتسهيل الملاحظة والتفاعل — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "أي فعل ينتمي لمستوى \"التذكّر\" في بلوم؟",
+        options: [
+          "يشرح",
+          "يحلّل",
+          "يذكر",
+          "يبتكر"
+        ],
+        correct: 2,
+        explanation: "أفعال التذكّر: يذكر، يعرّف، يعدد — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما دور \"المتعلم\" في الموقف التعليمي الجيد؟",
+        options: [
+          "متلقي سلبي",
+          "مشارك فعّال ومُكتشف",
+          "مُقيّم فقط",
+          "مراقب"
+        ],
+        correct: 1,
+        explanation: "في الموقف الجيد، المتعلم = مشارك فعّال، مُكتشف، مُعبّر — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"الوسائط التعليمية\"؟",
+        options: [
+          "الأهداف",
+          "قنوات نقل الرسالة (سمعية – بصرية – رقمية)",
+          "المحتوى فقط",
+          "نتائج الامتحانات"
+        ],
+        correct: 1,
+        explanation: "الوسائط = قنوات النقل، بينما الوسائل = الأدوات — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي من التالي يُعتبر \"خطأً شائعًا في الخاتمة\"؟",
+        options: [
+          "تلخيص النقاط",
+          "طرح سؤال تطبيقي",
+          "إنهاء فجائي دون تلخيص",
+          "ربط بالحياة الواقعية"
+        ],
+        correct: 2,
+        explanation: "من الأخطاء: الإنهاء المفاجئ دون تلخيص أو قياس فهم — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"التمهيد\" في مهارة التهيئة؟",
+        options: [
+          "مراجعة امتحان سابق",
+          "إدخال الطالب في موضوع الدرس عبر ربط أو مشكلة",
+          "شرح المحتوى بالكامل",
+          "توزيع الواجبات"
+        ],
+        correct: 1,
+        explanation: "التمهيد = إدخال في الموضوع، بينما التهيئة = استعداد ذهني — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التعلم النشط\"؟",
+        options: [
+          "الاستماع لشرح 10 دقائق",
+          "كتابة \"فكرة فهمتها + سؤال يحيرني\" ثم تبادل مع زميل",
+          "حفظ فقرة من الكتاب",
+          "مشاهدة فيديو دون تفاعل"
+        ],
+        correct: 1,
+        explanation: "التعلم النشط = مشاركة مباشرة (تدوين، تبادل، تصنيف) — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "ما دور \"التغذية الراجعة\" في التدريس المصغر؟",
+        options: [
+          "إنهاء التدريب",
+          "دفع نحو التحسين وبناء الثقة",
+          "منح شهادة مباشرة",
+          "فصل المتدربين الضعفاء"
+        ],
+        correct: 1,
+        explanation: "التغذية الراجعة = دعم وتحسين، لا عقاب — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"هدف إجرائي\" جيد؟",
+        options: [
+          "أن يفهم الطالب مفهوم الجاذبية",
+          "أن يشرح المعلم قانون نيوتن",
+          "أن يحسب الطالب قوة الجاذبية بدقة 85%",
+          "أن يحب الطالب الفيزياء"
+        ],
+        correct: 2,
+        explanation: "الهدف الإجرائي: فعل سلوكي (يحسب) + ناتج + معيار (دقة 85%) — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما مبدأ \"الأمان النفسي\" في التدريس المصغر؟",
+        options: [
+          "الخوف من الأخطاء",
+          "التعلّم من الأخطاء دون خوف",
+          "المنافسة القاسية",
+          "التقييم بالمقارنة"
+        ],
+        correct: 1,
+        explanation: "الخطأ = فرصة تحسين، لا فشل — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر فشلًا في \"ربط النظرية بالتطبيق\"؟",
+        options: [
+          "تدريب مهارة \"طرح الأسئلة\" مع تطبيق أفعال بلوم",
+          "شرح تصنيف بلوم نظريًّا دون تطبيق في أسئلة حقيقية",
+          "تسجيل الأداء وتحليله",
+          "استخدام التغذية الراجعة 2+2"
+        ],
+        correct: 1,
+        explanation: "روح التدريس المصغر = تحويل النظرية إلى أداء. الشرح النظري دون تطبيق = فصل غير مقبول — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في جملة الهدف: \"أن يفهم الطالب أهمية التعاون\"؟",
+        options: [
+          "استخدام فعل \"يفهم\" غير قابل للملاحظة",
+          "عدم تحديد المعيار",
+          "التركيز على المعلم",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "الهدف الإجرائي يجب أن: (1) يركّز على المتعلم، (2) يستخدم فعلًا سلوكيًّا، (3) يُحدد المعيار — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم الشامل\" حقًّا؟",
+        options: [
+          "اختبار تحريري فقط",
+          "ملاحظة أثناء النشاط فقط",
+          "اختبار تحريري + ملاحظة + تقييم ذاتي للقيم",
+          "تقرير المشرف فقط"
+        ],
+        correct: 2,
+        explanation: "التقويم الشامل = معرفي + مهاري + وجداني — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"الاختبار القبلي\" ليس تقييمًا تهديديًّا؟",
+        options: [
+          "لأنه لا يُحتسب في الدرجة",
+          "لأنه يُستخدم لتشخيص المستوى وتعديل الخطة",
+          "لأنه سهل",
+          "لأنه اختياري"
+        ],
+        correct: 1,
+        explanation: "القبلي = أداة تشخيصية، وليس حكمًا — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء استخدام الزمن\" في درس مصغر؟",
+        options: [
+          "تمهيد (1 د) + عرض (4 د) + تطبيق (2 د)",
+          "شرح (7 د) دون تفاعل أو خاتمة",
+          "تمهيد (2 د) + عرض (3 د) + خاتمة (2 د)",
+          "تطبيق (5 د) + خاتمة (2 د)"
+        ],
+        correct: 1,
+        explanation: "الدرس المصغر يحتاج توازنًا. الشرح الطويل دون تفاعل = إخلال بالبنية — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التعلم القائم على المشكلات\" مع طلاب معتادين على التلقي؟",
+        options: [
+          "صعوبة إيجاد مشكلات",
+          "مقاومة الطلاب لتحمل مسؤولية التعلّم",
+          "قلة الوسائل",
+          "ضيق الوقت فقط"
+        ],
+        correct: 1,
+        explanation: "PBL يطلب استقلالية ومسؤولية — التحدي الأعمق نفسي-تربوي — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"رؤية تربوية متكاملة\"؟",
+        options: [
+          "\"الهدف هو اجتياز الامتحان\"",
+          "\"الهدف هو بناء متعلم واعٍ، قادر على التفكير والتكيف\"",
+          "\"الهدف هو إكمال المنهج\"",
+          "\"الهدف هو رضا الإدارة\""
+        ],
+        correct: 1,
+        explanation: "الرؤية المتكاملة = بناء الإنسان، لا إنجاز مهام — الفصل الأول والثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"إعطاء واجب تطبيقي\" دون ربطه بالهدف؟",
+        options: [
+          "لأنه يصبح نشاطًا شكليًّا لا يُعزّز الفهم",
+          "لأنه يُثقل كاهل الطالب",
+          "لأنه يُقلل من وقت اللعب",
+          "لأنه قد لا يُنفّذ"
+        ],
+        correct: 0,
+        explanation: "الواجب يجب أن يكون امتدادًا طبيعيًّا للهدف — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"التقييم الذاتي\" جزءًا من تمكين الطالب؟",
+        options: [
+          "لأنه يُقلل من دور المعلم",
+          "لأنه يُدرّبه على تحمل مسؤولية تعلّمه",
+          "لأنه يُسهّل التصحيح",
+          "لأنه يُرضي أولياء الأمور"
+        ],
+        correct: 1,
+        explanation: "التقييم الذاتي = جوهر التعلّم الذاتي — الفصل الأول والخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في التغذية الراجعة\"؟",
+        options: [
+          "\"استخدامك للوسيلة كان ممتازًا، لكنه لم يُستخدم في الوقت المناسب\"",
+          "\"أدائك ضعيف جدًّا\"",
+          "\"تهيئتك أثارت الانتباه، وتحقيق الهدف يحتاج ربطًا أوضح\"",
+          "\"أعجبتني لغة جسدك\""
+        ],
+        correct: 1,
+        explanation: "\"ضعيف جدًّا\" = حكم عام، غير محدد — لا يفي بمعايير التغذية البنّاءة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"الامتحان النهائي\" وحده لا يكفي؟",
+        options: [
+          "لأنه لا يعطي فرصة للتحسين أثناء التعلّم",
+          "لأنه يُسبب ضغطًا نفسيًّا",
+          "لأنه قد لا يعكس التعب الفعلي",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التقويم الناجح = قبلي + بنائي + ختامي — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"الاختلاف بين الاستراتيجية والطريقة\" بدقة؟",
+        options: [
+          "\"استخدمتُ مناقشة كاستراتيجية\"",
+          "\"استخدمتُ التعلم التعاوني كاستراتيجية، ومناقشة كطريقة ضمنها\"",
+          "\"استخدمتُ فيديو كاستراتيجية\"",
+          "\"استخدمتُ اختبار كطريقة\""
+        ],
+        correct: 1,
+        explanation: "الاستراتيجية = خطة عامة (تعاون)، الطريقة = أسلوب مباشر (مناقشة) — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التدرّج في الصعوبة\" مع طلاب متباينين؟",
+        options: [
+          "صعوبة تصميم مهام تبدأ بسيطة وتنتهي معقدة للجميع",
+          "مقاومة الطلاب للمستوى السهل",
+          "ضيق الوقت",
+          "جميع ما سبق، لكن الحل هو المهام المرنة"
+        ],
+        correct: 3,
+        explanation: "التدرّج مطلوب، لكن مع الفروق، الحل = المهام المرنة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الربط بين المفاهيم\" مؤشرًا على التعلّم العميق؟",
+        options: [
+          "لأنه يُسهّل الحفظ",
+          "لأنه يُظهر بناء شبكة معرفية مترابطة",
+          "لأنه يُقلل من الجهد",
+          "لأنه يُرضي المعلم"
+        ],
+        correct: 1,
+        explanation: "التعلّم العميق = تكامل المفاهيم في بنية معرفية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء فهم لدور المعلم في التعلم الفعّال\"؟",
+        options: [
+          "العمل كمُيسّر ومرشد",
+          "العمل كمصدر وحيد للمعرفة",
+          "تشجيع الطلاب على الاستكشاف",
+          "تقديم تغذية راجعة بنّاءة"
+        ],
+        correct: 1,
+        explanation: "في التعلم الفعّال، المعلم مُيسّر، وليس ناقل معلومات — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"تقسيم الطلاب لمجموعات عشوائية\" في التعاون؟",
+        options: [
+          "لأنه قد يُهمش الضعفاء أو يُهيمن المتفوقون",
+          "لأنه يُسرّع العمل",
+          "لأنه يُقلل من الجهد",
+          "لأنه مألوف"
+        ],
+        correct: 0,
+        explanation: "المجموعات الفعّالة = متنوّعة ومتوازنة مع أدوار محددة — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم المرتبط بالأهداف\"؟",
+        options: [
+          "اختبار عام لا يغطي أهداف الدرس",
+          "أسئلة تقيس كل هدف إجرائي مُعلن",
+          "امتحان من كتاب خارجي",
+          "تقييم سلوكي فقط"
+        ],
+        correct: 1,
+        explanation: "التقويم الجيد = مرتبط بالأهداف — كل سؤال يقيس هدفًا — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"التحفيز الداخلي\" أهم من \"الخارجي\"؟",
+        options: [
+          "لأنه يدوم بعد انتهاء الموقف التعليمي",
+          "لأنه أرخص",
+          "لأنه أسرع",
+          "لأنه أسهل"
+        ],
+        correct: 0,
+        explanation: "التحفيز الداخلي = أساس التعلّم مدى الحياة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في التهيئة\"؟",
+        options: [
+          "سؤال مثير مرتبط بالواقع",
+          "سؤال مثير لا علاقة له بموضوع الدرس",
+          "ربط بالدرس السابق",
+          "استخدام صورة داعمة"
+        ],
+        correct: 1,
+        explanation: "التهيئة يجب أن تكون مرتبطة مباشرة بالهدف — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الملاحظة فقط\" غير كافٍ؟",
+        options: [
+          "لأنها ذاتية وقد تتأثر بالتحيّز",
+          "لأنها لا تُغطي الجوانب المعرفية العميقة",
+          "لأنها لا تُوثّق التعلّم على المدى الطويل",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التقويم الفعّال = تعدد الأدوات — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التكامل بين التدريس والتقويم\"؟",
+        options: [
+          "تدريس → امتحان منفصل",
+          "تضمين أنشطة تقويم بنائي خلال الدرس",
+          "تقويم في نهاية الفصل فقط",
+          "اختبار قبلي فقط"
+        ],
+        correct: 1,
+        explanation: "التكامل = جعل التقويم جزءًا عضويًّا من التدريس — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"الأسئلة المفتوحة\" مع طلاب معتادين على الجاهز؟",
+        options: [
+          "مقاومتهم للتفكير وطلب \"الإجابة الصحيحة\"",
+          "صعوبة تصميم الأسئلة",
+          "ضيق الوقت",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التحدي النفسي-التربوي: تغيير ثقافة \"الإجابة الوحيدة\" — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"سوء استخدام تصنيف بلوم\"؟",
+        options: [
+          "استخدام \"يذكر\" لمستوى التذكّر",
+          "استخدام \"يقيّم\" لسؤال اختيار من متعدد",
+          "استخدام \"يصمم\" لمستوى الإبداع",
+          "استخدام \"يحلّل\" لسؤال مقارنة"
+        ],
+        correct: 1,
+        explanation: "\"يقيّم\" يتطلب تبريرًا، واختيار من متعدد لا يسمح بذلك — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"التغذية الراجعة المتأخرة\" أقل فعالية؟",
+        options: [
+          "لأن الذاكرة تتلاشى، والفرصة للتعديل تضيع",
+          "لأنها تُثقل كاهل المعلم",
+          "لأنها تُقلل من الدافعية",
+          "جميع ما سبق"
+        ],
+        correct: 0,
+        explanation: "الفعالية تعتمد على التوقيت: كلما تأخرت، قلّ تأثيرها — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في إدارة الصف\"؟",
+        options: [
+          "قواعد معلنة ومطبقة",
+          "معالجة السلوك بهدوء وخصوصية",
+          "معاقبة طالب علنًا لسلوك عدواني",
+          "استخدام تعزيز إيجابي محدّد"
+        ],
+        correct: 2,
+        explanation: "المعالجة العلنية = إهانة. الحل: لقاء فردي — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"التمييز بين التعليم والتدريس\" ضروريًّا؟",
+        options: [
+          "لأنه يساعده على فهم أدواره بدقة",
+          "لأنه يُسهّل كتابة التقارير",
+          "لأنه مطلوب في الامتحانات",
+          "لأنه يُقلل من الجهد"
+        ],
+        correct: 0,
+        explanation: "الفهم الدقيق للأدوار يمنع الالتباس بين المسؤولية المؤسسية والتدريسية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التأمل كممارسة مهنية\"؟",
+        options: [
+          "كتابة: \"الدرس نجح\"",
+          "تحليل: \"التفاعل كان منخفضًا لأن الأسئلة كانت مغلقة، فسأستخدم مفتوحة\"",
+          "تسجيل الدرجة فقط",
+          "مقارنة الأداء بالزملاء"
+        ],
+        correct: 1,
+        explanation: "الممارسة التأملية = تحليل سببي + قرار تحسين — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"الاعتماد على الكتاب المدرسي كمصدر وحيد\"؟",
+        options: [
+          "لأنه لا يراعي الفروق الفردية",
+          "لأنه لا يربط بالواقع",
+          "لأنه قد لا يواكب المستجدات",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "المصادر المتعددة = شرط لـ واقعية، مرونة، وملاءمة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء فهم لمعنى التقويم البنائي\"؟",
+        options: [
+          "استخدام اختبار قصير أثناء الدرس لتعديل الشرح",
+          "منح درجة رمزية بعد كل نشاط",
+          "ملاحظة أداء وتقديم تغذية فورية",
+          "استخدام ملف الإنجاز لتتبع التقدم"
+        ],
+        correct: 1,
+        explanation: "التقويم البنائي = دعم وتحسين، وليس منح درجات رمزية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التعلم القائم على المشاريع\" في زمن محدود؟",
+        options: [
+          "صعوبة إنجاز مشروع كامل في حصة",
+          "الحل هو مشاريع مصغّرة أو مراحل",
+          "مقاومة الإدارة",
+          "جميع ما سبق، ولكن (B) هو الحل التربوي"
+        ],
+        correct: 3,
+        explanation: "التحدي واقعي، لكن المرونة = مشاريع مصغّرة — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التكامل بين المجالات\" في الهدف؟",
+        options: [
+          "\"أن يحسب الطالب المساحة\"",
+          "\"أن يقدّر الطالب أهمية الدقة (وجداني) ويحسبها بدقة 90% (معرفي)\"",
+          "\"أن يشرح المعلم قانون المساحة\"",
+          "\"أن يرسم الطالب المستطيل\""
+        ],
+        correct: 1,
+        explanation: "التكامل = دمج أهداف من مجالين أو أكثر — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"السؤال المغلق\" لا يُنمّي التفكير النقدي؟",
+        options: [
+          "لأنه يطلب إجابة واحدة جاهزة",
+          "لأنه سهل",
+          "لأنه يوفر الوقت",
+          "لأنه مألوف"
+        ],
+        correct: 0,
+        explanation: "التفكير النقدي يتطلب تحليل، تبرير، تقييم — والسؤال المغلق لا يتيح ذلك — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في استخدام الوسائل\"؟",
+        options: [
+          "عرض فيديو بعد الشرح لترسيخ الفهم",
+          "عرض فيديو قبل طرح السؤال التفاعلي",
+          "عرض فيديو دون ربطه بالهدف أو طرح أسئلة عليه",
+          "استخدام الصورة كتمهيد"
+        ],
+        correct: 2,
+        explanation: "الوسيلة دون تفاعل أو ربط = عرض تجميلي، لا تربوي — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"التركيز على الخطأ\" بدل \"السلوك\" خللًا؟",
+        options: [
+          "لأنه يُضعف ثقة الطالب بنفسه",
+          "لأنه لا يُعلّم السلوك البديل",
+          "لأنه يُحوّل البيئة إلى مناخ عقابي",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التركيز على السلوك (ليس الشخص) يحافظ على الكرامة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم العادل\" مع طالب ذي احتياجات خاصة؟",
+        options: [
+          "تطبيق نفس المعايير الصارمة",
+          "تعديل المعايير مع الحفاظ على جوهر الهدف",
+          "إعفاؤه من التقويم",
+          "منحه درجة أعلى تلقائيًّا"
+        ],
+        correct: 1,
+        explanation: "العدالة = تكافؤ الفرص، وليس المساواة المطلقة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التأمل الذاتي\" مع متدربين حديثي التخرج؟",
+        options: [
+          "صعوبة الابتعاد عن الذاتية والتحيّز",
+          "نقص الخبرة في التحليل",
+          "الحاجة لتدريب مسبق على أدوات التأمل",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التأمل مهارة تُكتسب، وتحتاج دعمًا وتدرّبًا — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"سوء فهم لفلسفة التدريس المصغر\"؟",
+        options: [
+          "\"هو تدريب على مهارات محددة في بيئة آمنة\"",
+          "\"هو اختبار نهائي للأداء\"",
+          "\"هو جسر بين النظرية والممارسة\"",
+          "\"هو فرصة للتعلّم من الأخطاء\""
+        ],
+        correct: 1,
+        explanation: "التدريس المصغر = تمرين تدريبي، ليس امتحانًا — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"إعطاء تغذية راجعة جماعية\" بعد أداء مصغر؟",
+        options: [
+          "لأنها لا تُحدّد نقاط القوة والتحسين لكل متدرب",
+          "لأنها تُوفر الوقت",
+          "لأنها تُقلل من الجهد",
+          "لأنها مألوفة"
+        ],
+        correct: 0,
+        explanation: "التغذية الفعّالة يجب أن تكون فردية ومحددة — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"التكامل بين التكنولوجيا والتقويم\"؟",
+        options: [
+          "استخدام السبورة الذكية للعرض فقط",
+          "تسجيل الأداء وتحليله ذاتيًّا عبر الفيديو",
+          "عرض فيديو تعليمي",
+          "استخدام تطبيق للإجابات"
+        ],
+        correct: 1,
+        explanation: "التكامل = استخدام التكنولوجيا كأداة تحليل وتقويم — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الذاكرة\" في شرح المعلم خطرًا؟",
+        options: [
+          "لأنه قد يؤدي إلى أخطاء معرفية",
+          "لأنه لا يُظهر التحضير الجيد",
+          "لأنه يُقلل من المصداقية",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التخطيط المسبق = شرط لـ الدقة، التنظيم، والملاءمة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقييم كعملية مستمرة\"؟",
+        options: [
+          "تقويم في نهاية كل وحدة فقط",
+          "تقويم قبلي + بنائي (ملاحظة، ملف إنجاز) + ختامي",
+          "اختبار نصفي ونهائي",
+          "تقييم ذاتي مرة واحدة"
+        ],
+        correct: 1,
+        explanation: "التقويم المستمر = تغطية جميع المراحل — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التعلم التعاوني\" مع ثقافة فردية سائدة؟",
+        options: [
+          "مقاومة الطلاب لمشاركة الأفكار",
+          "اعتقادهم أن التعاون = غش",
+          "نقص مهارات العمل الجماعي",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التحدي ثقافي ومهاري معًا — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"رؤية تربوية ضيقة\"؟",
+        options: [
+          "\"الهدف هو تنمية الإنسان المتكامل\"",
+          "\"الهدف هو التفوق في الامتحانات\"",
+          "\"الهدف هو بناء متعلم قادر على حل المشكلات\"",
+          "\"الهدف هو غرس القيم\""
+        ],
+        correct: 1,
+        explanation: "الرؤية الضيقة تختزل التعليم في التحصيل الآني — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"الاختبارات الموحدة\" قد لا تعكس جودة التدريس؟",
+        options: [
+          "لأنها لا تقيس الفروق الفردية",
+          "لأنها لا تقيس الجوانب الوجدانية والمهارية",
+          "لأنها قد لا ترتبط بأهداف المعلم المحلية",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "جودة التدريس تُقاس بـ تحقيق الأهداف المحددة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء استخدام الزمن في التمهيد\"؟",
+        options: [
+          "تمهيد (دقيقتين) بسؤال مثير وصورة",
+          "تمهيد (5 دقائق) بسرد قصصي غير مرتبط",
+          "تمهيد (دقيقة) بربط بالسابق",
+          "تمهيد (دقيقتين) بمشكلة واقعية"
+        ],
+        correct: 1,
+        explanation: "التمهيد يجب أن يكون مختصرًا ومرتبطًا — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الخبرة فقط\" غير كافٍ؟",
+        options: [
+          "لأن الخبرة دون تأمل تُكرر الأخطاء",
+          "لأنها لا تواكب المستجدات التربوية",
+          "لأنها قد تُرسّخ ممارسات خاطئة",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "الخبرة + التأمل النقدي = أساس التطوير — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم كجزء من التعلّم\"؟",
+        options: [
+          "امتحان منفصل بعد الدرس",
+          "نشاط تطبيقي يتضمن تقييم الأقران أثناء التنفيذ",
+          "اختبار تحريري في نهاية الأسبوع",
+          "تقرير مشرف فقط"
+        ],
+        correct: 1,
+        explanation: "التقويم كتعلّم = جعله تجربة تفاعلية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"تصميم خطة درس دون تحليل للمتعلّمين\"؟",
+        options: [
+          "لأنها قد لا تتناسب مع مستواهم أو اهتماماتهم",
+          "لأنها تُضيع الوقت",
+          "لأنها تُقلل من الجهد",
+          "لأنها مطلوبة شكليًّا"
+        ],
+        correct: 0,
+        explanation: "تحليل المتعلّمين = أساس الملاءمة والمرونة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في التغذية الراجعة من المشرف\"؟",
+        options: [
+          "ربط الملاحظات بمعايير مهنية محددة",
+          "إعطاء توجيهات عامة مثل \"حسّن أداءك\"",
+          "مناقشة نقاط القوة أولًا",
+          "طرح أسئلة تأملية"
+        ],
+        correct: 1,
+        explanation: "\"حسّن أداءك\" = غامض. التغذية الفعّالة محددة وقابلة للتنفيذ — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الربط بين التدريس والتقويم\" جوهر الجودة؟",
+        options: [
+          "لأنه يضمن أن ما يُدرّس هو ما يُقاس",
+          "لأنه يقلل من الجهد",
+          "لأنه يُسرّع التصحيح",
+          "لأنه مطلوب إداريًّا"
+        ],
+        correct: 0,
+        explanation: "الانسجام بين التدريس والتقويم = شرط لـ صدق التقويم — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"الاختلاف بين التقويم والقياس\" بدقة؟",
+        options: [
+          "\"الدرجة: 8/10\" = قياس، \"مستواه جيد جدًّا\" = تقييم",
+          "\"الدرجة: 8/10\" = تقويم",
+          "\"مستواه جيد\" = قياس",
+          "لا فرق"
+        ],
+        correct: 0,
+        explanation: "القياس = كمي، التقييم = تفسير، التقويم = عملية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"الأسئلة ذات المستويات العليا\" مع طلاب ضعاف؟",
+        options: [
+          "صعوبة صياغة أسئلة تبدأ من مستواهم وتصعد تدريجيًّا",
+          "اعتقاد المعلم أنهم غير قادرين",
+          "نقص التدريب على التمايز",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التحدي معرفي ونفسي ومهني — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"سوء فهم لدور التكنولوجيا\"؟",
+        options: [
+          "\"التكنولوجيا أداة لتعزيز التفاعل والتحليل\"",
+          "\"التكنولوجيا بديل للمعلم\"",
+          "\"التكنولوجيا تُسهّل جمع بيانات التقويم\"",
+          "\"التكنولوجيا تُثري المحتوى\""
+        ],
+        correct: 1,
+        explanation: "التكنولوجيا = أداة داعمة، وليس بديلًا — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"التقويم الذاتي\" قد يفشل دون تدريب؟",
+        options: [
+          "لأن الطلاب قد لا يعرفون معايير الجودة",
+          "لأنهم قد يكونون متساهلين أو قساة على أنفسهم",
+          "لأنهم قد لا يملكون لغة التقييم",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التقويم الذاتي مهارة تُدرّب — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"التكامل بين التهيئة والهدف\"؟",
+        options: [
+          "سؤال مثير عام",
+          "سؤال مثير مرتبط مباشرة بالهدف الإجرائي",
+          "سرد قصة طويلة",
+          "عرض فيديو دون ربط"
+        ],
+        correct: 1,
+        explanation: "التهيئة الفعّالة = بوابة الهدف — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الحدس\" في إدارة الصف خطرًا؟",
+        options: [
+          "لأنه قد يؤدي إلى قرارات غير عادلة",
+          "لأنه لا يُوثّق السلوك",
+          "لأنه يفتقر إلى المنهجية",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "الإدارة الفعّالة = منهجية + قواعد واضحة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم كحوار\"؟",
+        options: [
+          "منح درجة دون مناقشة",
+          "جلسة تغذية راجعة تفاعلية بين المعلم والطالب",
+          "تسجيل الدرجة في الدفتر",
+          "إرسال نتيجة عبر البريد"
+        ],
+        correct: 1,
+        explanation: "التقويم الحواري = تبادل آراء لاتخاذ قرارات تحسين — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"إعطاء واجب دون تغذية راجعة لاحقة\"؟",
+        options: [
+          "لأنه يُفقِد الواجب قيمته التعلّمية",
+          "لأنه يُثقل كاهل الطالب",
+          "لأنه يُقلل من الوقت",
+          "لأنه مطلوب إداريًّا"
+        ],
+        correct: 0,
+        explanation: "الواجب + تغذية راجعة = حلقة تعلّم مكتملة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء فهم لمعنى التعلّم\"؟",
+        options: [
+          "\"التعلّم تغيّر دائم في السلوك نتيجة خبرة\"",
+          "\"التعلّم حفظ المعلومات لاجتياز الامتحان\"",
+          "\"التعلّم بناء معرفي نشط\"",
+          "\"التعلّم عملية ذاتية\""
+        ],
+        correct: 1,
+        explanation: "تعريف B = تعلّم سطحي، بينما التعلّم الحقيقي = تغيير سلوكي دائم — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"التركيز على المحتوى\" بدل \"التعلّم\" خللًا؟",
+        options: [
+          "لأنه يجعل الطالب غائبًا عن العملية",
+          "لأنه يهمل الفروق الفردية",
+          "لأنه لا يقيس الفهم الحقيقي",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التدريس الحديث = التعلّم محور، وليس المحتوى — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التكامل بين التدريس المصغر والتطبيقي\"؟",
+        options: [
+          "التدريس المصغر في الكلية، ثم التطبيق في المدرسة دون رابط",
+          "استخدام نفس المهارات المدرّبة في المصغر في الصف الحقيقي",
+          "الاعتماد على التجربة فقط",
+          "تجاهل التدريس المصغر"
+        ],
+        correct: 1,
+        explanation: "جوهر المصغر = جسرًا بين النظرية والتطبيق — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التغذية الراجعة البنّاءة\" في ثقافة نقدية؟",
+        options: [
+          "مقاومة المتدربين للنقد",
+          "اعتبار التغذية هجومًا شخصيًّا",
+          "نقص ثقافة التعلّم من الأخطاء",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التحدي ثقافي، ويحتاج تغييرًا تدريجيًّا — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"رؤية تربوية متطورة\"؟",
+        options: [
+          "\"المعلم هو مصدر المعرفة\"",
+          "\"المعلم هو مُيسّر لبناء المعرفة\"",
+          "\"الطالب متلقي سلبي\"",
+          "\"الامتحان هو الغاية\""
+        ],
+        correct: 1,
+        explanation: "الرؤية المتطورة = المعلم مُيسّرًا، والطالب بانيًا نشطًا — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"الاختبارات التحريرية\" لا تكفي لتقويم المهارات؟",
+        options: [
+          "لأن المهارات تحتاج أداءً ملاحظًا",
+          "لأنها تقيس الحفظ فقط",
+          "لأنها لا تقيس السرعة والدقة في الأداء",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "تقويم المهارات = مراقبة الأداء (مثل: تركيب دائرة) — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"الخلل في التدرّج المعرفي\"؟",
+        options: [
+          "من التذكّر → الفهم → التطبيق",
+          "من التقييم → التذكّر → الإبداع",
+          "من البسيط → المعقّد",
+          "من المعلوم → المجهول"
+        ],
+        correct: 1,
+        explanation: "التدرّج الصحيح = من المستويات الدنيا إلى العليا — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"التأمل قبل الأداء\" ضروريًّا؟",
+        options: [
+          "لأنه يُقلل من القلق",
+          "لأنه يُساعد على توقع التحديات ووضع خطط بديلة",
+          "لأنه يُوفر الوقت",
+          "لأنه مطلوب"
+        ],
+        correct: 1,
+        explanation: "التأمل القبلي = تخطيط وقائي — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم كأداة تمكين\"؟",
+        options: [
+          "استخدام نتائج التقويم لوضع خطة تحسين فردية",
+          "تصنيف الطلاب حسب الدرجات",
+          "مقارنة الفصول",
+          "نشر النتائج"
+        ],
+        correct: 0,
+        explanation: "التمكين = جعل التقويم أداة لاتخاذ قرارات تطويرية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"الاعتماد على الزملاء فقط\" في التغذية الراجعة؟",
+        options: [
+          "لأنهم قد لا يملكون الخبرة الكافية",
+          "لأنهم قد يتأثرون بالعلاقات الشخصية",
+          "لأن التغذية تحتاج تكامل المصادر",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التغذية الفعّالة = ثلاثية المصدر — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء فهم لمعنى البيئة التعليمية\"؟",
+        options: [
+          "الاهتمام بترتيب المقاعد",
+          "الاهتمام بمناخ الاحترام",
+          "الاعتقاد أن البيئة = الديكور فقط",
+          "توفير وسائل متنوعة"
+        ],
+        correct: 2,
+        explanation: "البيئة = مادي + نفسي-اجتماعي — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الربط بين المجالات\" مؤشرًا على التخطيط الراقي؟",
+        options: [
+          "لأنه يعكس فهمًا شاملاً لأهداف التعليم",
+          "لأنه يُسهّل التقويم",
+          "لأنه يُقلل من الجهد",
+          "لأنه مطلوب"
+        ],
+        correct: 0,
+        explanation: "التخطيط الراقي = رؤية متكاملة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التكامل بين التدرّج والتمايز\"؟",
+        options: [
+          "نفس المهمة لجميع الطلاب",
+          "مهام متدرجة مع خيارات تناسب المستويات المختلفة",
+          "مهام صعبة للجميع",
+          "مهام سهلة للجميع"
+        ],
+        correct: 1,
+        explanation: "التدرّج + التمايز = مرونة تربوية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي في تطبيق \"التقويم الذاتي\" مع طلاب صغار؟",
+        options: [
+          "صعوبة فهم المعايير المجردة",
+          "الحل هو استخدام صور أو رموز بسيطة",
+          "نقص اللغة التقييمية",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التكيف مع العمر = جوهر التدريس — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"سوء استخدام التكنولوجيا\"؟",
+        options: [
+          "استخدام تطبيق تفاعلي لجمع تغذية راجعة فورية",
+          "عرض شرائح نصية طويلة دون تفاعل",
+          "تسجيل الأداء للتحليل",
+          "استخدام الواقع المعزّز لتوضيح مفهوم مجرّد"
+        ],
+        correct: 1,
+        explanation: "الشرائح النصية الطويلة = تحويل التكنولوجيا إلى سبورة إلكترونية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"الاختبارات الشهرية\" قد لا تكون تكوينية؟",
+        options: [
+          "لأنها قد تُستخدم للدرجات فقط دون تغذية راجعة",
+          "لأنها تُجرى شهريًّا",
+          "لأنها مكتوبة",
+          "لأنها إلزامية"
+        ],
+        correct: 0,
+        explanation: "التقويم التكويني = تغذية راجعة فورية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"التكامل بين التهيئة والختام\"؟",
+        options: [
+          "تمهيد بسؤال، واختتام بالعودة للإجابة بعد التعلّم",
+          "تمهيد بقصة، واختتام بامتحان",
+          "تمهيد بصورة، واختتام بواجب",
+          "تمهيد بفيديو، واختتام بصمت"
+        ],
+        correct: 0,
+        explanation: "التكامل = جعل الخاتمة إغلاقًا منطقيًّا للتمهيد — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الدرجات\" وحدها خيانة لمبدأ التقويم الشامل؟",
+        options: [
+          "لأنها تختزل التعلّم في رقم",
+          "لأنها تهمل الجوانب الوجدانية والمهارية",
+          "لأنها لا تعكس التطور خلال العملية",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التقويم الشامل = سرد تنموي، وليس رقمًا — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الموقف الذي يُجسّد \"فلسفة التدريس المصغر\" في أعمق صورها؟",
+        options: [
+          "أداء → تسجيل → تحليل ذاتي + تغذية → تعديل → إعادة → إتقان",
+          "أداء → منح درجة → الانتقال لمهارة أخرى",
+          "أداء → مناقشة عامة → إنهاء",
+          "أداء → تصحيح أخطاء فقط"
+        ],
+        correct: 0,
+        explanation: "هذا هو الدورة الذهبية للتدريس المصغر — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"الديناميكية\" في التدريس؟",
+        options: [
+          "الثبات على نموذج واحد",
+          "التأثير بخصائص المتعلمين والبيئة والوسائل",
+          "الاعتماد على الحفظ",
+          "تقليل التفاعل"
+        ],
+        correct: 1,
+        explanation: "من خصائص التدريس: ديناميكي — يتأثر بالسياق — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُستخدم \"التلخيص الجزئي\" بعد كل فكرة؟",
+        options: [
+          "لتقليل المحتوى",
+          "لمساعدة الطلاب على تنظيم المعلومات وترسيخ الفهم",
+          "لاختبار الحفظ",
+          "لإنهاء الدرس بسرعة"
+        ],
+        correct: 1,
+        explanation: "من معايير العرض الفعّال: تلخيص جزئي بعد كل فكرة رئيسية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُطبّق \"التكامل بين النظرية والتطبيق\"؟",
+        options: [
+          "شرح تصنيف بلوم دون تطبيق",
+          "استخدام أفعال بلوم في صياغة أسئلة حقيقية",
+          "حفظ التصنيف",
+          "اختبار نظري فقط"
+        ],
+        correct: 1,
+        explanation: "الربط النظري–التطبيقي = تطبيق النظرية في ممارسة فعلية — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في \"توزيع النظر بين 3 مناطق\" في القاعة؟",
+        options: [
+          "لتجنب التواصل البصري",
+          "لخلق إحساس بالمشاركة لجميع الطلاب",
+          "لاختبار الانتباه",
+          "لتقليل الجهد"
+        ],
+        correct: 1,
+        explanation: "من نصائح الأداء: وزّع النظر بين 3 مناطق لتعزيز الشمول — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم العادل\"؟",
+        options: [
+          "تفضيل الطلاب المقربين",
+          "الاعتماد على مقاييس واضحة وموضوعية للجميع",
+          "استخدام الدرجات العشوائية",
+          "مقارنة الطالب بأخيه"
+        ],
+        correct: 1,
+        explanation: "من معايير التقويم الجيد: عادل وموضوعي — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"التفاعلية\" في التدريس؟",
+        options: [
+          "شرح أحادي",
+          "تفاعل ثنائي/جماعي مستمر بين المعلم والمتعلمين",
+          "حفظ فردي",
+          "امتحان تنافسي"
+        ],
+        correct: 1,
+        explanation: "من خصائص التدريس: تواصلية = تفاعل مستمر — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُفضّل \"التطبيق على مواقف حياتية\"؟",
+        options: [
+          "لتقليل الجهد",
+          "لأنه يعزّز نقل التعلّم ويجعله ذا معنى",
+          "لأنه أسهل على المعلم",
+          "لملء الوقت"
+        ],
+        correct: 1,
+        explanation: "من خصائص التعلم الفعّال: مرتبط بالواقع — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"الهدف المعرفي\"؟",
+        options: [
+          "أن يركّب الطالب نموذجًا",
+          "أن يحلّل الطالب أسباب الحرب العالمية",
+          "أن يحب الطالب التاريخ",
+          "أن يشارك الطالب في المناقشة"
+        ],
+        correct: 1,
+        explanation: "المجال المعرفي = تفكير عقلي (يحلّل، يقيّم، يبتكر) — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما دور \"التأمل\" في تحويل الخطأ إلى فرصة؟",
+        options: [
+          "تجاهل الخطأ",
+          "تحليل أسبابه واتخاذ قرارات تحسين واعية",
+          "معاقبة المخطئ",
+          "تصنيف الأخطاء"
+        ],
+        correct: 1,
+        explanation: "التأمل يحوّل الخطأ إلى مؤشر تحسين عبر التحليل — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "كيف تُدرّب على \"التحكم في الوسيلة\"؟",
+        options: [
+          "بتشغيلها دون توقف",
+          "بطلب من طالب تنفيذ خطوة أمام الجميع أثناء الشرح",
+          "بالاعتماد الكلي عليها",
+          "بعرضها من بعيد"
+        ],
+        correct: 1,
+        explanation: "مثل: في شرح البوربوينت، \"طالب ينفذ خطوة واحدة\" → يعزز التفاعل مع الوسيلة — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في \"البدء بالسهل ثم التدرّج\"؟",
+        options: [
+          "لتقليل المحتوى",
+          "لبناء الثقة وتسهيل الانتقال إلى المفاهيم المعقدة",
+          "لاختبار الضعفاء فقط",
+          "لملء الوقت"
+        ],
+        correct: 1,
+        explanation: "من مبادئ الموقف الجيد: تدرّج في الصعوبة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التغذية الراجعة المرتبطة بالهدف\"؟",
+        options: [
+          "\"أحسنت\"",
+          "\"هدفك كان تدريب مهارة التهيئة، وتحقّق عبر السؤال المثير والصورة\"",
+          "\"أسلوبك جميل\"",
+          "\"صوتك مرتفع\""
+        ],
+        correct: 1,
+        explanation: "من خصائص التغذية الجيدة: مرتبطة بالهدف المعلن — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"التشويق\" في التهيئة؟",
+        options: [
+          "إطالة المقدمة",
+          "استخدام لغز أو موقف غامض يحفّز الفضول",
+          "شرح المحتوى مقدمًا",
+          "اختبار معرفي"
+        ],
+        correct: 1,
+        explanation: "التهيئة التشويقية = لغز – موقف حياتي – قصة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُستخدم \"النموذج الثلاثي للتقويم\"؟",
+        options: [
+          "لتسريع العملية",
+          "لضمان شمولية ودقة في التحليل عبر زوايا متعددة",
+          "لتقليل الجهد على المشرف",
+          "لتصنيف المتدربين"
+        ],
+        correct: 1,
+        explanation: "التقويم الثلاثي = تكامل الزوايا لتعزيز الدقة — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُطبّق \"التكيف مع الزمن المحدود\"؟",
+        options: [
+          "شرح الدرس كاملاً",
+          "التركيز على مهارة واحدة وجزء محدّد من المحتوى",
+          "استخدام وسائل كثيرة",
+          "إطالة التمهيد"
+        ],
+        correct: 1,
+        explanation: "في المصغر، يُختصر: المحتوى → جزء محدّد، المهارات → 1–3 فقط — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في \"التأكيد على المعيار\" في الهدف الإجرائي؟",
+        options: [
+          "لزيادة التعقيد",
+          "لجعل الهدف قابلًا للقياس (دقة، زمن، عدد، جودة)",
+          "لتشتيت الانتباه",
+          "لتقليل التفاعل"
+        ],
+        correct: 1,
+        explanation: "من شروط الهدف الجيد: تحديد المعيار — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التعلم التعاوني الفعّال\"؟",
+        options: [
+          "جلوس الطلاب بجانب بعض دون تفاعل",
+          "عمل جماعي بمهام متدرجة وفرص مشاركة متوازنة",
+          "مناقشة عامة دون تنظيم",
+          "عمل فردي"
+        ],
+        correct: 1,
+        explanation: "التعلم التعاوني الفعّال = مهام متدرجة + مشاركة متوازنة — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"الانضباط الإيجابي\"؟",
+        options: [
+          "العقاب القاسي",
+          "قواعد صريحة + تعزيز + معالجة هادئة",
+          "غياب القواعد",
+          "العقاب الجماعي"
+        ],
+        correct: 1,
+        explanation: "من أبعاد إدارة الصف: انضباطي = قواعد صريحة + تعزيز + معالجة هادئة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُستخدم \"السؤال التطبيقي\" في الخاتمة؟",
+        options: [
+          "لاختبار الحفظ",
+          "لقياس مدى توظيف المعرفة في مواقف جديدة",
+          "لملء الوقت",
+          "لإنهاء الدرس"
+        ],
+        correct: 1,
+        explanation: "السؤال التطبيقي = يقيس التطبيق، لا التذكّر — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"الهدف السلوكي\"؟",
+        options: [
+          "أن يفهم المعلم أهمية التقويم",
+          "أن يصمم الطالب خريطة مفاهيم لموضوع الدرس",
+          "أن يحب الطالب المعلم",
+          "أن يحضر الطالب الحصة"
+        ],
+        correct: 1,
+        explanation: "الأهداف الإجرائية = سلوك قابل للملاحظة — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما دور \"التكنولوجيا\" في المحاكاة التدريبية؟",
+        options: [
+          "الإبهار فقط",
+          "تدريب على مواقف صعبة (مثل: فصل فوضوي) في بيئة آمنة",
+          "بديل للمعلم",
+          "تقليل التفاعل"
+        ],
+        correct: 1,
+        explanation: "من الاتجاهات الحديثة: الواقع الافتراضي لمحاكاة مواقف صعبة — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُفضّل \"الثناء المحدّد\" في إدارة الصف؟",
+        options: [
+          "لأنه أسرع",
+          "لأنه يعزّز السلوك المحدد ويشجّع تكراره",
+          "لأنه يُستخدم فقط مع المتفوقين",
+          "لأنه لا يحتاج جهدًا"
+        ],
+        correct: 1,
+        explanation: "مثل: \"أعجبتني كيف ربطت المثال بالدرس\" — يعزّز السلوك المحدد — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التقويم البنّاء\"؟",
+        options: [
+          "منح درجة نهائية دون شرح",
+          "\"إجابتك صحيحة، لكن لو أضفت مثالاً لكانت أوضح\"",
+          "\"هذا خطأ\"",
+          "تجاهل الإجابة"
+        ],
+        correct: 1,
+        explanation: "التقويم البنّاء = دمج المديح مع التوجيه — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"الواقعية في المحتوى\"؟",
+        options: [
+          "الاعتماد على الأمثلة النظرية فقط",
+          "ربط المحتوى بمشكلات واقعية يعيشها الطلاب",
+          "تجاهل السياق الثقافي",
+          "استخدام لغة معقدة"
+        ],
+        correct: 1,
+        explanation: "من خصائص الموقف الجيد: واقعية — ربط المحتوى بحياة الطالب — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "كيف تُدرّب على \"المرونة التدريسية\"؟",
+        options: [
+          "بالالتزام الحرفي بالخطة",
+          "بتجربة استراتيجيات مختلفة لنفس المحتوى",
+          "بتكرار نفس الأسلوب",
+          "بتجاهل ردود فعل الطلاب"
+        ],
+        correct: 1,
+        explanation: "مثل: تقديم نفس المحتوى بثلاث طرق (سمعي/بصري/حركي) → يُدرّب على المرونة — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في \"الربط بين أجزاء الدرس\"؟",
+        options: [
+          "لزيادة الوقت",
+          "لمساعدة الطلاب على رؤية الصورة الكلية وترابط المفاهيم",
+          "لاختبار الذاكرة",
+          "لتقليل الفهم"
+        ],
+        correct: 1,
+        explanation: "من معايير العرض الفعّال: انتقالات سلسة تُحقّق التكامل — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما المقصود بـ\"المعلم الميسّر\"؟",
+        options: [
+          "ناقل معلومات فقط",
+          "مُخطّط – مُيسّر – مرشد – قدوة",
+          "مراقب فقط",
+          "مُقيّم فقط"
+        ],
+        correct: 1,
+        explanation: "دور المعلم في الموقف الحديث: مُيسّر تعلّم واعٍ — الفصل الأول والثالث."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر فشلًا في تطبيق مبدأ \"التكامل بين الجوانب\"؟",
+        options: [
+          "استخدام فيديو لشرح دورة الماء",
+          "اختبار تحريري فقط لدرس تضمن مناقشة وتصميم نموذج",
+          "طرح سؤال انعكاسي في الخاتمة",
+          "ربط المحتوى بمشكلة بيئية"
+        ],
+        correct: 1,
+        explanation: "التكامل = تقويم المعرفي + المهاري + الوجداني — الفصل الأول والثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ التربوي الجوهري في جملة: \"أن يفهم الطالب أهمية التعاون\"؟",
+        options: [
+          "استخدام فعل \"يفهم\" غير قابل للملاحظة",
+          "عدم تحديد المعيار",
+          "التركيز على المعلم",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "الهدف الإجرائي يجب أن: (1) يركّز على المتعلم، (2) يستخدم فعلًا سلوكيًّا، (3) يُحدد المعيار — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"إعادة التدريس\" مؤشرًا على الجدية المهنية؟",
+        options: [
+          "لأنه يُظهر قدرة على التعلّم من التحليل وتحمّل المسؤولية",
+          "لأنه يُرضي المشرف",
+          "لأنه يُطيل وقت التدريب",
+          "لأنه يُقلل من عدد المحاولات"
+        ],
+        correct: 0,
+        explanation: "إعادة التدريس = تطبيق عملي لمبدأ التأمل → التحسين → الإتقان — الفصل الثالث والخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي تصرّف يُظهر سوء فهم لـ\"التغذية الراجعة البنّاءة\"؟",
+        options: [
+          "القول: \"تهيئتك جذّابة، لكن لو ربطتها بالهدف صراحة لكانت أوضح\"",
+          "القول: \"أنت تفتقر لمهارات التهيئة\"",
+          "القول: \"استخدامك للصورة عزّز الفهم، جرّب إضافة سؤال تفاعلي بعدها\"",
+          "القول: \"أعجبتني طريقة توزيعك للنظر بين الطلاب\""
+        ],
+        correct: 1,
+        explanation: "التغذية البنّاءة تركّز على الأداء (ليس الشخص) — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي التربوي الأعمق في تطبيق \"PBL\" مع طلاب معتادين على التلقي؟",
+        options: [
+          "صعوبة إيجاد مشكلات واقعية",
+          "مقاومة الطلاب لتحمل مسؤولية التعلّم وطلب التوجيه الدائم",
+          "قلة الوسائل التعليمية",
+          "ضيق الوقت فقط"
+        ],
+        correct: 1,
+        explanation: "PBL يُحوّل الطالب من متلقٍّ إلى مُكتشف مسؤول — الفصل الرابع."
+      },
+      {
+        type: "mcq",
+        question: "أي معيار يُعتبر الأكثر دلالة على \"عمق الفهم\"؟",
+        options: [
+          "القدرة على تذكّر تعريف الضغط",
+          "القدرة على شرح مفهوم الضغط لطفل",
+          "القدرة على حل معادلة الضغط",
+          "القدرة على تطبيق مبدأ الضغط في تفسير ظاهرة طفو الأجسام"
+        ],
+        correct: 3,
+        explanation: "وفقاً لبلوم، التطبيق في سياقات جديدة (D) يفوق التذكّر (A)، الفهم (B)، والتطبيق الروتيني (C) — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ المنهجي في استخدام \"فيديو طويل (10 دقائق)\" في درس مصغر (7 دقائق)؟",
+        options: [
+          "عدم ارتباطه بالهدف",
+          "انتهاكه لمبدأ \"التركيز\"",
+          "تحوّله من وسيلة داعمة إلى محور الدرس",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "في المصغر: (1) التركيز، (2) الزمن المختصر، (3) الوسيلة داعمة — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الثناء العام\" مثل \"أحسنت\" عائقًا أمام التطوير؟",
+        options: [
+          "لأنه لا يُحدّد السلوك القابل للتكرار",
+          "لأنه يُنمّي الاعتماد على التغذية الخارجية",
+          "لأنه لا يُشير إلى معيار الأداء",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "الثناء الفعّال يجب أن يكون محددًا، مرتبطًا بالمعيار، ويدفع نحو الاستقلالية — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُطبّق \"التأمل النقدي\" وليس \"التأمل الوصفي\"؟",
+        options: [
+          "\"درّستُ مهارة التهيئة، واستخدمتُ سؤالاً مثيرًا\"",
+          "\"السؤال المثير حقّق جذب الانتباه، لكنه لم يُرتبط صراحة بالهدف، فسأعدّله\"",
+          "\"الطلاب أجابوا على السؤال\"",
+          "\"الوقت كان كافيًا\""
+        ],
+        correct: 1,
+        explanation: "التأمل النقدي = تحليل السبب – الأثر – القرار — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "ما التعارض الخفي بين \"النمط السلطوي\" و\"التعلم الفعّال\"؟",
+        options: [
+          "لا تعارض",
+          "السلطوي يُهمش دور المتعلم كمحور، ويُقلل التفكير النقدي",
+          "السلطوي يُسرّع إنجاز المحتوى",
+          "السلطوي مناسب لجميع المراحل"
+        ],
+        correct: 1,
+        explanation: "التعلم الفعّال يتطلب المتعلم محورًا — تعارض جوهري — الفصل الأول والثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُظهر \"سوء استخدام تصنيف بلوم\"؟",
+        options: [
+          "سؤال \"اشرح\" لمستوى \"الفهم\"",
+          "سؤال \"قارن\" لمستوى \"التحليل\"",
+          "سؤال \"ما عاصمة مصر؟\" تحت عنوان \"مستوى التقييم\"",
+          "سؤال \"صمم\" لمستوى \"الإبداع\""
+        ],
+        correct: 2,
+        explanation: "\"ما عاصمة مصر؟\" = تذكّر، وليس تقييم — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب التربوي في منع \"العقاب الجماعي\" حتى لو كان السلوك جماعيًّا؟",
+        options: [
+          "لأنه يُخالف العدالة التربوية ويُضعف الثقة بالبيئة التعليمية",
+          "لأنه لا يُحقّق الردع",
+          "لأنه يُطيل وقت الحصة",
+          "لأنه يُقلل من سلطة المعلم"
+        ],
+        correct: 0,
+        explanation: "العقاب الجماعي يُعاقب الأبرياء — يُضعف المناخ النفسي الآمن — الفصل الأول والثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر فشلًا في \"ربط النظرية بالتطبيق\"؟",
+        options: [
+          "تدريب مهارة \"طرح الأسئلة\" مع تطبيق أفعال بلوم",
+          "شرح تصنيف بلوم نظريًّا دون تطبيق في أسئلة حقيقية",
+          "تسجيل الأداء وتحليله",
+          "استخدام التغذية الراجعة 2+2"
+        ],
+        correct: 1,
+        explanation: "روح المصغر = تحويل النظرية إلى أداء — الفصل الثالث."
+      },
+      {
+        type: "mcq",
+        question: "لماذا يُعتبر \"الاعتماد على الحفظ في التقويم\" خيانة لمبادئ \"التعلم الفعّال\"؟",
+        options: [
+          "لأنه يقيس التذكّر فقط، ويهمل التفكير العليا",
+          "لأنه سهل التصحيح",
+          "لأنه مألوف",
+          "لأنه يُقلل من الجهد على الطالب"
+        ],
+        correct: 0,
+        explanation: "التعلم الفعّال يُنمّي مهارات التفكير العليا — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في جملة: \"التقويم = القياس\"؟",
+        options: [
+          "القياس جزء من التقويم، وليس كله",
+          "التقويم يشمل التحليل والتحسين، والقياس كمي فقط",
+          "التقويم عملية منهجية، والقياس أداة منها",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "القياس (تقدير كمي)، التقييم (تفسير)، التقويم (عملية شاملة) — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي معيار يُميّز \"الخطة التدريسية الجيدة\" عن \"الوصف العام\"؟",
+        options: [
+          "وجود أهداف عامة مثل \"تنمية التفكير\"",
+          "وجود أهداف إجرائية سلوكية قابلة للقياس",
+          "ذكر المحتوى فقط",
+          "تحديد الزمن فقط"
+        ],
+        correct: 1,
+        explanation: "الخطة الجيدة = إجرائية (أهداف سلوكية) — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما التحدي الأكبر في تطبيق \"مراعاة الفروق\" في فصل كبير؟",
+        options: [
+          "صعوبة تصميم مهام متدرجة لـ40 طالبًا",
+          "مقاومة النظام التعليمي للتمايز",
+          "نقص الوقت والموارد",
+          "جميع ما سبق، لكن الجذري هو غياب ثقافة التمايز في التدريب"
+        ],
+        correct: 3,
+        explanation: "التحديات العملية موجودة، لكن الجذري هو أن المعلّم لم يُدرّب على التمايز كفلسفة — الفصل الثالث والخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُطبّق \"التقويم كأداة تحسين\" وليس \"كحكم نهائي\"؟",
+        options: [
+          "منح درجة نهائية دون مناقشة",
+          "استخدام نتائج اختبار قبلي لتعديل خطة الدرس",
+          "مقارنة الطالب بزملائه",
+          "توثيق الدرجة في السجل فقط"
+        ],
+        correct: 1,
+        explanation: "التقويم الناجح لا يسأل \"كم حصل؟\" بل \"كيف نُحسّن؟\" — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في اعتبار \"الوسيلة الجيدة\" هي \"الأكثر تكنولوجيا\"؟",
+        options: [
+          "لأن الفعالية تُقاس بالارتباط بالهدف، لا بالتعقيد التقني",
+          "لأن التكنولوجيا قد تشتت الانتباه",
+          "لأن البساطة قد تكون أكثر تأثيرًا",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "معايير اختيار الوسيلة: الارتباط بالهدف، الملاءمة، الوضوح، التشويق — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي موقف يُظهر \"سوء فهم لدور التكنولوجيا\"؟",
+        options: [
+          "استخدام تطبيق تفاعلي لجمع تغذية راجعة فورية",
+          "عرض شرائح نصية طويلة دون تفاعل أو توقف",
+          "تسجيل الأداء المصغر للتحليل الذاتي",
+          "استخدام محاكاة رقمية لتوضيح مفهوم مجرّد"
+        ],
+        correct: 1,
+        explanation: "الشرائح النصية الطويلة تحوّل التكنولوجيا إلى \"سبورة إلكترونية\"، وتُفقد التفاعل — خلافًا لمبدأ الوسيلة الداعمة — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "ما السبب في أن \"التقويم الذاتي\" قد يفشل مع طلاب صغار دون تكييف؟",
+        options: [
+          "صعوبة فهم معايير مجردة مثل \"الدقة\" أو \"الوضوح\"",
+          "الحاجة إلى لغة تقييم بسيطة (مثل: 😊 → 👍 → ✏️)",
+          "ضعف القدرة على التمييز بين \"ما فهمته\" و\"ما لم أفهمه\"",
+          "جميع ما سبق"
+        ],
+        correct: 3,
+        explanation: "التقويم الذاتي مع الصغار يحتاج تبسيط المعايير، توظيف الرموز، وتدريب تدريجي — الفصل الخامس."
+      },
+      {
+        type: "mcq",
+        question: "أي جملة تُعبّر عن \"رؤية تربوية ضيقة\"؟",
+        options: [
+          "\"الهدف هو غرس مهارات التفكير النقدي\"",
+          "\"الهدف هو اجتياز الامتحان بتفوّق\"",
+          "\"الهدف هو بناء انتماء وطني\"",
+          "\"الهدف هو تنمية القدرة على حل المشكلات\""
+        ],
+        correct: 1,
+        explanation: "الرؤية الضيقة تختزل التعليم في التحصيل الآني، وتتجاهل الجوانب الوجدانية والمهارية — الفصل الأول."
+      },
+      {
+        type: "mcq",
+        question: "ما الخطأ في \"إعطاء واجب دون مناقشة نتائجه لاحقًا\"؟",
+        options: [
+          "لأنه يُفقِد الواجب قيمته كأداة تعلّم",
+          "لأنه يُزيد العبء على الطالب",
+          "لأنه يُقلل من وقت الشرح",
+          "لأنه مطلوب إداريًّا فقط"
+        ],
+        correct: 0,
+        explanation: "الواجب + مناقشة النتائج وتغذية راجعة = حلقة تعلّم مغلقة. بدون مناقشة، يصبح نشاطًا معزولًا — الفصل الثاني."
+      },
+      {
+        type: "mcq",
+        question: "أي مثال يُطبّق \"التكامل بين التهيئة والختام\"؟",
+        options: [
+          "تمهيد بسؤال: \"ماذا يحدث لو انطفأت الكهرباء؟\" → خاتمة بعرض حل لمشكلة انقطاع التيار",
+          "تمهيد بصورة → خاتمة بامتحان",
+          "تمهيد بفيديو → خاتمة بكتابة واجب",
+          "تمهيد بسرد → خاتمة بصمت"
+        ],
+        correct: 0,
+        explanation: "التكامل = جعل الخاتمة إجابة عملية للسؤال الافتتاحي — يُحقّق بناءً منطقيًّا للمعرفة — الفصل الثاني."
+      },
+      {
+  type: "mcq",
+  question: "لماذا يُعتبر \"الاعتماد على الدرجات\" وحدها خيانة لمبدأ التقويم البنائي؟",
+  options: [
+    "لأن الدرجة لا تُشير إلى أين أخطأ الطالب",
+    "لأنها لا تُقدّم تغذية راجعة لتحسين الأداء",
+    "لأنها تحوّل التقويم إلى حكم بدل دعم",
+    "جميع ما سبق"
+  ],
+  correct: 3,
+  explanation: "التقويم البنائي = تشخيص + علاج، والدرجة فقط = تشخيص دون علاج — الفصل الثاني."
+},
+{
+  type: "mcq",
+  question: "ما المقصود بـ\"المرونة في التكيّف مع الفروق\"؟",
+  options: [
+    "تطبيق نفس الخطة للجميع",
+    "تعديل الاستراتيجيات والوسائل حسب استجابة المتعلمين",
+    "تجاهل الفروق لإنجاز المنهج",
+    "الاعتماد على الاختبارات فقط"
+  ],
+  correct: 1,
+  explanation: "من خصائص الموقف التعليمي الجيد: مرونة في التكيّف مع الفروق الفردية — الفصل الأول."
+},
+{
+  type: "mcq",
+  question: "أي موقف يُظهر \"سوء استخدام الزمن في درس مصغر\"؟",
+  options: [
+    "تخصيص دقيقتين للتمهيد",
+    "شرح المحتوى 6 دقائق دون تطبيق أو خاتمة في درس 7 دقائق",
+    "تخصيص دقيقة للختام",
+    "استخدام 3 دقائق للتطبيق"
+  ],
+  correct: 1,
+  explanation: "الدرس المصغر يحتاج توازنًا بين العناصر (تمهيد – عرض – تطبيق – خاتمة). الإخلال = خلل في التصميم — الفصل الثالث."
+},
+{
+  type: "mcq",
+  question: "ما دور \"التأمل بعد الأداء\" في بناء الممارس التربوي الواعي؟",
+  options: [
+    "جعله يقلّد النماذج الجاهزة",
+    "تمكينه من فهم أثر قراراته التدريسية وتعديلها",
+    "تقليل الحاجة للتدريب",
+    "تسريع إنهاء الجلسات"
+  ],
+  correct: 1,
+  explanation: "التأمل يُحوّل المعلم من مُقلّد إلى مُفكّر واعٍ يتخذ قرارات مهنية مبنية على تحليل — الفصل الخامس."
+},
+{
+  type: "mcq",
+  question: "أي جملة تُطبّق \"التكامل بين المجالات\" في تقويم درس؟",
+  options: [
+    "اختبار تحريري فقط",
+    "ملاحظة أداء (مهاري) + مناقشة موقف أخلاقي (وجداني) + أسئلة معرفية",
+    "منح درجة نهائية",
+    "تقرير مشرف فقط"
+  ],
+  correct: 1,
+  explanation: "التكامل في التقويم = تغطية المعرفي + المهاري + الوجداني — الفصل الأول."
+},
+{
+  type: "mcq",
+  question: "ما السبب في أن \"الاعتماد على الخبرة فقط\" دون تأمل يُكرّر الأخطاء؟",
+  options: [
+    "لأن الخبرة تُخزّن السلوك، لا تحلّله",
+    "لأنها لا تُحدّث الممارسات وفق المستجدات",
+    "لأنها قد تُرسّخ عادات خاطئة كـ\"حقيقة\"",
+    "جميع ما سبق"
+  ],
+  correct: 3,
+  explanation: "الخبرة + التأمل النقدي = تعلّم وتطوير. الخبرة وحدها = تكرار — الفصل الخامس."
+},
+{
+  type: "mcq",
+  question: "أي مثال يُطبّق \"التغذية الراجعة من الأقران\" وفق معايير فعّالة؟",
+  options: [
+    "\"أداءك مقبول\"",
+    "\"استخدامك للسؤال المفتوح عزّز المشاركة (نقطة قوة)، لو أضفت وقت تفكير لكانت الإجابات أعمق (اقتراح)\"",
+    "\"أنت أفضل من زميلك\"",
+    "\"أعجبتني ثيابك\""
+  ],
+  correct: 1,
+  explanation: "التغذية الفعّالة من الأقران = محددة، بنّاءة، مرتبطة بالهدف — الفصل الخامس."
+},
+{
+  type: "mcq",
+  question: "ما الخطأ في \"تصميم وسيلة تعليمية معقدة جدًّا\"؟",
+  options: [
+    "لأنها قد تشغّل انتباه الطلاب عن المحتوى",
+    "لأنها قد تفشل تقنيًّا في اللحظة الحاسمة",
+    "لأنها تُهدر وقت الشرح في شرح الوسيلة نفسها",
+    "جميع ما سبق"
+  ],
+  correct: 3,
+  explanation: "من معايير اختيار الوسيلة: الوضوح، البساطة، سهولة التشغيل — الفصل الثاني."
+},
+{
+  type: "mcq",
+  question: "أي موقف يُطبّق \"فلسفة التدريس المصغر\" في أوضح صورها؟",
+  options: [
+    "أداء → تسجيل → تحليل → تغذية → تعديل → إعادة أداء → إتقان",
+    "أداء → درجة → انتقال",
+    "أداء → تصحيح أخطاء شفهي سريع",
+    "أداء → مناقشة عامة دون هيكل"
+  ],
+  correct: 0,
+  explanation: "هذه هي الدورة الكاملة التي تحوّل التمرين إلى إتقان — جوهر فلسفة المصغر — الفصل الثالث."
+},
+{
+  type: "mcq",
+  question: "ما الموقف الذي يُجسّد \"التعلّم مدى الحياة\" للمعلم؟",
+  options: [
+    "حفظ نظريات قديمة دون تطبيق",
+    "مراجعة أداءه عبر الفيديو وطلب تغذية راجعة بعد كل درس",
+    "الاعتماد على خبرة 10 سنوات دون تغيير",
+    "تجنّب التدريب بعد التعيين"
+  ],
+  correct: 1,
+  explanation: "التعلّم مدى الحياة = تأمل ذاتي + تغذية راجعة + تحسين مستمر — الفصل الخامس."
+}
+    ]
+  }
+};
 
-      btn.classList.toggle("day", isDay);
-      btn.classList.toggle("night", !isDay);
-      btn.innerHTML = isDay ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  // ================ المتغيرات العامة ================
+  let currentQuiz = null;
+  let currentQuizId = null;
+  let currentQuestionIndex = 0;
+  let userAnswers = [];
 
-      localStorage.setItem("themeMode", isDay ? "day" : "night");
+  // ================ دوال الحفظ والاسترجاع ================
+  function saveProgress() {
+    const quizProgress = {
+      quizId: currentQuizId,
+      index: currentQuestionIndex,
+      answers: userAnswers
+    };
+    localStorage.setItem('quizProgress', JSON.stringify(quizProgress)); // تخزين كـ String [web:2]
+  }
+
+  function clearProgress() {
+    localStorage.removeItem('quizProgress'); // إزالة مفتاح محدد [web:29]
+  }
+
+  function checkSavedProgress() {
+    const savedData = localStorage.getItem('quizProgress'); // يرجع String أو null [web:21]
+    if (!savedData) return false;
+
+    const progress = JSON.parse(savedData);
+
+    // لو الاختبار مش موجود أو مقفول: امسح التقدم وارجع للرئيسية
+    if (!quizzes[progress.quizId] || quizzes[progress.quizId].locked) {
+      clearProgress();
+      return false;
     }
 
-    // Init
-    if (savedTheme === "day") setTheme("day");
-    else setTheme("night");
+    currentQuizId = progress.quizId;
+    currentQuiz = quizzes[progress.quizId];
+    currentQuestionIndex = progress.index || 0;
+    userAnswers = Array.isArray(progress.answers) ? progress.answers : [];
 
-    btn.addEventListener("click", () => {
-      const isCurrentlyDay = root.classList.contains("day-mode");
-      setTheme(isCurrentlyDay ? "night" : "day");
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('quizContainer').style.display = 'block';
+
+    loadQuestion();
+    return true;
+  }
+
+  // ================ دوال التحكم ================
+ function startQuiz(quizId) {
+  const quiz = quizzes[quizId];
+  if (!quiz) return;
+
+  // ✅ امنع المقفول قبل إخفاء الرئيسية
+  if (quiz.locked) {
+    alert("القسم ده خاص ب تيم مذاكرة.");
+    return;
+  }
+
+  // ✅ تأكد فيه أسئلة
+  if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+    alert("الاختبار ده مفيهوش أسئلة حاليًا.");
+    return;
+  }
+
+  currentQuizId = quizId;
+  currentQuiz = quiz;
+  currentQuestionIndex = 0;
+  userAnswers = [];
+
+  document.getElementById('homePage').style.display = 'none';
+  document.getElementById('quizContainer').style.display = 'block';
+
+  saveProgress();
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (!currentQuiz) return;
+
+  const total = currentQuiz.questions.length;
+  const q = currentQuiz.questions[currentQuestionIndex];
+
+  // ✅ لو السؤال مش موجود لأي سبب
+  if (!q) {
+    alert("حصل خطأ في تحميل السؤال. راجع بيانات الأسئلة.");
+    goHome();
+    return;
+  }
+
+  document.getElementById('qNumber').textContent = currentQuestionIndex + 1;
+  document.getElementById('qTotal').textContent = total;
+  document.getElementById('qText').textContent = q.question;
+
+  const optionsContainer = document.getElementById('optionsContainer');
+  optionsContainer.innerHTML = '';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = opt;
+    btn.onclick = () => selectOption(idx);
+    optionsContainer.appendChild(btn);
+  });
+
+  document.getElementById('explanation').style.display = 'none';
+  document.getElementById('btnNext').style.display = 'none';
+}
+
+  function selectOption(selectedIndex) {
+    const q = currentQuiz.questions[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === selectedIndex) {
+        btn.classList.add(idx === q.correct ? 'correct' : 'incorrect');
+      } else if (idx === q.correct) {
+        btn.classList.add('correct');
+      }
     });
 
-    // Particles config
-    // (لو مش عايز particles خالص، احذف السطرين بتوع particles.js + الكود ده)
-    if (window.particlesJS) {
-      particlesJS("particles-js", {
-        particles: {
-          number: { value: 70, density: { enable: true, value_area: 900 } },
-          color: { value: ["#a453ff", "#54aaff", "#ff6b35"] },
-          shape: { type: "circle" },
-          opacity: { value: 0.35, random: true },
-          size: { value: 3, random: true },
-          line_linked: {
-            enable: true,
-            distance: 140,
-            color: "#ffffff",
-            opacity: 0.08,
-            width: 1
-          },
-          move: { enable: true, speed: 1.2 }
-        },
-        interactivity: {
-          detect_on: "canvas",
-          events: {
-            onhover: { enable: true, mode: "repulse" },
-            onclick: { enable: true, mode: "push" },
-            resize: true
-          },
-          modes: {
-            repulse: { distance: 120, duration: 0.4 },
-            push: { particles_nb: 2 }
-          }
-        },
-        retina_detect: true
-      });
+    userAnswers.push({
+      question: q.q,
+      selected: selectedIndex,
+      correct: q.correct,
+      explanation: q.explanation,
+      isCorrect: selectedIndex === q.correct
+    });
+
+    saveProgress();
+
+    const expDiv = document.getElementById('explanation');
+    expDiv.textContent = q.explanation;
+    expDiv.style.display = 'block';
+
+    document.getElementById('btnNext').style.display = 'inline-block';
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuiz.questions.length) {
+      saveProgress();
+      loadQuestion();
+    } else {
+      showResults();
     }
-  </script>
+  }
+
+  function showResults() {
+    clearProgress();
+
+    document.getElementById('quizContainer').style.display = 'none';
+    document.getElementById('resultsContainer').style.display = 'block';
+
+    const title = document.getElementById('resultQuizTitle');
+    const list = document.getElementById('resultsList');
+
+    const correctCount = userAnswers.filter(a => a.isCorrect).length;
+    const totalCount = userAnswers.length;
+
+    title.textContent = `نتائجك في اختبار ${currentQuiz.title}`;
+    list.innerHTML = '';
+
+    const scoreDisplay = document.createElement('div');
+    scoreDisplay.style.textAlign = 'center';
+    scoreDisplay.style.fontSize = '1.4rem';
+    scoreDisplay.style.marginBottom = '1.5rem';
+    scoreDisplay.style.fontWeight = '700';
+    scoreDisplay.style.color =
+      correctCount === totalCount ? '#a5d6a7' :
+      correctCount >= totalCount / 2 ? '#ffd54f' : '#ef9a9a';
+    scoreDisplay.innerHTML = `أجبت على <strong>${correctCount}</strong> من أصل <strong>${totalCount}</strong> سؤالًا بشكل صحيح`;
+    list.appendChild(scoreDisplay);
+
+    userAnswers.forEach((ans, idx) => {
+      const item = document.createElement('div');
+      item.className = 'result-item';
+
+      const qText = document.createElement('div');
+      qText.className = 'result-question';
+      qText.innerHTML = `السؤال ${idx + 1}: ${ans.question}`;
+
+      const userOpt = currentQuiz.questions[idx].options[ans.selected];
+      const correctOpt = currentQuiz.questions[idx].options[ans.correct];
+
+      const ansDiv = document.createElement('div');
+      ansDiv.innerHTML = `
+        <div>إجابتك: <span class="result-answer ${ans.isCorrect ? 'answer-correct' : 'answer-incorrect'}">${userOpt}</span></div>
+        <div>الإجابة الصحيحة: <span class="result-answer answer-correct">${correctOpt}</span></div>
+      `;
+
+      const expText = document.createElement('div');
+      expText.className = 'result-explanation';
+      expText.innerHTML = `التفسير: ${ans.explanation}`;
+
+      item.appendChild(qText);
+      item.appendChild(ansDiv);
+      item.appendChild(expText);
+      list.appendChild(item);
+    });
+
+    renderResultButtons(list);
+  }
+
+  function renderResultButtons(container) {
+    const btnContainer = document.createElement('div');
+    btnContainer.style.display = 'flex';
+    btnContainer.style.gap = '15px';
+    btnContainer.style.justifyContent = 'center';
+    btnContainer.style.marginTop = '2rem';
+    btnContainer.style.flexWrap = 'wrap';
+
+    const btnRestart = document.createElement('button');
+    btnRestart.className = 'btn-action btn-restart';
+    btnRestart.innerHTML = 'إعادة الاختبار';
+    btnRestart.onclick = restartQuiz;
+
+    const btnHome = document.createElement('button');
+    btnHome.className = 'btn-action btn-home';
+    btnHome.innerHTML = 'العودة للرئيسية';
+    btnHome.onclick = goHome;
+
+    btnContainer.appendChild(btnRestart);
+    btnContainer.appendChild(btnHome);
+    container.appendChild(btnContainer);
+  }
+
+  function restartQuiz() {
+    // لو ضغط إعادة اختبار والاختبار الحالي مقفول (مش المفروض يحصل)، رجّعه للرئيسية
+    if (!currentQuizId || !quizzes[currentQuizId] || quizzes[currentQuizId].locked) {
+      goHome();
+      return;
+    }
+    clearProgress();
+    startQuiz(currentQuizId);
+  }
+
+  function goHome() {
+    clearProgress();
+    document.getElementById('quizContainer').style.display = 'none';
+    document.getElementById('resultsContainer').style.display = 'none';
+    document.getElementById('homePage').style.display = 'block';
+  }
+
+  // ================ تهيئة الصفحة عند التحميل ================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('quizContainer').style.display = 'none';
+    document.getElementById('resultsContainer').style.display = 'none';
+
+    if (!checkSavedProgress()) {
+      document.getElementById('homePage').style.display = 'block';
+    }
+  });
+</script>
 </body>
 </html>
-
-
