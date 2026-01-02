@@ -275,6 +275,285 @@
             outline: 2px solid rgba(255,107,53,.65);
             outline-offset: 3px;
         }
+
+        /* ===== Reset صغير يظبط الريسبونسف ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+img, video, canvas, svg { max-width: 100%; height: auto; }
+
+:root{
+  --accent-orange: #ff6b35;
+  --neon-blue: #5d5fef;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 18px 55px rgba(0,0,0,.35);
+  --soft-shadow: 0 12px 35px rgba(0,0,0,.25);
+
+  /* ✅ مسافات وخطوط Fluid */
+  --gutter: clamp(12px, 2.2vw, 24px);
+  --radius: clamp(14px, 1.8vw, 22px);
+  --title-size: clamp(1.35rem, 2.2vw + 0.6rem, 2.25rem);
+  --text-size: clamp(0.95rem, 0.35vw + 0.85rem, 1.05rem);
+}
+
+html { font-size: 16px; }
+body{
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  font-size: var(--text-size);
+  line-height: 1.65;
+
+  background:
+    radial-gradient(1100px 600px at 85% 12%, rgba(93,95,239,.18), transparent 55%),
+    radial-gradient(900px 520px at 10% 30%, rgba(255,107,53,.16), transparent 55%),
+    linear-gradient(180deg, #070916, #050614);
+}
+
+/* Blobs */
+body::before, body::after{
+  content:"";
+  position: fixed;
+  width: clamp(280px, 38vw, 520px);
+  height: clamp(280px, 38vw, 520px);
+  border-radius: 50%;
+  filter: blur(45px);
+  opacity: .55;
+  z-index: 0;
+  pointer-events: none;
+  transform: translate3d(0,0,0);
+}
+body::before{
+  top: clamp(-200px, -18vw, -120px);
+  right: clamp(-220px, -18vw, -140px);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(93,95,239,.8), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(255,107,53,.65), transparent 62%);
+  animation: blobMove1 10s ease-in-out infinite;
+}
+body::after{
+  bottom: clamp(-240px, -20vw, -160px);
+  left: clamp(-240px, -20vw, -160px);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,107,53,.75), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(93,95,239,.55), transparent 62%);
+  animation: blobMove2 12s ease-in-out infinite;
+}
+@keyframes blobMove1{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(-18px, 22px) scale(1.05); }
+}
+@keyframes blobMove2{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(22px, -18px) scale(1.06); }
+}
+
+/* particles طبقة */
+#particles-js{
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+header, section, footer{ position: relative; z-index: 2; }
+
+/* ✅ حشو عام للأقسام لمنع اللزق/الخروج */
+header, section, footer{
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ===== زر ديناميكي: نخليه ثابت + Fluid + ما يطلعش برّه ===== */
+.dynamic-btn{
+  position: fixed; /* بدل absolute عشان مايتأثرش بارتفاع الهيدر */
+  top: var(--gutter);
+  left: var(--gutter);
+  z-index: 1000;
+
+  max-width: calc(100vw - (var(--gutter) * 2));
+  padding: clamp(8px, 1.2vw, 10px) clamp(14px, 2vw, 20px);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: clamp(0.88rem, 0.25vw + 0.82rem, 1rem);
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.35);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dynamic-btn i{ flex: 0 0 auto; }
+.dynamic-btn span, .dynamic-btn b, .dynamic-btn strong{ min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+.dynamic-btn::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(45deg,
+    rgba(255,255,255,0) 42%,
+    rgba(255,255,255,.20) 50%,
+    rgba(255,255,255,0) 58%);
+  transform: translate(-120%,-120%) rotate(45deg);
+  opacity: 0;
+  pointer-events:none;
+}
+.dynamic-btn:hover{ transform: translateY(-3px); filter: brightness(1.05); }
+.dynamic-btn:hover::after{ opacity: 1; animation: shine 1.1s ease forwards; }
+
+.login-style{ background: rgba(255,107,53,.92); color: #fff; }
+.login-style:hover{ box-shadow: 0 10px 28px rgba(255, 107, 53, 0.45); }
+.profile-style{ background: rgba(93,95,239,.92); color: #fff; }
+.profile-style:hover{ box-shadow: 0 10px 28px rgba(93, 95, 239, 0.45); }
+
+/* ===== Glass panels ===== */
+.card-section{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--soft-shadow);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+  will-change: transform;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+  .card-section{ background: rgba(255,255,255,0.10); }
+}
+
+.card-section::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(45deg,
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,.18) 50%,
+    rgba(255,255,255,0) 60%);
+  transform: translate(-120%, -120%) rotate(45deg);
+  opacity: 0;
+  pointer-events:none;
+}
+
+.card-link{ cursor: pointer; }
+.card-link:hover .card-section{
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--glass-shadow);
+  border-color: rgba(255,107,53,.28);
+}
+.card-link:hover .card-section::after{ opacity: 1; animation: shine 1.25s ease forwards; }
+
+.card-section i{ transition: transform .25s ease, filter .25s ease; }
+.card-link:hover i{
+  transform: translateY(-2px) scale(1.05);
+  filter: drop-shadow(0 10px 18px rgba(255,107,53,.28));
+}
+
+@keyframes shine{
+  from{ transform: translate(-120%, -120%) rotate(45deg); }
+  to{ transform: translate(120%, 120%) rotate(45deg); }
+}
+
+/* ===== Titles/Logo ===== */
+.neon-title{
+  font-size: var(--title-size);
+  text-shadow: 0 0 10px rgba(255,107,53,.25), 0 0 20px rgba(93,95,239,.18);
+  animation: titlePulse 3.5s ease-in-out infinite;
+}
+@keyframes titlePulse{
+  0%,100%{ transform: translateY(0); filter: brightness(1); }
+  50%{ transform: translateY(-2px); filter: brightness(1.07); }
+}
+.logo{ animation: softFloat 3.2s ease-in-out infinite; will-change: transform; }
+@keyframes softFloat{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-4px);} }
+
+/* ===== Video ===== */
+#videoSection{ position: relative; z-index: 10; }
+#videoContainer{
+  width: 100%;
+  max-width: min(900px, 100%);
+  margin: 0 auto;
+}
+#videoContainer video{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: var(--radius);
+  display: block;
+}
+#watchVideoBtn{
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(135deg, rgba(93,95,239,.9), rgba(255,107,53,.85));
+  box-shadow: 0 12px 35px rgba(0,0,0,.25);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+#watchVideoBtn:hover{
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+  box-shadow: 0 18px 55px rgba(0,0,0,.35);
+}
+
+/* Footer */
+footer{
+  background: rgba(255,255,255,.06);
+  border-top: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Modal */
+.modal-content{ border-radius: var(--radius); border: 1px solid rgba(255,255,255,.10); }
+.modal-header{ border-bottom: 1px solid rgba(255,255,255,0.1); }
+.modal-footer{ border-top: 1px solid rgba(255,255,255,0.1); }
+.btn-close-white{ filter: invert(1); }
+
+/* Scroll reveal */
+.reveal{ opacity: 0; transform: translateY(14px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.show{ opacity: 1; transform: translateY(0); }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce){
+  .neon-title, .logo{ animation: none !important; }
+  .card-section, .card-section::after, .dynamic-btn, .dynamic-btn::after{
+    transition: none !important;
+    animation: none !important;
+  }
+  body::before, body::after{ animation: none !important; }
+  .reveal{ opacity: 1; transform: none; }
+}
+
+/* ===== Breakpoints (Bootstrap-like) ===== */
+@media (max-width: 768px){
+  /* خد مساحة للزر الثابت عشان مايغطيش عنوان الصفحة */
+  header{ padding-top: calc(var(--gutter) * 3.3); }
+}
+
+@media (max-width: 576px){
+  .dynamic-btn{
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+  /* لو الزر طويل قوي على الموبايل */
+  .dynamic-btn{ max-width: 92vw; }
+}
+
+/* تحسين الـ focus */
+:focus-visible{
+  outline: 2px solid rgba(255,107,53,.65);
+  outline-offset: 3px;
+}
     </style>
 </head>
 
@@ -410,3 +689,4 @@
     </script>
 </body>
 </html>
+
