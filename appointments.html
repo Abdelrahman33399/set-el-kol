@@ -8,38 +8,132 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* تم ترك كل الـ CSS كما هو لتجنب أي مشاكل في التنسيق */
-        :root {
-            --bg-color: #121212;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-light: #e0e0e0;
-            --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
-            --accent-orange: #ff6b35;
-            --accent-orange-hover: #e05a2a;
-            --shadow-purple: rgba(164, 83, 255, 0.5);
-            --shadow-orange: rgba(255, 107, 53, 0.5);
-        }
-        :root.day-mode {
-            --bg-color: #1b405f;
-            --card-bg: rgba(175, 171, 171, 0.832);
-            --border-color: rgba(27, 27, 228, 0.2);
-            --text-light: #f9f9f9;
-            --primary-neon: linear-gradient(45deg, #ffffff, #ffffff);
-            --accent-orange: #e65c00;
-            --accent-orange-hover: #cc5200;
-            --shadow-purple: rgb(255, 255, 255);
-            --shadow-orange: rgba(230, 92, 0, 0.592);
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding-bottom: 2rem;
-            overflow-x: hidden;
-            position: relative;
-        }
+        /* =========================
+   THEME SYNC (Home -> Appointments)
+   الصقه داخل <style> في صفحة مواعيدي (ويفضّل مكان :root و body)
+   ========================= */
+
+:root {
+  /* Base */
+  --bg-color: #121212;
+  --text-light: #e0e0e0;
+
+  /* Glass */
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.14);
+  --glass-blur: 12px;
+
+  /* Neon accents */
+  --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
+  --accent-orange: #ff6b35;
+  --accent-orange-hover: #e05a2a;
+
+  --shadow-purple: rgba(164, 83, 255, 0.45);
+  --shadow-orange: rgba(255, 107, 53, 0.45);
+
+  /* Extra */
+  --neon-blue: #5d5fef;
+  --soft-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  --strong-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+}
+
+/* الوضع النهاري (مُعدّل ليكون أهدى وأقل وهج) */
+:root.day-mode {
+  /* Off-white بدل الأبيض الصريح لتقليل الوهج */
+  --bg-color: #f6f4ee;
+
+  /* نصوص غامقة وواضحة */
+  --text-light: #111827;
+
+  /* Glass هادي */
+  --card-bg: rgba(255, 255, 255, 0.62);
+  --border-color: rgba(17, 24, 39, 0.10);
+
+  /* نيون نهاري لكن مش مبهر */
+  --primary-neon: linear-gradient(45deg, #2f3bff, #ff6b35);
+
+  /* Accent */
+  --accent-orange: #e65c00;
+  --accent-orange-hover: #cc5200;
+
+  /* Shadows أخف */
+  --shadow-purple: rgba(47, 59, 255, 0.18);
+  --shadow-orange: rgba(230, 92, 0, 0.22);
+
+  /* (اختياري) لو حابب تحكم أدق في الظلال بالنهاري */
+  --soft-shadow: 0 12px 30px rgba(17, 24, 39, 0.12);
+  --strong-shadow: 0 18px 45px rgba(17, 24, 39, 0.18);
+}
+
+/* Body + خلفية عامة */
+body {
+  background:
+    radial-gradient(1100px 600px at 85% 12%, rgba(93, 95, 239, 0.18), transparent 55%),
+    radial-gradient(900px 520px at 10% 30%, rgba(255, 107, 53, 0.16), transparent 55%),
+    linear-gradient(180deg, rgba(7,9,22,1), rgba(5,6,20,1));
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Day mode: خلفية نهارية أهدى + أقل سطوع */
+:root.day-mode body {
+  background:
+    radial-gradient(1100px 600px at 85% 12%, rgba(47, 59, 255, 0.07), transparent 58%),
+    radial-gradient(900px 520px at 10% 30%, rgba(38, 105, 239, 0.07), transparent 58%),
+    linear-gradient(180deg, #d6a40f, #1267efba);
+}
+
+/* Blobs خلفية (خفيفة) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  filter: blur(45px);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  top: -160px;
+  right: -180px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(93,95,239,.75), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(255,107,53,.55), transparent 62%);
+  animation: blobMove1 10s ease-in-out infinite;
+}
+
+body::after {
+  bottom: -210px;
+  left: -210px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,107,53,.65), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(93,95,239,.45), transparent 62%);
+  animation: blobMove2 12s ease-in-out infinite;
+}
+
+@keyframes blobMove1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-18px, 22px) scale(1.05); }
+}
+@keyframes blobMove2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(22px, -18px) scale(1.06); }
+}
+
+/* خلي المحتوى فوق الـ blobs */
+.container, .chat-bot, .admin-section, .global-appointment-card, table, .theme-toggle-btn {
+  position: relative;
+  z-index: 1;
+}
+
         .neon-title {
             background: var(--primary-neon);
             -webkit-background-clip: text;
@@ -252,19 +346,83 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+
+        /* =========================
+           UPDATE: Dynamic FX (icons + reveal) - My Appointments
+           ========================= */
+        .chat-bot,
+        .admin-section,
+        .global-appointment-card,
+        #addFormContainer .card {
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Floating icons layer */
+        .fx-icons{
+          position:absolute;
+          inset:0;
+          z-index:0;
+          pointer-events:none;
+          opacity:.9;
+        }
+        .fx-icons .fx-icon{
+          position:absolute;
+          color: rgba(255, 107, 53, 0.22);
+          filter: drop-shadow(0 10px 20px rgba(0,0,0,.25));
+          transform: translate3d(0,0,0);
+          animation: fxFloat 6.6s ease-in-out infinite;
+        }
+        .fx-icons .i1{ top: 14%; right: 8%; font-size: 22px; animation-duration: 7.2s; }
+        .fx-icons .i2{ bottom: 12%; left: 10%; font-size: 26px; animation-duration: 8s; opacity:.75; }
+        .fx-icons .i3{ top: 52%; left: 58%; font-size: 18px; animation-duration: 6.2s; opacity:.55; }
+
+        @keyframes fxFloat{
+          0%,100%{ transform: translateY(0) rotate(0deg); opacity:.65; }
+          50%{ transform: translateY(-10px) rotate(10deg); opacity:1; }
+        }
+
+        /* Content above icons */
+        .chat-bot > *,
+        .admin-section > *,
+        .global-appointment-card > *,
+        #addFormContainer .card > *{
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Reveal animation */
+        .reveal{
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity .65s ease, transform .65s ease;
+          will-change: transform, opacity;
+        }
+        .reveal.show{
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce){
+          .fx-icons .fx-icon{ animation: none !important; }
+          .reveal{ opacity: 1; transform: none; transition: none; }
+        }
     </style>
 </head>
 <body>
     <button id="themeToggle" class="theme-toggle-btn">
         <i class="fas fa-moon"></i>
     </button>
+
     <div id="imageModal" class="image-modal">
         <span class="close-modal">&times;</span>
         <img class="image-modal-content" id="fullSizeImage">
         <div id="modalCaption" class="modal-caption"></div>
     </div>
+
     <div class="container py-5">
         <h1 class="neon-title text-center mb-4"> مواعيدي الأسبوعية</h1>
+
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
                 <div class="chat-bot">
@@ -275,8 +433,8 @@
                     <div class="bot-bubble" id="welcomeBubble">
                         👋 مرحبا! أنا هنا عشان أساعدك تنظم مواعيدك الأسبوعية. قول لي: "أضف موعد" أو "اعرض الجدول" أو "امسح كل حاجة".
                     </div>
-                    <div id="chatMessages">
-                        </div>
+                    <div id="chatMessages"></div>
+
                     <div class="user-input">
                         <input type="text" id="userCommand" placeholder="اكتب أمرك هنا..." class="form-control" onkeypress="if(event.key==='Enter') processCommand()">
                         <button class="btn add-btn" onclick="processCommand()">
@@ -286,6 +444,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-10 col-lg-8">
                 <div class="action-btns">
@@ -301,6 +460,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center mt-4" id="addFormContainer" style="display:none;">
             <div class="col-12 col-md-10 col-lg-8">
                 <div class="card bg-dark text-light p-4">
@@ -319,6 +479,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-10 col-lg-8">
                 <h3 class="text-light mb-3">📋 جدول مواعيدك</h3>
@@ -332,12 +493,12 @@
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="appointmentsTable">
-                            </tbody>
+                        <tbody id="appointmentsTable"></tbody>
                     </table>
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center mt-5">
             <div class="col-12 col-md-10 col-lg-8">
                 <div class="admin-section">
@@ -345,19 +506,440 @@
                         <span class="admin-badge">من الأدمن</span>
                         <h4 class="mb-0 text-light">📌 مواعيد المحاضرات والسكاشن (أساسية)</h4>
                     </div>
-                    <div id="globalAppointmentsContainer" class="global-appointments-container">
-                        </div>
+                    <div id="globalAppointmentsContainer" class="global-appointments-container"></div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <div class="container py-5">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script type="module">
-      const _0x28e353=_0x326e;(function(_0xe2ced4,_0x4b1fac){const _0x1cab41=_0x326e,_0x243d15=_0xe2ced4();while(!![]){try{const _0x45f9cf=-parseInt(_0x1cab41(0x273))/0x1+parseInt(_0x1cab41(0x210))/0x2+parseInt(_0x1cab41(0x20f))/0x3*(-parseInt(_0x1cab41(0x1cb))/0x4)+parseInt(_0x1cab41(0x1d7))/0x5*(-parseInt(_0x1cab41(0x1aa))/0x6)+parseInt(_0x1cab41(0x23f))/0x7*(parseInt(_0x1cab41(0x277))/0x8)+parseInt(_0x1cab41(0x219))/0x9*(parseInt(_0x1cab41(0x214))/0xa)+parseInt(_0x1cab41(0x261))/0xb*(-parseInt(_0x1cab41(0x242))/0xc);if(_0x45f9cf===_0x4b1fac)break;else _0x243d15['push'](_0x243d15['shift']());}catch(_0x150d46){_0x243d15['push'](_0x243d15['shift']());}}}(_0x6a0c,0xb4767));function _0x6a0c(){const _0x1f0609=['appointments','reset','OWTBA','RXhxu','WVyYf','<i\x20class=\x22fas\x20fa-sun\x22></i>','خطأ\x20في\x20الحذف:\x20','day','غير\x20محدد','695530ifVuqR','numeric','innerHTML','pzZuE','toLocaleString','czxtd','sit-el-kol.firebasestorage.app','BWxAx','جرب:\x20\x22إضافة\x20موعد\x22\x20أو\x20\x22مسح\x20كل\x20الجدول\x22','iYveR','QPNRF','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','مسح\x20كل\x20مواعيدك\x20الخاصة؟\x20المواعيد\x20العامة\x20مش\x20هتتأثر.','none','YhMip','\x27,\x20this.checked)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','themeToggle','(((.+)+)+)+$','classList','Error\x20saving\x20appointment:','global-appointment-card','WrOSf','\x20position-fixed\x20bottom-0\x20end-0\x20m-3','igYXK','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22badge\x20bg-info\x22>عام/من\x20الأدمن</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-label\x22>الوقت</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-value\x22>','isGlobal','INqTZ','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20type=\x22checkbox\x22\x20class=\x22form-check-input\x22\x20','call','function\x20*\x5c(\x20*\x5c)','value','add\x20appointment','deleteAppointment','YKvkG','init','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-label\x22>المادة</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-value\x22>','عدل\x20العنوان:','userCommand','apkhK','test','addEventListener','processCommand','liWHc','nHvDn','kBxqS','message','setItem','NzeIO','body','createElement','OtHPj','lKcFy','PBWiX','هل\x20أنت\x20متأكد\x20من\x20حذف\x20هذا\x20الموعد\x20الخاص؟','completed','fBMTJ','30dQbtiq','895658UlEroa','login.html','oIWQc','includes','10ozKayZ','time','qpbTb','ZhzQE','TjwUO','2389266pDtGqt','jmZsg','trim','InRdl','all','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','MjXXV','تم\x20إضافة\x20الموعد\x20بنجاح!','jfUkb','خطأ\x20في\x20التعديل:\x20','rgFMT','addAppointment','خطأ\x20في\x20المسح:\x20','theme','rExpA','dXnKT','short','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','eqBFQ','add','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-sm\x20btn-warning\x20me-1\x22\x20onclick=\x22editAppointment(\x27','zEkCy','day-mode','ar-EG','SmKPz','EcODb','toDate','stateObject','uid','luUQz','SLKMA','iBAsO','while\x20(true)\x20{}','2-digit','KFnmR','className','constructor','mzjHP','185129KilVWH','AlShc','Error\x20updating:','12JsPSfA','getTime','VLDiH','rKcpR','push','أدخل\x20العنوان\x20والتاريخ\x20والوقت!','contains','preventDefault','zvVTm','wTuqD','Vzxyg','1:573924344198:web:fec2e9a54c1c152cd16c07','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-label\x22>الدكتور/المُعيد</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-value\x22>','FoLNU','error','VWBDv','JpJYV','LnjHb','Elswa','toLowerCase','addFormContainer','map','EqtZO','chain','appointmentsTable','onsubmit','mmLJA','forEach','appendChild','Niepa','تم\x20التعديل!','1277111RwOCFu','OTdob','dkqQU','nznMW','IGTGe','VCeDk','remove','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>📅\x20','createdAt','G-CWVJDKPS0M','editAppointment','mqsqr','خطأ\x20في\x20الحفظ:\x20','wKjpy','display','asc','string','length','267915TjQiZX','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr><td\x20colspan=\x224\x22\x20class=\x22text-center\x20text-muted\x22>لا\x20توجد\x20مواعيد\x20بعد.</td></tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','xNFJw','getItem','256cyXQzu','globalAppointmentsContainer','PuCwk','nfvsi','EslLt','LOFqd','night','danger','clear\x20all','ref','uppHd','ELGeV','qQHwL','getElementById','alert\x20alert-','AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-edit\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-sm\x20btn-danger\x22\x20onclick=\x22deleteAppointment(\x27','qQmNr','ojqjp','cDsLF','Error\x20loading\x20appointments:','sit-el-kol','toString','تم\x20إكمال\x20المهمة!\x20✔','split','type','تم\x20إعادة\x20فتحها.','AiVqa','JhbrT','zIndex','title','href','vUoZe','مساءً','صباحًا','info','userId','TyUta','appointmentTitle','global','خطأ\x20في\x20تحميل\x20المواعيد:\x20','BuCyS','6grjfzb','<span\x20class=\x22badge\x20bg-success\x20ms-2\x22>تم\x20✔</span>','toggleCompleted','vCjKr','IlGoE','apply','iBcts','filter','UBunX','div','gAJKQ','awyNP','cYIsi','LcJiV','checked','jnmLD','gqrlC','aSfQf','personal','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22','debu','gger','nyuIO','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-label\x22>المكان</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-item-value\x22>','data','appointmentTime','GEEFp','<i\x20class=\x22fas\x20fa-bell\x20me-2\x22></i>','jOyUZ','RokMC','style','dtbbS','search','118924rzRNWK','XSbPj','عدل\x20التاريخ\x20والوقت\x20(YYYY-MM-DDTHH:MM):'];_0x6a0c=function(){return _0x1f0609;};return _0x6a0c();}const _0x879ff4=(function(){let _0x47a479=!![];return function(_0x1f058a,_0xd77ce7){const _0x13162b=_0x47a479?function(){if(_0xd77ce7){const _0x21c3f7=_0xd77ce7['apply'](_0x1f058a,arguments);return _0xd77ce7=null,_0x21c3f7;}}:function(){};return _0x47a479=![],_0x13162b;};}()),_0x17b257=_0x879ff4(this,function(){const _0x4ea94d=_0x326e,_0x2e4a5d={'InRdl':_0x4ea94d(0x1e8)};return _0x17b257['toString']()['search'](_0x2e4a5d[_0x4ea94d(0x21c)])[_0x4ea94d(0x196)]()[_0x4ea94d(0x23d)](_0x17b257)[_0x4ea94d(0x1ca)](_0x2e4a5d[_0x4ea94d(0x21c)]);});_0x17b257();const _0xf041cc=(function(){let _0x14bb0f=!![];return function(_0x1db4cf,_0x5a881c){const _0x27774a=_0x14bb0f?function(){if(_0x5a881c){const _0x1a418b=_0x5a881c['apply'](_0x1db4cf,arguments);return _0x5a881c=null,_0x1a418b;}}:function(){};return _0x14bb0f=![],_0x27774a;};}());(function(){const _0x394901=_0x326e,_0x2580da={'dcYTk':_0x394901(0x1f4),'bNOjU':_0x394901(0x21e),'EslLt':function(_0x2d7dae,_0x3b4200){return _0x2d7dae(_0x3b4200);},'lKcFy':_0x394901(0x1f9),'DAvVN':_0x394901(0x259),'wTuqD':function(_0x50241a,_0x5a9988){return _0x50241a+_0x5a9988;},'aSfQf':'input','IGTGe':function(_0x158daa){return _0x158daa();},'ZhzQE':function(_0x1ab224,_0x59102e,_0x1d2a58){return _0x1ab224(_0x59102e,_0x1d2a58);}};_0x2580da[_0x394901(0x217)](_0xf041cc,this,function(){const _0x2d6dda=_0x394901,_0x1f14c6=new RegExp(_0x2580da['dcYTk']),_0x57b0f8=new RegExp(_0x2580da['bNOjU'],'i'),_0x1a5a64=_0x2580da[_0x2d6dda(0x27b)](_0x4f40b4,_0x2580da[_0x2d6dda(0x20a)]);!_0x1f14c6[_0x2d6dda(0x1fe)](_0x1a5a64+_0x2580da['DAvVN'])||!_0x57b0f8['test'](_0x2580da[_0x2d6dda(0x24b)](_0x1a5a64,_0x2580da[_0x2d6dda(0x1bb)]))?_0x1a5a64('0'):_0x2580da[_0x2d6dda(0x265)](_0x4f40b4);})();}());import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';import{getFirestore,collection,query,where,getDocs,addDoc,updateDoc,deleteDoc,doc,orderBy}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';function _0x326e(_0x517530,_0x58d1c5){const _0x34a454=_0x6a0c();return _0x326e=function(_0x4f40b4,_0xf041cc){_0x4f40b4=_0x4f40b4-0x194;let _0x83baf5=_0x34a454[_0x4f40b4];return _0x83baf5;},_0x326e(_0x517530,_0x58d1c5);}const firebaseConfig={'apiKey':_0x28e353(0x286),'authDomain':'sit-el-kol.firebaseapp.com','projectId':_0x28e353(0x195),'storageBucket':_0x28e353(0x1dd),'messagingSenderId':'573924344198','appId':_0x28e353(0x24d),'measurementId':_0x28e353(0x26a)},app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);let currentUser=null,allAppointments=[];const appointmentsTable=document[_0x28e353(0x284)](_0x28e353(0x25a)),globalAppointmentsContainer=document[_0x28e353(0x284)](_0x28e353(0x278)),addFormContainer=document[_0x28e353(0x284)](_0x28e353(0x256));document[_0x28e353(0x1ff)]('DOMContentLoaded',function(){const _0xcb3b9=_0x28e353,_0x46fc4f={'ELGeV':function(_0xc5b8c4){return _0xc5b8c4();}};_0x46fc4f[_0xcb3b9(0x282)](setupThemeToggle);}),onAuthStateChanged(auth,async _0x4096d5=>{const _0x125eed=_0x28e353,_0x3e8850={'quCJe':function(_0x41dc7e){return _0x41dc7e();},'Kllne':_0x125eed(0x211)};_0x4096d5?(currentUser=_0x4096d5,await _0x3e8850['quCJe'](loadAppointments)):window['location'][_0x125eed(0x19f)]=_0x3e8850['Kllne'];});async function loadAppointments(){const _0x402438=_0x28e353,_0x14875b={'LMqGN':function(_0x553746,_0xeebd76){return _0x553746!==_0xeebd76;},'JpJYV':function(_0x6bed10,_0x3be2fd,_0x183621,_0x4e1699){return _0x6bed10(_0x3be2fd,_0x183621,_0x4e1699);},'lFQKN':function(_0x4bb941,_0x4f3f22,_0x2aa152){return _0x4bb941(_0x4f3f22,_0x2aa152);},'jnmLD':'appointments','qhYwn':function(_0x396824,_0x61ced0,_0x1296fc){return _0x396824(_0x61ced0,_0x1296fc);},'nznMW':'time','dtbbS':_0x402438(0x270),'jfUkb':function(_0x5851da,_0x508e94,_0x371948,_0x47a6a8){return _0x5851da(_0x508e94,_0x371948,_0x47a6a8);},'TjwUO':function(_0x2651ce,_0x3fff0c,_0x655db4){return _0x2651ce(_0x3fff0c,_0x655db4);},'VWBDv':function(_0x430339,_0x579b71,_0x2f2164,_0x53f29c){return _0x430339(_0x579b71,_0x2f2164,_0x53f29c);},'tKSpD':function(_0x4321de,_0xe3d5fe,_0x33efb7){return _0x4321de(_0xe3d5fe,_0x33efb7);},'oIWQc':_0x402438(0x269),'vUoZe':function(_0x8c762b,_0x230d31){return _0x8c762b(_0x230d31);},'nHvDn':function(_0x15948c){return _0x15948c();},'gAJKQ':_0x402438(0x194),'xgZwT':'danger'};try{const _0x1f2b38=_0x14875b[_0x402438(0x252)](query,_0x14875b['lFQKN'](collection,db,_0x14875b[_0x402438(0x1b9)]),where(_0x402438(0x1a4),'==',currentUser[_0x402438(0x235)]),_0x14875b['qhYwn'](orderBy,_0x14875b[_0x402438(0x264)],_0x14875b[_0x402438(0x1c9)])),_0x3d2d3f=_0x14875b[_0x402438(0x221)](query,_0x14875b['TjwUO'](collection,db,_0x402438(0x1ce)),_0x14875b[_0x402438(0x251)](where,_0x402438(0x1f0),'==',!![]),_0x14875b['tKSpD'](orderBy,_0x14875b[_0x402438(0x212)],'desc')),[_0x53cf58,_0x529d20]=await Promise[_0x402438(0x21d)]([_0x14875b[_0x402438(0x1a0)](getDocs,_0x1f2b38),_0x14875b[_0x402438(0x1a0)](getDocs,_0x3d2d3f)]);allAppointments=[],_0x53cf58['forEach'](_0x2f5a6a=>{const _0x16c6d9=_0x402438;_0x14875b['LMqGN'](_0x2f5a6a['data']()[_0x16c6d9(0x1f0)],!![])&&allAppointments[_0x16c6d9(0x246)]({'id':_0x2f5a6a['id'],..._0x2f5a6a[_0x16c6d9(0x1c2)](),'type':'personal'});}),_0x529d20[_0x402438(0x25d)](_0x59a4c4=>{const _0x3ece23=_0x402438;allAppointments[_0x3ece23(0x246)]({'id':_0x59a4c4['id'],..._0x59a4c4[_0x3ece23(0x1c2)](),'type':_0x3ece23(0x1a7)});}),_0x14875b[_0x402438(0x202)](renderAppointments),renderGlobalAppointments();}catch(_0x28e410){console[_0x402438(0x250)](_0x14875b[_0x402438(0x1b4)],_0x28e410),_0x14875b[_0x402438(0x218)](showNotification,_0x402438(0x1a8)+_0x28e410['message'],_0x14875b['xgZwT']);}}function renderAppointments(){const _0x53094a=_0x28e353,_0x2627c7={'igYXK':function(_0x3e5a50,_0x18f1cf){return _0x3e5a50(_0x18f1cf);},'jmZsg':_0x53094a(0x229),'JhbrT':_0x53094a(0x1d8),'cYIsi':_0x53094a(0x23a),'apkhK':_0x53094a(0x271),'Fefzg':function(_0x378afc,_0x1819db){return _0x378afc(_0x1819db);},'AlShc':_0x53094a(0x1b8),'zvVTm':'text-decoration-line-through\x20text-muted','GEEFp':_0x53094a(0x1ab)};appointmentsTable[_0x53094a(0x1d9)]='';const _0x33a89b=allAppointments[_0x53094a(0x1b1)](_0x2906fe=>_0x2906fe[_0x53094a(0x199)]===_0x53094a(0x1bc));if(_0x33a89b[_0x53094a(0x272)]===0x0){appointmentsTable[_0x53094a(0x1d9)]=_0x53094a(0x274);return;}_0x33a89b[_0x53094a(0x25d)](_0x208b9e=>{const _0x16c0fc=_0x53094a;let _0x1efb5c='';if(_0x208b9e[_0x16c0fc(0x215)]){if(_0x208b9e[_0x16c0fc(0x215)][_0x16c0fc(0x233)]){const _0x12becd=_0x208b9e[_0x16c0fc(0x215)]['toDate']();!_0x2627c7[_0x16c0fc(0x1ee)](isNaN,_0x12becd[_0x16c0fc(0x243)]())&&(_0x1efb5c=_0x12becd[_0x16c0fc(0x1db)]('ar-EG',{'weekday':_0x2627c7[_0x16c0fc(0x21a)],'year':_0x2627c7[_0x16c0fc(0x19c)],'month':_0x16c0fc(0x23a),'day':_0x2627c7['cYIsi'],'hour':_0x2627c7[_0x16c0fc(0x1b6)],'minute':_0x2627c7[_0x16c0fc(0x1b6)]}));}else{if(typeof _0x208b9e[_0x16c0fc(0x215)]===_0x2627c7[_0x16c0fc(0x1fd)]){const _0x433d54=new Date(_0x208b9e[_0x16c0fc(0x215)]);!_0x2627c7['Fefzg'](isNaN,_0x433d54[_0x16c0fc(0x243)]())&&(_0x1efb5c=_0x433d54[_0x16c0fc(0x1db)](_0x16c0fc(0x230),{'weekday':_0x2627c7[_0x16c0fc(0x21a)],'year':_0x2627c7[_0x16c0fc(0x19c)],'month':_0x2627c7['cYIsi'],'day':_0x2627c7[_0x16c0fc(0x1b6)],'hour':_0x2627c7[_0x16c0fc(0x1b6)],'minute':_0x2627c7[_0x16c0fc(0x1b6)]}));}}}appointmentsTable['innerHTML']+=_0x16c0fc(0x1f2)+(_0x208b9e[_0x16c0fc(0x20d)]?_0x2627c7[_0x16c0fc(0x240)]:'')+'\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20onchange=\x22toggleCompleted(\x27'+_0x208b9e['id']+_0x16c0fc(0x1e6)+_0x1efb5c+_0x16c0fc(0x1bd)+(_0x208b9e[_0x16c0fc(0x20d)]?_0x2627c7[_0x16c0fc(0x24a)]:'')+'\x22>'+_0x208b9e[_0x16c0fc(0x19e)]+'\x20'+(_0x208b9e['completed']?_0x2627c7[_0x16c0fc(0x1c4)]:'')+_0x16c0fc(0x22d)+_0x208b9e['id']+_0x16c0fc(0x287)+_0x208b9e['id']+_0x16c0fc(0x1e2);});}function renderGlobalAppointments(){const _0x3d315f=_0x28e353,_0x357096={'SlEFJ':'div','eqBFQ':_0x3d315f(0x1eb),'WVyYf':_0x3d315f(0x1d6),'Niepa':function(_0x871a2a,_0x49e78a){return _0x871a2a(_0x49e78a);},'Elswa':function(_0x4134a0,_0x10588b){return _0x4134a0>=_0x10588b;},'PuCwk':_0x3d315f(0x1a1),'RXhxu':_0x3d315f(0x1a2),'cibos':function(_0x5250e3,_0x222a72){return _0x5250e3%_0x222a72;}};globalAppointmentsContainer[_0x3d315f(0x1d9)]='';const _0x25c617=allAppointments[_0x3d315f(0x1b1)](_0x5a5ae1=>_0x5a5ae1[_0x3d315f(0x199)]===_0x3d315f(0x1a7));if(_0x25c617[_0x3d315f(0x272)]===0x0){globalAppointmentsContainer['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-message\x22>لا\x20توجد\x20مواعيد\x20عامة\x20مضافة\x20من\x20الأدمن\x20حتى\x20الآن.</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';return;}_0x25c617[_0x3d315f(0x25d)](_0x30ebd6=>{const _0x112998=_0x3d315f,_0x1429af=document['createElement'](_0x357096['SlEFJ']);_0x1429af[_0x112998(0x23c)]=_0x357096[_0x112998(0x22b)];let _0x24cd0b=_0x30ebd6[_0x112998(0x215)]||_0x357096['WVyYf'];if(_0x24cd0b!==_0x357096[_0x112998(0x1d2)])try{const [_0x37253a,_0x4ddc37]=_0x24cd0b[_0x112998(0x198)](':'),_0x13b038=_0x357096[_0x112998(0x25f)](parseInt,_0x37253a),_0x20e7c3=_0x357096[_0x112998(0x254)](_0x13b038,0xc)?_0x357096[_0x112998(0x279)]:_0x357096[_0x112998(0x1d1)],_0x43ea23=_0x357096['cibos'](_0x13b038,0xc)||0xc;_0x24cd0b=_0x43ea23+':'+_0x4ddc37+'\x20'+_0x20e7c3;}catch(_0x4bad59){}let _0x9fc4f8=_0x357096[_0x112998(0x1d2)],_0x45628f=_0x357096[_0x112998(0x1d2)],_0x37b961=_0x112998(0x1d6),_0x5a0b04=_0x357096[_0x112998(0x1d2)];if(_0x30ebd6[_0x112998(0x19e)]&&_0x30ebd6['title']['includes']('-')){const _0x3966d9=_0x30ebd6[_0x112998(0x19e)][_0x112998(0x198)]('-')[_0x112998(0x257)](_0x56a7e0=>_0x56a7e0[_0x112998(0x21b)]());_0x9fc4f8=_0x3966d9[0x0]||_0x357096[_0x112998(0x1d2)],_0x45628f=_0x3966d9[0x1]||_0x357096[_0x112998(0x1d2)],_0x37b961=_0x3966d9[0x2]||_0x357096['WVyYf'],_0x5a0b04=_0x3966d9[0x3]||_0x357096[_0x112998(0x1d2)];}else _0x45628f=_0x30ebd6[_0x112998(0x19e)]||_0x112998(0x1d6);_0x1429af['innerHTML']=_0x112998(0x268)+_0x9fc4f8+_0x112998(0x1ef)+_0x24cd0b+_0x112998(0x1c1)+_0x5a0b04+_0x112998(0x24e)+_0x37b961+_0x112998(0x1fa)+_0x45628f+_0x112998(0x22a),globalAppointmentsContainer[_0x112998(0x25e)](_0x1429af);});}async function saveAppointment(_0x2cb813,_0x542f83){const _0x2a6c4e=_0x28e353,_0x2b32e3={'iBAsO':function(_0x433f5c,_0x4a700e,_0x15d0c6){return _0x433f5c(_0x4a700e,_0x15d0c6);},'iBcts':'appointments','czxtd':function(_0x3c3e59,_0x136c4e){return _0x3c3e59(_0x136c4e);},'BxXNz':function(_0x576582){return _0x576582();},'zEkCy':_0x2a6c4e(0x1ea),'PBWiX':_0x2a6c4e(0x26d),'dkqQU':_0x2a6c4e(0x27e)};try{await _0x2b32e3[_0x2a6c4e(0x238)](addDoc,_0x2b32e3[_0x2a6c4e(0x238)](collection,db,_0x2b32e3[_0x2a6c4e(0x1b0)]),{'userId':currentUser[_0x2a6c4e(0x235)],'title':_0x2cb813,'time':_0x542f83,'completed':![],'isGlobal':![],'createdAt':new Date()}),_0x2b32e3[_0x2a6c4e(0x1dc)](showNotification,_0x2a6c4e(0x220)),await _0x2b32e3['BxXNz'](loadAppointments);}catch(_0x39abb8){console[_0x2a6c4e(0x250)](_0x2b32e3[_0x2a6c4e(0x22e)],_0x39abb8),showNotification(_0x2b32e3[_0x2a6c4e(0x20b)]+_0x39abb8['message'],_0x2b32e3[_0x2a6c4e(0x263)]);}}async function toggleCompleted(_0x1bc8ef,_0x21c898){const _0x5499a7=_0x28e353,_0x516e6a={'awyNP':function(_0x15a99c,_0xcce219,_0xc4701f){return _0x15a99c(_0xcce219,_0xc4701f);},'ojqjp':function(_0x45c257){return _0x45c257();},'TyUta':function(_0xd2faa9,_0x2ffba2){return _0xd2faa9(_0x2ffba2);},'qpLmw':_0x5499a7(0x197),'WrOSf':_0x5499a7(0x19a),'qQmNr':_0x5499a7(0x241),'DOOSe':_0x5499a7(0x27e)};try{await _0x516e6a[_0x5499a7(0x1b5)](updateDoc,doc(db,_0x5499a7(0x1ce),_0x1bc8ef),{'completed':_0x21c898}),await _0x516e6a[_0x5499a7(0x289)](loadAppointments),_0x516e6a[_0x5499a7(0x1a5)](showNotification,_0x21c898?_0x516e6a['qpLmw']:_0x516e6a[_0x5499a7(0x1ec)]);}catch(_0x552910){console[_0x5499a7(0x250)](_0x516e6a[_0x5499a7(0x288)],_0x552910),showNotification('خطأ\x20في\x20التحديث',_0x516e6a['DOOSe']);}}async function editAppointment(_0x4d31dd){const _0x49f080=_0x28e353,_0x5db9f4={'rExpA':_0x49f080(0x1fb),'vCjKr':function(_0x3de0ba,_0x2e083e){return _0x3de0ba===_0x2e083e;},'mqsqr':function(_0x20621b,_0x274c8d,_0x2520d2){return _0x20621b(_0x274c8d,_0x2520d2);},'EcODb':_0x49f080(0x1cd),'DttPq':_0x49f080(0x260),'OTdob':function(_0x1ffd3d){return _0x1ffd3d();},'pzZuE':function(_0x4b818b,_0x44a1bc,_0x5ed7d8){return _0x4b818b(_0x44a1bc,_0x5ed7d8);},'fBMTJ':function(_0x576f1a,_0x531cd6){return _0x576f1a+_0x531cd6;}},_0x11d8b6=allAppointments['find'](_0x435489=>_0x435489['id']===_0x4d31dd&&_0x435489[_0x49f080(0x199)]===_0x49f080(0x1bc));if(!_0x11d8b6)return;const _0x1077cf=prompt(_0x5db9f4[_0x49f080(0x227)],_0x11d8b6[_0x49f080(0x19e)]);if(_0x5db9f4[_0x49f080(0x1ad)](_0x1077cf,null))return;const _0x4ba1d6=_0x5db9f4[_0x49f080(0x26c)](prompt,_0x5db9f4[_0x49f080(0x232)],_0x11d8b6[_0x49f080(0x215)]);if(_0x4ba1d6===null)return;try{await updateDoc(doc(db,_0x49f080(0x1ce),_0x4d31dd),{'title':_0x1077cf,'time':_0x4ba1d6}),showNotification(_0x5db9f4['DttPq']),await _0x5db9f4[_0x49f080(0x262)](loadAppointments);}catch(_0x2d0b36){_0x5db9f4[_0x49f080(0x1da)](showNotification,_0x5db9f4[_0x49f080(0x20e)](_0x49f080(0x222),_0x2d0b36[_0x49f080(0x204)]),_0x49f080(0x27e));}}async function deleteAppointment(_0x5dbd36){const _0x10d082=_0x28e353,_0x2ae2ab={'INqTZ':_0x10d082(0x20c),'SSZrr':function(_0x5756a4,_0x145f46){return _0x5756a4(_0x145f46);},'MjXXV':function(_0x3197cd,_0x1ad116,_0x5989ea,_0x29db0b){return _0x3197cd(_0x1ad116,_0x5989ea,_0x29db0b);},'luUQz':function(_0x450f5c){return _0x450f5c();},'rgFMT':function(_0x227304,_0x5aa88d,_0x2b3419){return _0x227304(_0x5aa88d,_0x2b3419);},'liWHc':_0x10d082(0x27e)};if(!confirm(_0x2ae2ab[_0x10d082(0x1f1)]))return;try{await _0x2ae2ab['SSZrr'](deleteDoc,_0x2ae2ab[_0x10d082(0x21f)](doc,db,_0x10d082(0x1ce),_0x5dbd36)),showNotification('تم\x20الحذف!'),await _0x2ae2ab[_0x10d082(0x236)](loadAppointments);}catch(_0x1e58a2){_0x2ae2ab[_0x10d082(0x223)](showNotification,_0x10d082(0x1d4)+_0x1e58a2[_0x10d082(0x204)],_0x2ae2ab[_0x10d082(0x201)]);}}async function clearAllAppointments(){const _0x415244=_0x28e353,_0x1e2f8a={'nfvsi':function(_0x164191,_0x3d5345){return _0x164191(_0x3d5345);},'KRfAQ':function(_0x1f044e,_0x4204b4,_0x3f88bb,_0x1acab5){return _0x1f044e(_0x4204b4,_0x3f88bb,_0x1acab5);},'rKcpR':function(_0x1ae3cb,_0x44cf3a,_0x35cc0d,_0x34428d){return _0x1ae3cb(_0x44cf3a,_0x35cc0d,_0x34428d);},'VLDiH':_0x415244(0x1a4),'uppHd':'isGlobal','Vzxyg':'تم\x20مسح\x20كل\x20مواعيدك\x20الخاصة!','wKjpy':function(_0x1046f3){return _0x1046f3();},'Xjlfy':function(_0x2af65b,_0x1d3199,_0x286c28){return _0x2af65b(_0x1d3199,_0x286c28);},'kBxqS':'danger'};if(!_0x1e2f8a[_0x415244(0x27a)](confirm,_0x415244(0x1e3)))return;try{const _0x51e615=_0x1e2f8a['KRfAQ'](query,collection(db,_0x415244(0x1ce)),_0x1e2f8a[_0x415244(0x245)](where,_0x1e2f8a[_0x415244(0x244)],'==',currentUser[_0x415244(0x235)]),_0x1e2f8a[_0x415244(0x245)](where,_0x1e2f8a[_0x415244(0x281)],'!=',!![])),_0x1576c2=await getDocs(_0x51e615),_0x3c888d=[];_0x1576c2['forEach'](_0x33fb70=>_0x3c888d[_0x415244(0x246)](deleteDoc(_0x33fb70[_0x415244(0x280)]))),await Promise['all'](_0x3c888d),showNotification(_0x1e2f8a[_0x415244(0x24c)]),await _0x1e2f8a[_0x415244(0x26e)](loadAppointments);}catch(_0x5cffa7){_0x1e2f8a['Xjlfy'](showNotification,_0x415244(0x225)+_0x5cffa7[_0x415244(0x204)],_0x1e2f8a[_0x415244(0x203)]);}}function showAddForm(){const _0x5cc426=_0x28e353,_0x51b6fe={'FoLNU':_0x5cc426(0x1a6),'BuCyS':_0x5cc426(0x1c3),'YKvkG':function(_0x364899,_0x35811d,_0x1ea6b5){return _0x364899(_0x35811d,_0x1ea6b5);},'xNFJw':_0x5cc426(0x247),'XSbPj':'warning','KFnmR':function(_0x80752a){return _0x80752a();}};addFormContainer[_0x5cc426(0x1c8)][_0x5cc426(0x26f)]='block',document[_0x5cc426(0x284)](_0x5cc426(0x224))[_0x5cc426(0x25b)]=async _0x5beacd=>{const _0x141de0=_0x5cc426;_0x5beacd[_0x141de0(0x249)]();const _0x532a4f=document['getElementById'](_0x51b6fe[_0x141de0(0x24f)])[_0x141de0(0x1f5)]['trim'](),_0x288455=document[_0x141de0(0x284)](_0x51b6fe[_0x141de0(0x1a9)])[_0x141de0(0x1f5)];if(!_0x532a4f||!_0x288455){_0x51b6fe['YKvkG'](showNotification,_0x51b6fe[_0x141de0(0x275)],_0x51b6fe[_0x141de0(0x1cc)]);return;}await _0x51b6fe[_0x141de0(0x1f8)](saveAppointment,_0x532a4f,_0x288455),_0x51b6fe[_0x141de0(0x23b)](resetAddForm);};}function resetAddForm(){const _0x26bbb9=_0x28e353,_0x48a529={'cDsLF':_0x26bbb9(0x224)};document[_0x26bbb9(0x284)](_0x48a529[_0x26bbb9(0x28a)])[_0x26bbb9(0x1cf)](),addFormContainer[_0x26bbb9(0x1c8)][_0x26bbb9(0x26f)]=_0x26bbb9(0x1e4);}function processCommand(){const _0x564af0=_0x28e353,_0x53cb0b={'mmLJA':_0x564af0(0x1fc),'qpbTb':'أضف\x20موعد','qQHwL':_0x564af0(0x1f6),'SmKPz':'مسح\x20كل','YhMip':_0x564af0(0x27f),'dXnKT':function(_0x258a29){return _0x258a29();},'SLKMA':function(_0x25a27d,_0x21b6f6){return _0x25a27d(_0x21b6f6);},'yBZwj':_0x564af0(0x1df)},_0x381c02=document[_0x564af0(0x284)](_0x53cb0b[_0x564af0(0x25c)])[_0x564af0(0x1f5)][_0x564af0(0x21b)]()[_0x564af0(0x255)]();document['getElementById'](_0x53cb0b[_0x564af0(0x25c)])['value']='';if(!_0x381c02)return;if(_0x381c02['includes'](_0x53cb0b[_0x564af0(0x216)])||_0x381c02[_0x564af0(0x213)](_0x53cb0b[_0x564af0(0x283)])){showAddForm();return;}else{if(_0x381c02[_0x564af0(0x213)](_0x53cb0b[_0x564af0(0x231)])||_0x381c02[_0x564af0(0x213)](_0x53cb0b[_0x564af0(0x1e5)])){_0x53cb0b[_0x564af0(0x228)](clearAllAppointments);return;}}_0x53cb0b[_0x564af0(0x237)](showNotification,_0x53cb0b['yBZwj']);}function setupThemeToggle(){const _0x12446a=_0x28e353,_0x2bab76={'AiVqa':_0x12446a(0x22f),'OWTBA':_0x12446a(0x226),'gqrlC':'<i\x20class=\x22fas\x20fa-moon\x22></i>','LcJiV':_0x12446a(0x1d5),'IlGoE':_0x12446a(0x1d3),'RokMC':_0x12446a(0x1e7),'VCeDk':function(_0x26a622,_0x371482){return _0x26a622===_0x371482;},'OtHPj':'click'},_0x4161d3=document[_0x12446a(0x284)](_0x2bab76[_0x12446a(0x1c7)]),_0x259655=document['documentElement'];_0x2bab76[_0x12446a(0x266)](localStorage[_0x12446a(0x276)](_0x2bab76[_0x12446a(0x1d0)]),_0x2bab76[_0x12446a(0x1b7)])&&(_0x259655['classList'][_0x12446a(0x22c)](_0x12446a(0x22f)),_0x4161d3[_0x12446a(0x1d9)]=_0x2bab76[_0x12446a(0x1ae)]),_0x4161d3[_0x12446a(0x1ff)](_0x2bab76[_0x12446a(0x209)],function(){const _0x5831b1=_0x12446a;_0x259655['classList'][_0x5831b1(0x248)](_0x2bab76[_0x5831b1(0x19b)])?(_0x259655[_0x5831b1(0x1e9)][_0x5831b1(0x267)](_0x5831b1(0x22f)),localStorage[_0x5831b1(0x205)](_0x2bab76[_0x5831b1(0x1d0)],_0x5831b1(0x27d)),_0x4161d3['innerHTML']=_0x2bab76[_0x5831b1(0x1ba)]):(_0x259655[_0x5831b1(0x1e9)][_0x5831b1(0x22c)](_0x2bab76['AiVqa']),localStorage[_0x5831b1(0x205)](_0x2bab76[_0x5831b1(0x1d0)],_0x2bab76['LcJiV']),_0x4161d3[_0x5831b1(0x1d9)]=_0x2bab76['IlGoE']);});}function showNotification(_0x1f03db,_0x14fe7c=_0x28e353(0x1a3)){const _0x214427=_0x28e353,_0x2271a6=document[_0x214427(0x208)](_0x214427(0x1b3));_0x2271a6['className']=_0x214427(0x285)+_0x14fe7c+_0x214427(0x1ed),_0x2271a6['style'][_0x214427(0x19d)]=0x270f,_0x2271a6[_0x214427(0x1d9)]=_0x214427(0x1c5)+_0x1f03db,document[_0x214427(0x207)][_0x214427(0x25e)](_0x2271a6),setTimeout(()=>_0x2271a6['remove'](),0xfa0);}window[_0x28e353(0x200)]=processCommand,window['showAddForm']=showAddForm,window['clearAllAppointments']=clearAllAppointments,window[_0x28e353(0x1ac)]=toggleCompleted,window[_0x28e353(0x26b)]=editAppointment,window[_0x28e353(0x1f7)]=deleteAppointment;function _0x4f40b4(_0xd94ce8){const _0x2312bb=_0x28e353,_0x54f243={'LOFqd':function(_0x4f5ed2,_0x176c27){return _0x4f5ed2===_0x176c27;},'jOyUZ':_0x2312bb(0x271),'mzjHP':_0x2312bb(0x239),'DwMXa':function(_0x2c3549,_0x12ff6a){return _0x2c3549!==_0x12ff6a;},'iYveR':function(_0xcdc63a,_0x48799f){return _0xcdc63a+_0x48799f;},'tQPca':function(_0x567800,_0x5c5af){return _0x567800/_0x5c5af;},'QPNRF':_0x2312bb(0x272),'BWxAx':function(_0x456b91,_0x1ea72a){return _0x456b91%_0x1ea72a;},'NzeIO':function(_0x3c7cb7,_0x1e2d9a){return _0x3c7cb7+_0x1e2d9a;},'UBunX':_0x2312bb(0x1be),'EqtZO':_0x2312bb(0x1bf),'LnjHb':'action','nyuIO':function(_0x49d5f6,_0x51158b){return _0x49d5f6(_0x51158b);}};function _0x102276(_0x108cf0){const _0x50c1f6=_0x2312bb;if(_0x54f243['LOFqd'](typeof _0x108cf0,_0x54f243[_0x50c1f6(0x1c6)]))return function(_0x4f6654){}[_0x50c1f6(0x23d)](_0x54f243[_0x50c1f6(0x23e)])[_0x50c1f6(0x1af)]('counter');else _0x54f243['DwMXa'](_0x54f243[_0x50c1f6(0x1e0)]('',_0x54f243['tQPca'](_0x108cf0,_0x108cf0))[_0x54f243[_0x50c1f6(0x1e1)]],0x1)||_0x54f243[_0x50c1f6(0x27c)](_0x54f243[_0x50c1f6(0x1de)](_0x108cf0,0x14),0x0)?function(){return!![];}[_0x50c1f6(0x23d)](_0x54f243[_0x50c1f6(0x206)](_0x54f243[_0x50c1f6(0x1b2)],_0x54f243[_0x50c1f6(0x258)]))[_0x50c1f6(0x1f3)](_0x54f243[_0x50c1f6(0x253)]):function(){return![];}[_0x50c1f6(0x23d)](_0x54f243[_0x50c1f6(0x206)](_0x50c1f6(0x1be),_0x54f243[_0x50c1f6(0x258)]))['apply'](_0x50c1f6(0x234));_0x102276(++_0x108cf0);}try{if(_0xd94ce8)return _0x102276;else _0x54f243[_0x2312bb(0x1c0)](_0x102276,0x0);}catch(_0x59c595){}}
+        // --- Firebase Setup (كما هي) ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {
+            getFirestore,
+            collection,
+            query,
+            where,
+            getDocs,
+            addDoc,
+            updateDoc,
+            deleteDoc,
+            doc,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
+            authDomain: "sit-el-kol.firebaseapp.com",
+            projectId: "sit-el-kol",
+            storageBucket: "sit-el-kol.firebasestorage.app",
+            messagingSenderId: "573924344198",
+            appId: "1:573924344198:web:fec2e9a54c1c152cd16c07",
+            measurementId: "G-CWVJDKPS0M"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let allAppointments = [];
+
+        // --- DOM Elements ---
+        const appointmentsTable = document.getElementById('appointmentsTable');
+        const globalAppointmentsContainer = document.getElementById('globalAppointmentsContainer');
+        const addFormContainer = document.getElementById('addFormContainer');
+
+        // --- Setup after DOM loaded (كما هي) ---
+        document.addEventListener('DOMContentLoaded', function () {
+            setupThemeToggle();
+        });
+
+        // --- Authentication Guard (كما هي) ---
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                await loadAppointments();
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // --- Load Appointments (Personal + Global) (كما هي) ---
+        async function loadAppointments() {
+            try {
+                const personalQ = query(
+                    collection(db, "appointments"),
+                    where("userId", "==", currentUser.uid),
+                    orderBy("time", "asc")
+                );
+
+                const globalQ = query(
+                    collection(db, "appointments"),
+                    where("isGlobal", "==", true),
+                    orderBy("createdAt", "desc")
+                );
+
+                const [personalSnap, globalSnap] = await Promise.all([
+                    getDocs(personalQ),
+                    getDocs(globalQ)
+                ]);
+
+                allAppointments = [];
+
+                personalSnap.forEach(doc => {
+                    if (doc.data().isGlobal !== true) {
+                        allAppointments.push({ id: doc.id, ...doc.data(), type: 'personal' });
+                    }
+                });
+
+                globalSnap.forEach(doc => {
+                    allAppointments.push({ id: doc.id, ...doc.data(), type: 'global' });
+                });
+
+                renderAppointments();
+                renderGlobalAppointments();
+
+            } catch (error) {
+                console.error("Error loading appointments:", error);
+                showNotification('خطأ في تحميل المواعيد: ' + error.message, 'danger');
+            }
+        }
+
+        // --- Render Personal Appointments (كما هي) ---
+        function renderAppointments() {
+            appointmentsTable.innerHTML = '';
+            const personalApps = allAppointments.filter(a => a.type === 'personal');
+
+            if (personalApps.length === 0) {
+                appointmentsTable.innerHTML = `
+                    <tr><td colspan="4" class="text-center text-muted">لا توجد مواعيد بعد.</td></tr>
+                `;
+                return;
+            }
+
+            personalApps.forEach(app => {
+                let timeFormatted = "";
+
+                if (app.time) {
+                    if (app.time.toDate) {
+                        const dateTime = app.time.toDate();
+                        if (!isNaN(dateTime.getTime())) {
+                            timeFormatted = dateTime.toLocaleString('ar-EG', {
+                                weekday: 'short',
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        }
+                    } else if (typeof app.time === 'string') {
+                        const dateTime = new Date(app.time);
+                        if (!isNaN(dateTime.getTime())) {
+                            timeFormatted = dateTime.toLocaleString('ar-EG', {
+                                weekday: 'short',
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        }
+                    }
+                }
+
+                appointmentsTable.innerHTML += `
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="form-check-input" ${app.completed ? 'checked' : ''}
+                                   onchange="toggleCompleted('${app.id}', this.checked)">
+                        </td>
+                        <td>${timeFormatted}</td>
+                        <td class="${app.completed ? 'text-decoration-line-through text-muted' : ''}">
+                          ${app.title} ${app.completed ? '<span class="badge bg-success ms-2">تم ✔</span>' : ''}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-warning me-1" onclick="editAppointment('${app.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteAppointment('${app.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- Render Global Appointments as Cards (كما هي) ---
+        function renderGlobalAppointments() {
+            globalAppointmentsContainer.innerHTML = '';
+
+            const globalApps = allAppointments.filter(a => a.type === 'global');
+            if (globalApps.length === 0) {
+                globalAppointmentsContainer.innerHTML = `
+                    <div class="empty-message">لا توجد مواعيد عامة مضافة من الأدمن حتى الآن.</div>
+                `;
+                return;
+            }
+
+            globalApps.forEach(app => {
+                const card = document.createElement('div');
+                card.className = 'global-appointment-card';
+
+                let timeFormatted = app.time || "غير محدد";
+
+                if (timeFormatted !== "غير محدد") {
+                    try {
+                        const [hours, minutes] = timeFormatted.split(':');
+                        const hoursInt = parseInt(hours);
+
+                        const ampm = hoursInt >= 12 ? 'مساءً' : 'صباحًا';
+                        const displayHours = hoursInt % 12 || 12;
+
+                        timeFormatted = `${displayHours}:${minutes} ${ampm}`;
+                    } catch (e) { }
+                }
+
+                let day = "غير محدد";
+                let subject = "غير محدد";
+                let doctor = "غير محدد";
+                let location = "غير محدد";
+
+                if (app.title && app.title.includes('-')) {
+                    const parts = app.title.split('-').map(p => p.trim());
+                    day = parts[0] || "غير محدد";
+                    subject = parts[1] || "غير محدد";
+                    doctor = parts[2] || "غير محدد";
+                    location = parts[3] || "غير محدد";
+                } else {
+                    subject = app.title || "غير محدد";
+                }
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span>📅 ${day}</span>
+                        <span class="badge bg-info">عام/من الأدمن</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-item">
+                            <div class="card-item-label">الوقت</div>
+                            <div class="card-item-value">${timeFormatted}</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-item-label">المكان</div>
+                            <div class="card-item-value">${location}</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-item-label">الدكتور/المُعيد</div>
+                            <div class="card-item-value">${doctor}</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-item-label">المادة</div>
+                            <div class="card-item-value">${subject}</div>
+                        </div>
+                    </div>
+                `;
+
+                globalAppointmentsContainer.appendChild(card);
+            });
+        }
+
+        async function saveAppointment(title, time) {
+            try {
+                await addDoc(collection(db, "appointments"), {
+                    userId: currentUser.uid,
+                    title: title,
+                    time: time,
+                    completed: false,
+                    isGlobal: false,
+                    createdAt: new Date()
+                });
+                showNotification('تم إضافة الموعد بنجاح!');
+                await loadAppointments();
+            } catch (error) {
+                console.error("Error saving appointment:", error);
+                showNotification('خطأ في الحفظ: ' + error.message, 'danger');
+            }
+        }
+
+        async function toggleCompleted(id, completed) {
+            try {
+                await updateDoc(doc(db, "appointments", id), { completed });
+                await loadAppointments();
+                showNotification(completed ? 'تم إكمال المهمة! ✔' : 'تم إعادة فتحها.');
+            } catch (error) {
+                console.error("Error updating:", error);
+                showNotification('خطأ في التحديث', 'danger');
+            }
+        }
+
+        async function editAppointment(id) {
+            const app = allAppointments.find(a => a.id === id && a.type === 'personal');
+            if (!app) return;
+
+            const newTitle = prompt('عدل العنوان:', app.title);
+            if (newTitle === null) return;
+
+            const newTime = prompt('عدل التاريخ والوقت (YYYY-MM-DDTHH:MM):', app.time);
+            if (newTime === null) return;
+
+            try {
+                await updateDoc(doc(db, "appointments", id), {
+                    title: newTitle,
+                    time: newTime
+                });
+                showNotification('تم التعديل!');
+                await loadAppointments();
+            } catch (error) {
+                showNotification('خطأ في التعديل: ' + error.message, 'danger');
+            }
+        }
+
+        async function deleteAppointment(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الموعد الخاص؟')) return;
+            try {
+                await deleteDoc(doc(db, "appointments", id));
+                showNotification('تم الحذف!');
+                await loadAppointments();
+            } catch (error) {
+                showNotification('خطأ في الحذف: ' + error.message, 'danger');
+            }
+        }
+
+        async function clearAllAppointments() {
+            if (!confirm('مسح كل مواعيدك الخاصة؟ المواعيد العامة مش هتتأثر.')) return;
+            try {
+                const q = query(
+                    collection(db, "appointments"),
+                    where("userId", "==", currentUser.uid),
+                    where("isGlobal", "!=", true)
+                );
+                const snap = await getDocs(q);
+
+                const batch = [];
+                snap.forEach(docu => batch.push(deleteDoc(docu.ref)));
+                await Promise.all(batch);
+
+                showNotification('تم مسح كل مواعيدك الخاصة!');
+                await loadAppointments();
+            } catch (error) {
+                showNotification('خطأ في المسح: ' + error.message, 'danger');
+            }
+        }
+
+        function showAddForm() {
+            addFormContainer.style.display = 'block';
+            document.getElementById('addAppointment').onsubmit = async (e) => {
+                e.preventDefault();
+                const title = document.getElementById('appointmentTitle').value.trim();
+                const time = document.getElementById('appointmentTime').value;
+                if (!title || !time) {
+                    showNotification('أدخل العنوان والتاريخ والوقت!', 'warning');
+                    return;
+                }
+                await saveAppointment(title, time);
+                resetAddForm();
+            };
+        }
+
+        function resetAddForm() {
+            document.getElementById('addAppointment').reset();
+            addFormContainer.style.display = 'none';
+        }
+
+        function processCommand() {
+            const cmd = document.getElementById('userCommand').value.trim().toLowerCase();
+            document.getElementById('userCommand').value = '';
+            if (!cmd) return;
+
+            if (cmd.includes('أضف موعد') || cmd.includes('add appointment')) {
+                showAddForm();
+                return;
+            } else if (cmd.includes('مسح كل') || cmd.includes('clear all')) {
+                clearAllAppointments();
+                return;
+            }
+
+            showNotification('جرب: "إضافة موعد" أو "مسح كل الجدول"');
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'day') {
+                root.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (root.classList.contains('day-mode')) {
+                    root.classList.remove('day-mode');
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    root.classList.add('day-mode');
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+        }
+
+        function showNotification(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `alert alert-${type} position-fixed bottom-0 end-0 m-3`;
+            div.style.zIndex = 9999;
+            div.innerHTML = `<i class="fas fa-bell me-2"></i>${msg}`;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 4000);
+        }
+
+        window.processCommand = processCommand;
+        window.showAddForm = showAddForm;
+        window.clearAllAppointments = clearAllAppointments;
+        window.toggleCompleted = toggleCompleted;
+        window.editAppointment = editAppointment;
+        window.deleteAppointment = deleteAppointment;
     </script>
-</body>
-</html>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Targets for floating icons
+      const fxTargets = document.querySelectorAll('.chat-bot, .admin-section, .global-appointment-card, #addFormContainer .card');
+      fxTargets.forEach(el => {
+        if (el.querySelector('.fx-icons')) return;
+        const icons = document.createElement('div');
+        icons.className = 'fx-icons';
+        icons.setAttribute('aria-hidden', 'true');
+        icons.innerHTML = `
+          <i class="fas fa-calendar-check fx-icon i1" aria-hidden="true"></i>
+          <i class="fas fa-clock fx-icon i2" aria-hidden="true"></i>
+          <i class="fas fa-circle fx-icon i3" aria-hidden="true"></i>
+        `;
+        el.appendChild(icons);
+      });
+
+      // Reveal on scroll (IntersectionObserver)
+      const revealTargets = document.querySelectorAll('.chat-bot, .action-btns, #addFormContainer, .table-responsive, .admin-section, .global-appointment-card');
+      revealTargets.forEach(el => el.classList.add('reveal'));
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            entry.target.classList.add('show');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealTargets.forEach(el => io.observe(el));
+    });
+    </script>
+
 </body>
 </html>
