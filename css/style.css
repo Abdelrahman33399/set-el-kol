@@ -1,161 +1,345 @@
-/* الوضع الليلي (الافتراضي) */
 :root {
-    /* الألوان الأساسية */
-    --bg-color: #121212; /* رمادي غامق للخلفية */
-    --card-bg: rgba(255, 255, 255, 0.05); /* خلفية البطاقات شفافة مع تدرج */
-    --border-color: rgba(255, 255, 255, 0.1);
-    --text-light: #e0e0e0; /* لون فاتح للنصوص */
-    --primary-neon: linear-gradient(45deg, #a453ff, #54aaff); /* نيون متدرج بنفسجي وأزرق */
-    --accent-orange: #ff6b35; /* لون برتقالي غامق مريح للعين */
-    --accent-orange-hover: #e05a2a;
-    --shadow-purple: rgba(164, 83, 255, 0.5);
-    --shadow-orange: rgba(255, 107, 53, 0.5);
+  /* Base */
+  --bg-color: #121212;
+  --text-light: #e0e0e0;
+
+  /* Glass */
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.14);
+  --glass-blur: 12px;
+
+  /* Neon accents */
+  --primary-neon: linear-gradient(45deg, #a453ff, #54aaff);
+  --accent-orange: #ff6b35;
+  --accent-orange-hover: #e05a2a;
+
+  --shadow-purple: rgba(164, 83, 255, 0.45);
+  --shadow-orange: rgba(255, 107, 53, 0.45);
+
+  /* Extra */
+  --neon-blue: #5d5fef;
+  --soft-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  --strong-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
 }
 
-/* الوضع النهاري - مريح مع تدرجات أزرق/بنفسجي */
+/* الوضع النهاري (مُعدّل ليكون أهدى وأقل وهج) */
 :root.day-mode {
-    --bg-color: #1b405f; /* خلفية زرقاء فاتحة ناعمة */
-    --card-bg: rgba(255, 255, 255, 0.7); /* كروت بيضاء شبه شفافة */
-    --border-color: rgba(130, 130, 255, 0.2);
-    --text-light: #ec6211; /* ← النصوص العادية بالأسود — باينة وواضحة */
-    --primary-neon: linear-gradient(45deg, #ffffff, #ffffff); /* بنفسجي → أزرق — تدرج نهاري أنيق */
-    --accent-orange: #e65c00; /* برتقالي ترابي — مش حارق */
-    --accent-orange-hover: #cc5200;
-    --shadow-purple: rgb(255, 255, 255);
-    --shadow-orange: rgba(230, 92, 0, 0.592);
+  /* Off-white بدل الأبيض الصريح لتقليل الوهج */
+  --bg-color: #f6f4ee;
+
+  /* نصوص غامقة وواضحة */
+  --text-light: #111827;
+
+  /* Glass هادي */
+  --card-bg: rgba(255, 255, 255, 0.62);
+  --border-color: rgba(17, 24, 39, 0.10);
+
+  /* نيون نهاري لكن مش مبهر */
+  --primary-neon: linear-gradient(45deg, #2f3bff, #ff6b35);
+
+  /* Accent */
+  --accent-orange: #e65c00;
+  --accent-orange-hover: #cc5200;
+
+  /* Shadows أخف */
+  --shadow-purple: rgba(47, 59, 255, 0.18);
+  --shadow-orange: rgba(230, 92, 0, 0.22);
+
+  /* (اختياري) لو حابب تحكم أدق في الظلال بالنهاري */
+  --soft-shadow: 0 12px 30px rgba(17, 24, 39, 0.12);
+  --strong-shadow: 0 18px 45px rgba(17, 24, 39, 0.18);
 }
 
+/* Body + خلفية عامة */
 body {
-    background-color: var(--bg-color);
-    color: var(--text-light);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
-    position: relative;
+  background:
+    radial-gradient(1100px 600px at 85% 12%, rgba(93, 95, 239, 0.18), transparent 55%),
+    radial-gradient(900px 520px at 10% 30%, rgba(255, 107, 53, 0.16), transparent 55%),
+    linear-gradient(180deg, rgba(7,9,22,1), rgba(5,6,20,1));
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
 }
 
-/* خلفية Particles.js */
+/* Day mode: خلفية نهارية أهدى + أقل سطوع */
+:root.day-mode body {
+  background:
+    radial-gradient(1100px 600px at 85% 12%, rgba(47, 59, 255, 0.07), transparent 58%),
+    radial-gradient(900px 520px at 10% 30%, rgba(38, 105, 239, 0.07), transparent 58%),
+    linear-gradient(180deg, #d6a40f, #1267efba);
+}
+
+/* Blobs خلفية (خفيفة) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  filter: blur(45px);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  top: -160px;
+  right: -180px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(93,95,239,.75), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(255,107,53,.55), transparent 62%);
+  animation: blobMove1 10s ease-in-out infinite;
+}
+
+body::after {
+  bottom: -210px;
+  left: -210px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,107,53,.65), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(93,95,239,.45), transparent 62%);
+  animation: blobMove2 12s ease-in-out infinite;
+}
+
+@keyframes blobMove1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-18px, 22px) scale(1.05); }
+}
+@keyframes blobMove2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(22px, -18px) scale(1.06); }
+}
+
+/* particles.js layer */
 #particles-js {
-    position: fixed; /* ← غيرتها لـ fixed عشان تفضل ظاهرة */
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    pointer-events: none; /* ← مهم: يسمح بالتفاعل مع العناصر فوقها */
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
+/* خلي المحتوى فوق الخلفية */
+header, section, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* العنوان */
 .neon-title {
-    background: var(--primary-neon);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2.5rem;
-    font-weight: 800;
-    text-shadow: 0 0 10px var(--shadow-purple);
+  background: var(--primary-neon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  font-size: 2.5rem;
+  font-weight: 800;
+
+  text-shadow:
+    0 0 10px var(--shadow-purple),
+    0 0 18px rgba(93,95,239,0.15);
+
+  animation: titlePulse 3.5s ease-in-out infinite;
 }
 
+@keyframes titlePulse {
+  0%,100% { transform: translateY(0); filter: brightness(1); }
+  50% { transform: translateY(-2px); filter: brightness(1.07); }
+}
+
+/* اللوجو */
 .logo {
-    max-width: 200px;
-    border-radius: 70px;
-    box-shadow: 0 0 20px var(--shadow-orange);
+  max-width: 200px;
+  border-radius: 70px;
+  box-shadow: 0 0 20px var(--shadow-orange);
+  animation: softFloat 3.2s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes softFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Cards */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .card-section {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    backdrop-filter: blur(10px); /* ← يحافظ على الخلفية شبه شفافة */
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--soft-shadow);
+
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+
+  position: relative;
+  overflow: hidden;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  will-change: transform;
 }
 
-.card-section:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px var(--shadow-orange);
-    background: rgba(255, 107, 53, 0.1);
+/* لمعان (shine) على الكارت */
+.card-section::after {
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(45deg,
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0) 60%);
+  transform: translate(-120%, -120%) rotate(45deg);
+  opacity: 0;
+  pointer-events:none;
 }
 
-.card-link {
-    text-decoration: none;
-    color: inherit;
+.card-link:hover .card-section {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--strong-shadow);
+  border-color: rgba(255, 107, 53, 0.28);
+  background: rgba(255, 107, 53, 0.08);
+}
+
+.card-link:hover .card-section::after {
+  opacity: 1;
+  animation: shine 1.25s ease forwards;
+}
+
+@keyframes shine {
+  from { transform: translate(-120%, -120%) rotate(45deg); }
+  to   { transform: translate(120%, 120%) rotate(45deg); }
 }
 
 .card-section i {
-    color: var(--accent-orange);
+  color: var(--accent-orange);
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.card-link:hover .card-section i {
+  transform: translateY(-2px) scale(1.05);
+  filter: drop-shadow(0 10px 18px rgba(255,107,53,.28));
 }
 
 .card-section h3 {
-    color: var(--text-light);
-    font-weight: 600;
+  color: var(--text-light);
+  font-weight: 700;
 }
 
+/* Footer */
 footer {
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.20);
+  border-top: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
+/* Day mode: Footer أفتح شوية وهادئ */
+:root.day-mode footer {
+  background: rgba(17, 24, 39, 0.04);
+  border-top: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+/* Designer button */
 .designer-btn {
-    display: inline-block;
-    background: var(--accent-orange);
-    color: white !important;
-    padding: 8px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s;
-    margin-top: 10px;
+  display: inline-block;
+  background: var(--accent-orange);
+  color: white !important;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  margin-top: 10px;
 }
 
 .designer-btn:hover {
-    background: var(--accent-orange-hover);
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px var(--shadow-orange);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .neon-title {
-        font-size: 2rem;
-    }
-    .card-section {
-        padding: 1.5rem;
-    }
+  background: var(--accent-orange-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px var(--shadow-orange);
 }
 
 /* زر تبديل الوضع */
 .theme-toggle-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: var(--accent-orange);
-    color: white;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 15px var(--shadow-orange);
-    transition: all 0.3s ease;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  background: var(--accent-orange);
+  color: white;
+
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px var(--shadow-orange);
+  transition: transform .25s ease, background .25s ease;
 }
 
 .theme-toggle-btn:hover {
-    background: var(--accent-orange-hover);
-    transform: translateY(-3px) rotate(15deg);
+  background: var(--accent-orange-hover);
+  transform: translateY(-3px) rotate(12deg);
 }
 
 .theme-toggle-btn i {
-    transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+}
+.theme-toggle-btn.day i { transform: rotate(0deg); }
+.theme-toggle-btn.night i { transform: rotate(360deg); }
+
+/* Scroll reveal (يتفعل بكلاس show من JS) */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.theme-toggle-btn.day i {
-    transform: rotate(0deg);
+/* حل مشكلة text-light في Bootstrap داخل النهاري (مهم لراحة العين) */
+:root.day-mode .text-light { color: #111827 !important; }
+:root.day-mode .lead { color: #334155 !important; }
+
+/* Accessibility: تقليل الحركة (مهم) */
+@media (prefers-reduced-motion: reduce) {
+  .neon-title, .logo, body::before, body::after {
+    animation: none !important;
+  }
+  .card-section, .card-section::after, .designer-btn, .theme-toggle-btn {
+    transition: none !important;
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.theme-toggle-btn.night i {
-    transform: rotate(360deg);
+/* Focus للكيبورد */
+:focus-visible {
+  outline: 2px solid rgba(255, 107, 53, 0.65);
+  outline-offset: 3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .neon-title { font-size: 2rem; }
+  .card-section { padding: 1.5rem; }
 }
