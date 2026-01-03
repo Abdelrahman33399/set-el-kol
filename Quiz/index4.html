@@ -539,7 +539,26 @@
     <source src="1.mp4" type="audio/mpeg">
   </audio>
 
-  <script>
+  <script type="module">
+  // ================= Firebase Auth Guard =================
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDeapYypO595vcDWUoh1gOncsGkQ5EZdyE",
+    authDomain: "sit-el-kol.firebaseapp.com",
+    projectId: "sit-el-kol",
+    storageBucket: "sit-el-kol.firebasestorage.app",
+    messagingSenderId: "573924344198",
+    appId: "1:573924344198:web:fec2e9a54c1c152cd16c07",
+    measurementId: "G-CWVJDKPS0M"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // اخفاء الصفحة لحد ما نعرف هل مسجل دخول ولا لا (اختياري لكنه مهم لتجنب الوميض)
+  document.documentElement.style.visibility = "hidden";
   const quizzes = {
   quiz1: {
     title: "أساسيات التصميم التعليمي ",
@@ -6558,278 +6577,287 @@
     ]
   }};
 
-// ================ المتغيرات العامة ================
-    let currentQuiz = null;
-    let currentQuizId = null; // لتخزين معرف الاختبار الحالي
-    let currentQuestionIndex = 0;
-    let userAnswers = [];
+  // ================ المتغيرات العامة ================
+  let currentQuiz = null;
+  let currentQuizId = null; // لتخزين معرف الاختبار الحالي
+  let currentQuestionIndex = 0;
+  let userAnswers = [];
 
-    // ============ (إضافة) دوال صوت صح/غلط من ملفات ============
-   // ======== أصوات صح/غلط من ملفات (مدة 5 ثواني) ========
-let soundTimers = {}; // لتخزين تايمر لكل صوت
+  // ============ (إضافة) دوال صوت صح/غلط من ملفات ============
+  // ======== أصوات صح/غلط من ملفات (مدة 3 ثواني) ========
+  let soundTimers = {}; // لتخزين تايمر لكل صوت
 
-function playSoundById(id) {
-  const audio = document.getElementById(id);
-  if (!audio) return;
+  function playSoundById(id) {
+    const audio = document.getElementById(id);
+    if (!audio) return;
 
-  // لو في تايمر قديم لنفس الصوت، لغيه
-  if (soundTimers[id]) {
-    clearTimeout(soundTimers[id]);
-    soundTimers[id] = null;
+    // لو في تايمر قديم لنفس الصوت، لغيه
+    if (soundTimers[id]) {
+      clearTimeout(soundTimers[id]);
+      soundTimers[id] = null;
+    }
+
+    // شغّل من البداية
+    audio.pause();
+    audio.currentTime = 0;
+
+    const p = audio.play();
+    if (p && typeof p.catch === "function") {
+      p.catch(() => {});
+    }
+
+    // وقف بعد 3 ثواني
+    soundTimers[id] = setTimeout(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }, 3000);
   }
 
-  // شغّل من البداية
-  audio.pause();           // تأكد إنه واقف قبل الإعادة [web:53]
-  audio.currentTime = 0;   // ارجع للبداية [web:64]
-
-  const p = audio.play();  // play() بيرجع Promise [web:27]
-  if (p && typeof p.catch === "function") {
-    p.catch(() => {});
+  function playCorrectSound() {
+    playSoundById("soundCorrect");
   }
 
-  // وقف بعد 5 ثواني بالضبط
-  soundTimers[id] = setTimeout(() => {
-    audio.pause();         // إيقاف التشغيل [web:53]
-    audio.currentTime = 0; // (اختياري) يرجعه للبداية جاهز للمرة الجاية [web:64]
-  }, 3000);
-}
+  function playWrongSound() {
+    playSoundById("soundWrong");
+  }
 
-    function playCorrectSound() {
-      playSoundById("soundCorrect");
-    }
+  // ================ دوال الحفظ والاسترجاع ================
 
-    function playWrongSound() {
-      playSoundById("soundWrong");
-    }
+  function saveProgress() {
+    const quizProgress = {
+      quizId: currentQuizId,
+      index: currentQuestionIndex,
+      answers: userAnswers
+    };
+    localStorage.setItem("quizProgress", JSON.stringify(quizProgress));
+  }
 
-    // ================ دوال الحفظ والاسترجاع (الجديدة) ================
-    
-    // حفظ التقدم في ذاكرة المتصفح
-    function saveProgress() {
-      const quizProgress = {
-        quizId: currentQuizId,
-        index: currentQuestionIndex,
-        answers: userAnswers
-      };
-      localStorage.setItem('quizProgress', JSON.stringify(quizProgress));
-    }
+  function clearProgress() {
+    localStorage.removeItem("quizProgress");
+  }
 
-    // مسح البيانات عند الانتهاء أو العودة للرئيسية
-    function clearProgress() {
-      localStorage.removeItem('quizProgress');
-    }
+  function checkSavedProgress() {
+    const savedData = localStorage.getItem("quizProgress");
+    if (savedData) {
+      const progress = JSON.parse(savedData);
 
-    // استعادة البيانات عند تحميل الصفحة
-    function checkSavedProgress() {
-      const savedData = localStorage.getItem('quizProgress');
-      if (savedData) {
-        const progress = JSON.parse(savedData);
-        
-        // التأكد من أن الاختبار لا يزال موجوداً في قاعدة البيانات
-        if (quizzes && quizzes[progress.quizId]) {
-          currentQuizId = progress.quizId;
-          currentQuiz = quizzes[progress.quizId];
-          currentQuestionIndex = progress.index;
-          userAnswers = progress.answers;
+      if (quizzes && quizzes[progress.quizId]) {
+        currentQuizId = progress.quizId;
+        currentQuiz = quizzes[progress.quizId];
+        currentQuestionIndex = progress.index;
+        userAnswers = progress.answers;
 
-          // تحديث الواجهة
-          document.getElementById('homePage').style.display = 'none';
-          document.getElementById('quizContainer').style.display = 'block';
-          
-          loadQuestion();
-          return true;
-        }
-      }
-      return false;
-    }
+        document.getElementById("homePage").style.display = "none";
+        document.getElementById("quizContainer").style.display = "block";
 
-    // ================ دوال التحكم المعدلة ================
-    function startQuiz(quizId) {
-      currentQuizId = quizId;
-      currentQuiz = quizzes[quizId];
-      currentQuestionIndex = 0;
-      userAnswers = [];
-      
-      document.getElementById('homePage').style.display = 'none';
-      document.getElementById('quizContainer').style.display = 'block';
-      
-      saveProgress(); // حفظ البداية
-      loadQuestion();
-    }
-
-    function loadQuestion() {
-      if (!currentQuiz) return;
-
-      const q = currentQuiz.questions[currentQuestionIndex];
-      const total = currentQuiz.questions.length;
-
-      document.getElementById('qNumber').textContent = currentQuestionIndex + 1;
-      document.getElementById('qTotal').textContent = total;
-      document.getElementById('qText').textContent = q.question;
-
-      const optionsContainer = document.getElementById('optionsContainer');
-      optionsContainer.innerHTML = '';
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = opt;
-        btn.onclick = () => selectOption(idx);
-        optionsContainer.appendChild(btn);
-      });
-
-      document.getElementById('explanation').style.display = 'none';
-      document.getElementById('btnNext').style.display = 'none';
-    }
-
-    function selectOption(selectedIndex) {
-      const q = currentQuiz.questions[currentQuestionIndex];
-
-      // ======== (إضافة) تشغيل الصوت حسب صح/غلط ========
-      if (selectedIndex === q.correct) {
-        playCorrectSound();
-      } else {
-        playWrongSound();
-      }
-
-      const buttons = document.querySelectorAll('.option-btn');
-
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === selectedIndex) {
-          if (idx === q.correct) {
-            btn.classList.add('correct');
-          } else {
-            btn.classList.add('incorrect');
-          }
-        } else if (idx === q.correct) {
-          btn.classList.add('correct');
-        }
-      });
-
-      userAnswers.push({
-        question: q.q,
-        selected: selectedIndex,
-        correct: q.correct,
-        explanation: q.explanation,
-        isCorrect: selectedIndex === q.correct
-      });
-
-      // حفظ التقدم بعد كل إجابة
-      saveProgress();
-
-      const expDiv = document.getElementById('explanation');
-      expDiv.textContent = q.explanation;
-      expDiv.style.display = 'block';
-
-      document.getElementById('btnNext').style.display = 'inline-block';
-    }
-
-    function nextQuestion() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < currentQuiz.questions.length) {
-        saveProgress(); // حفظ رقم السؤال الجديد
         loadQuestion();
-      } else {
-        showResults();
+        return true;
       }
     }
+    return false;
+  }
 
-    function showResults() {
-      clearProgress(); // مسح البيانات لأن الاختبار انتهى بنجاح
-      document.getElementById('quizContainer').style.display = 'none';
-      document.getElementById('resultsContainer').style.display = 'block';
+  // ================ دوال التحكم ================
+  function startQuiz(quizId) {
+    currentQuizId = quizId;
+    currentQuiz = quizzes[quizId];
+    currentQuestionIndex = 0;
+    userAnswers = [];
 
-      const title = document.getElementById('resultQuizTitle');
-      const list = document.getElementById('resultsList');
-      const correctCount = userAnswers.filter(a => a.isCorrect).length;
-      const totalCount = userAnswers.length;
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("quizContainer").style.display = "block";
 
-      title.textContent = `نتائجك في اختبار ${currentQuiz.title}`;
-      list.innerHTML = '';
+    saveProgress();
+    loadQuestion();
+  }
 
-      // (كود عرض النتائج وتنسيق النقاط كما هو في الكود الأصلي...)
-      const scoreDisplay = document.createElement('div');
-      scoreDisplay.style.textAlign = 'center';
-      scoreDisplay.style.fontSize = '1.4rem';
-      scoreDisplay.style.marginBottom = '1.5rem';
-      scoreDisplay.style.fontWeight = '700';
-      scoreDisplay.style.color = correctCount === totalCount ? '#a5d6a7' : correctCount >= totalCount / 2 ? '#ffd54f' : '#ef9a9a';
-      scoreDisplay.innerHTML = `أجبت على <strong>${correctCount}</strong> من أصل <strong>${totalCount}</strong> سؤالًا بشكل صحيح`;
-      list.appendChild(scoreDisplay);
+  function loadQuestion() {
+    if (!currentQuiz) return;
 
-      userAnswers.forEach((ans, idx) => {
-        const item = document.createElement('div');
-        item.className = 'result-item';
-        // ... (بقية كود عرض تفاصيل الأسئلة كما هو) ...
-        const qText = document.createElement('div');
-        qText.className = 'result-question';
-        qText.innerHTML = `السؤال ${idx + 1}: ${ans.question}`;
+    const q = currentQuiz.questions[currentQuestionIndex];
+    const total = currentQuiz.questions.length;
 
-        const userOpt = currentQuiz.questions[idx].options[ans.selected];
-        const correctOpt = currentQuiz.questions[idx].options[ans.correct];
+    document.getElementById("qNumber").textContent = currentQuestionIndex + 1;
+    document.getElementById("qTotal").textContent = total;
+    document.getElementById("qText").textContent = q.question;
 
-        const ansDiv = document.createElement('div');
-        ansDiv.innerHTML = `
-          <div>إجابتك: <span class="result-answer ${ans.isCorrect ? 'answer-correct' : 'answer-incorrect'}">${userOpt}</span></div>
-          <div>الإجابة الصحيحة: <span class="result-answer answer-correct">${correctOpt}</span></div>
-        `;
+    const optionsContainer = document.getElementById("optionsContainer");
+    optionsContainer.innerHTML = "";
 
-        const expText = document.createElement('div');
-        expText.className = 'result-explanation';
-        expText.innerHTML = `التفسير: ${ans.explanation}`;
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.innerHTML = opt;
+      btn.onclick = () => selectOption(idx);
+      optionsContainer.appendChild(btn);
+    });
 
-        item.appendChild(qText);
-        item.appendChild(ansDiv);
-        item.appendChild(expText);
-        list.appendChild(item);
-      });
+    document.getElementById("explanation").style.display = "none";
+    document.getElementById("btnNext").style.display = "none";
+  }
 
-      // إضافة أزرار التحكم في النهاية
-      renderResultButtons(list);
-    }
+  function selectOption(selectedIndex) {
+    const q = currentQuiz.questions[currentQuestionIndex];
 
-    function renderResultButtons(container) {
-      const btnContainer = document.createElement('div');
-      btnContainer.style.display = 'flex';
-      btnContainer.style.gap = '15px';
-      btnContainer.style.justifyContent = 'center';
-      btnContainer.style.marginTop = '2rem';
-      btnContainer.style.flexWrap = 'wrap';
+    if (selectedIndex === q.correct) playCorrectSound();
+    else playWrongSound();
 
-      const btnRestart = document.createElement('button');
-      btnRestart.className = 'btn-action btn-restart';
-      btnRestart.innerHTML = 'إعادة الاختبار';
-      btnRestart.onclick = restartQuiz;
+    const buttons = document.querySelectorAll(".option-btn");
 
-      const btnHome = document.createElement('button');
-      btnHome.className = 'btn-action btn-home';
-      btnHome.innerHTML = 'العودة للرئيسية';
-      btnHome.onclick = goHome;
-
-      btnContainer.appendChild(btnRestart);
-      btnContainer.appendChild(btnHome);
-      container.appendChild(btnContainer);
-    }
-
-    function restartQuiz() {
-      clearProgress();
-      startQuiz(currentQuizId);
-    }
-
-    function goHome() {
-      clearProgress();
-      document.getElementById('quizContainer').style.display = 'none';
-      document.getElementById('resultsContainer').style.display = 'none';
-      document.getElementById('homePage').style.display = 'block';
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('quizContainer').style.display = 'none';
-      document.getElementById('resultsContainer').style.display = 'none';
-      if (!checkSavedProgress()) {
-        document.getElementById('homePage').style.display = 'block';
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === selectedIndex) {
+        if (idx === q.correct) btn.classList.add("correct");
+        else btn.classList.add("incorrect");
+      } else if (idx === q.correct) {
+        btn.classList.add("correct");
       }
     });
-  </script>
+
+    userAnswers.push({
+      // ملاحظة: عندك هنا كان q.q — ده غالباً غلط، المفروض q.question
+      question: q.question,
+      selected: selectedIndex,
+      correct: q.correct,
+      explanation: q.explanation,
+      isCorrect: selectedIndex === q.correct
+    });
+
+    saveProgress();
+
+    const expDiv = document.getElementById("explanation");
+    expDiv.textContent = q.explanation;
+    expDiv.style.display = "block";
+
+    document.getElementById("btnNext").style.display = "inline-block";
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuiz.questions.length) {
+      saveProgress();
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  }
+
+  function showResults() {
+    clearProgress();
+    document.getElementById("quizContainer").style.display = "none";
+    document.getElementById("resultsContainer").style.display = "block";
+
+    const title = document.getElementById("resultQuizTitle");
+    const list = document.getElementById("resultsList");
+    const correctCount = userAnswers.filter(a => a.isCorrect).length;
+    const totalCount = userAnswers.length;
+
+    title.textContent = `نتائجك في اختبار ${currentQuiz.title}`;
+    list.innerHTML = "";
+
+    const scoreDisplay = document.createElement("div");
+    scoreDisplay.style.textAlign = "center";
+    scoreDisplay.style.fontSize = "1.4rem";
+    scoreDisplay.style.marginBottom = "1.5rem";
+    scoreDisplay.style.fontWeight = "700";
+    scoreDisplay.style.color =
+      correctCount === totalCount
+        ? "#a5d6a7"
+        : correctCount >= totalCount / 2
+        ? "#ffd54f"
+        : "#ef9a9a";
+
+    scoreDisplay.innerHTML = `أجبت على <strong>${correctCount}</strong> من أصل <strong>${totalCount}</strong> سؤالًا بشكل صحيح`;
+    list.appendChild(scoreDisplay);
+
+    userAnswers.forEach((ans, idx) => {
+      const item = document.createElement("div");
+      item.className = "result-item";
+
+      const qText = document.createElement("div");
+      qText.className = "result-question";
+      qText.innerHTML = `السؤال ${idx + 1}: ${ans.question}`;
+
+      const userOpt = currentQuiz.questions[idx].options[ans.selected];
+      const correctOpt = currentQuiz.questions[idx].options[ans.correct];
+
+      const ansDiv = document.createElement("div");
+      ansDiv.innerHTML = `
+        <div>إجابتك: <span class="result-answer ${ans.isCorrect ? "answer-correct" : "answer-incorrect"}">${userOpt}</span></div>
+        <div>الإجابة الصحيحة: <span class="result-answer answer-correct">${correctOpt}</span></div>
+      `;
+
+      const expText = document.createElement("div");
+      expText.className = "result-explanation";
+      expText.innerHTML = `التفسير: ${ans.explanation}`;
+
+      item.appendChild(qText);
+      item.appendChild(ansDiv);
+      item.appendChild(expText);
+      list.appendChild(item);
+    });
+
+    renderResultButtons(list);
+  }
+
+  function renderResultButtons(container) {
+    const btnContainer = document.createElement("div");
+    btnContainer.style.display = "flex";
+    btnContainer.style.gap = "15px";
+    btnContainer.style.justifyContent = "center";
+    btnContainer.style.marginTop = "2rem";
+    btnContainer.style.flexWrap = "wrap";
+
+    const btnRestart = document.createElement("button");
+    btnRestart.className = "btn-action btn-restart";
+    btnRestart.innerHTML = "إعادة الاختبار";
+    btnRestart.onclick = restartQuiz;
+
+    const btnHome = document.createElement("button");
+    btnHome.className = "btn-action btn-home";
+    btnHome.innerHTML = "العودة للرئيسية";
+    btnHome.onclick = goHome;
+
+    btnContainer.appendChild(btnRestart);
+    btnContainer.appendChild(btnHome);
+    container.appendChild(btnContainer);
+  }
+
+  function restartQuiz() {
+    clearProgress();
+    startQuiz(currentQuizId);
+  }
+
+  function goHome() {
+    clearProgress();
+    document.getElementById("quizContainer").style.display = "none";
+    document.getElementById("resultsContainer").style.display = "none";
+    document.getElementById("homePage").style.display = "block";
+  }
+
+  // مهم: نخلي دوال الـ onclick اللي في HTML تشتغل مع module
+  window.startQuiz = startQuiz;
+  window.nextQuestion = nextQuestion;
+  window.goHome = goHome;
+
+  // ================= تشغيل الصفحة بعد تحقق الدخول =================
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // غيّر المسار لاسم صفحة تسجيل الدخول عندك
+      window.location.replace("../login.html");
+      return;
+    }
+
+    // مسجل دخول -> نكمل تحميل الواجهة
+    document.documentElement.style.visibility = "visible";
+
+    document.getElementById("quizContainer").style.display = "none";
+    document.getElementById("resultsContainer").style.display = "none";
+
+    if (!checkSavedProgress()) {
+      document.getElementById("homePage").style.display = "block";
+    }
+  });
+</script>
 </body>
 </html>
